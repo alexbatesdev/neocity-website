@@ -2,48 +2,56 @@
 <html lang="en">
 
 <head>
+    <!-- Boiler Plate -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- css reset -->
     <link rel="stylesheet" href="https://meyerweb.com/eric/tools/css/reset/reset.css">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&display=swap" rel="stylesheet">
+
+    <!-- Retro windows98 css (I'm not using it all) -->
     <!-- <link rel="stylesheet" href="https://unpkg.com/98.css"> -->
+    <!-- Just the scrollbar -->
     <link rel="stylesheet" href="./css/retro98Scrollbar.css">
+
+    <!-- My stuff -->
     <link rel="stylesheet" href="./css/index.css">
     <script src="./js/index.js" defer></script>
     <title>Buzzo's Page</title>
 </head>
+<!-- https://github-contributions-api.deno.dev/mcbuzzerr.json -->
 
 <body class="retro-scrollbar">
-    <div class="body">
-        <div class="spaceTakingSquare retro-scrollbar" id="sq-1">
-        </div>
-        <div class="spaceTakingSquare retro-scrollbar" id="sq-2">
-            <img src="./css/img/sunset.png" alt="pixel art sunset" width="100%">
-        </div>
-        <div class="spaceTakingSquare js-scrollbar-container" id="sq-3">
-            <div class="js-scrollbar-lane">
-                <div class="js-scrollbar-tracker">
-                    <img class="js-scrollbar-image" src="./css/img/smiley.png" />
+    <div class="body hexBackground">
+        <div class="window-body">
+            <div class="row">
+                <h1 class="greeting hexBackground hb-text">Hi, my name is <span class="name">Buzzo</span></h1>
+                <div class="window-hole-round hexBackground center-contents">
+                    <img src="./css/img/30419176.png" alt="Outline of Dave" id="user-outline">
                 </div>
             </div>
-            <div class="js-scrollbar-content" onscroll="updateScrollbar(event)">
-                <img src="./css/img/sunset.png" alt="pixel art sunset" width="100%">
-                <img src="./css/img/sunset.png" alt="pixel art sunset" width="100%" class="flip">
+            <div class="window-hole hexBackground">
+                <ul>
+                    <b>Likes: </b>
+                    <li>- Programming</li>
+                    <li>- Cool Patterns</li>
+                    <li>- Cool Websites</li>
+                </ul>
+                <ul>
+                    <b>Dislikes: </b>
+                    <li>- Easily Readable Text</li>
+                    <li>- How Long coding takes</li>
+                </ul>
             </div>
-        </div>
-        <div class="spaceTakingSquare js-scrollbar-container" id="sq-4">
-            <div class="js-scrollbar-lane">
-                <div class="js-scrollbar-tracker">
-                    <img class="js-scrollbar-image" src="./css/img/smiley.png" />
-                </div>
-            </div>
-            <div class="js-scrollbar-content" onscroll="updateScrollbar(event)">
-                <img src="./css/img/sunset.png" alt="pixel art sunset" width="100%">
-                <img src="./css/img/sunset.png" alt="pixel art sunset" width="100%" class="flip">
-            </div>
+            <p class="footnote">-- Cool Design Made By Buzzo --</p>
         </div>
     </div>
-
 </body>
 
 </html>
