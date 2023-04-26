@@ -1,0 +1,56 @@
+:root {
+    --button-face: #dfdfdf;
+    --button-highlight: #ffffff;
+    --button-shadow: #808080;
+    --window-frame: #0a0a0a;
+    --border-raised-outer: inset -1px -1px var(--window-frame), inset 1px 1px var(--button-highlight);
+    --border-raised-inner: inset -2px -2px var(--button-shadow), inset 2px 2px var(--button-face);
+}
+
+.retro-scrollbar::-webkit-scrollbar {
+    width: 16px;
+}
+
+.retro-scrollbar::-webkit-scrollbar:horizontal {
+    height: 17px;
+}
+
+.retro-scrollbar::-webkit-scrollbar-corner {
+    background: var(--button-face);
+}
+
+.retro-scrollbar::-webkit-scrollbar-track {
+    background-image: url("./icon/scrollbar-background.svg");
+}
+
+.retro-scrollbar::-webkit-scrollbar-thumb {
+    background-color: var(--button-face);
+    box-shadow: var(--border-raised-outer), var(--border-raised-inner);
+}
+
+.retro-scrollbar::-webkit-scrollbar-button:horizontal:start:decrement,
+.retro-scrollbar::-webkit-scrollbar-button:horizontal:end:increment,
+.retro-scrollbar::-webkit-scrollbar-button:vertical:start:decrement,
+.retro-scrollbar::-webkit-scrollbar-button:vertical:end:increment {
+    display: block;
+}
+
+.retro-scrollbar::-webkit-scrollbar-button:vertical:start {
+    height: 17px;
+    background-image: url("./icon/button-up.svg");
+}
+
+.retro-scrollbar::-webkit-scrollbar-button:vertical:end {
+    height: 17px;
+    background-image: url("./icon/button-down.svg");
+}
+
+.retro-scrollbar::-webkit-scrollbar-button:horizontal:start {
+    width: 16px;
+    background-image: url("./icon/button-left.svg");
+}
+
+.retro-scrollbar::-webkit-scrollbar-button:horizontal:end {
+    width: 16px;
+    background-image: url("./icon/button-right.svg");
+}

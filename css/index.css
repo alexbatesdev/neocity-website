@@ -1,0 +1,89 @@
+.body {
+    background-color: #331774;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* This was taken from a neocities website */
+    background-image:
+        linear-gradient(30deg, rgb(3, 13, 216) 12%, rgba(0, 0, 0, 0) 12.5%, rgba(0, 0, 0, 0) 87%, rgb(3, 13, 216) 87.5%, rgb(3, 13, 216)),
+        linear-gradient(150deg, rgb(3, 13, 216) 12%, rgba(0, 0, 0, 0) 12.5%, rgba(0, 0, 0, 0) 87%, rgb(3, 13, 216) 87.5%, rgb(3, 13, 216)),
+        linear-gradient(30deg, rgb(3, 13, 216) 12%, rgba(0, 0, 0, 0) 12.5%, rgba(0, 0, 0, 0) 87%, rgb(3, 13, 216) 87.5%, rgb(3, 13, 216)),
+        linear-gradient(150deg, rgb(3, 13, 216) 12%, rgba(0, 0, 0, 0) 12.5%, rgba(0, 0, 0, 0) 87%, rgb(3, 13, 216) 87.5%, rgb(3, 13, 216)),
+        linear-gradient(60deg, rgb(99, 216, 12) 25%, rgba(0, 0, 0, 0) 25.5%, rgba(0, 0, 0, 0) 75%, rgb(99, 216, 12) 75%, rgb(99, 216, 12)),
+        linear-gradient(60deg, rgb(99, 216, 12) 25%, rgba(0, 0, 0, 0) 25.5%, rgba(0, 0, 0, 0) 75%, rgb(99, 216, 12) 75%, rgb(99, 216, 12));
+    background-position: 0px 0px, 0px 0px, 40px 70px, 40px 70px, 0px 0px, 40px 70px;
+    background-size: 80px 140px, 80px 140px, 80px 140px, 80px 140px, 80px 140px, 80px 140px;
+    background-color: rgb(65, 172, 214);
+}
+
+.spaceTakingSquare {
+    width: 300px;
+    height: 300px;
+    margin: 300px;
+    background-color: white;
+    outline: 3px solid white;
+    outline-offset: 1px;
+    overflow-y: auto;
+}
+
+.spaceTakingSquare>h1 {
+    margin: 50px;
+    padding: 50px;
+    font-size: 1.5em;
+    color: #331774;
+}
+
+#sq-1 {
+    background-image: url('./img/sunset.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.flip {
+    transform: rotateX(180deg);
+    margin-top: -3px;
+}
+
+
+.js-scrollbar-content::-webkit-scrollbar {
+    display: none;
+}
+
+.js-scrollbar-content {
+    overflow-y: scroll;
+    height: 100%;
+    padding-right: 10px;
+}
+
+.js-scrollbar-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.js-scrollbar-tracker {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 30px;
+    width: 10px;
+    background-color: #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.js-scrollbar-lane {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 10px;
+    background-image: linear-gradient(to right, red 20%, orange 20% 40%, yellow 40% 60%, green 60% 80%, blue 80%);
+}
+
+.js-scrollbar-image {
+    z-index: 1;
+    width: 35px;
+    height: 35px;
+}
