@@ -11,6 +11,11 @@ document.body.addEventListener("keydown", (event) => {
     }
 })
 
+const summonCat = (event) => {
+    console.log(event)
+}
+
+
 const syncBackgrounds = () => {
     const backgroundWidth = 150;
     // const aspectRatio = 1.14285714;
@@ -35,3 +40,12 @@ window.onload = syncBackgrounds;
 window.addEventListener("resize", syncBackgrounds)
 
 // addEventListener for window resize 
+
+
+
+
+const anotherNeko = () => {
+    x = Math.floor(Math.random() * box.boundWidth());
+    y = Math.floor(Math.random() * box.boundHeight());
+    new Neko(x, y);
+}
