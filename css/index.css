@@ -54,6 +54,7 @@
     flex-direction: column;
     justify-content: flex-start;
     position: relative;
+    border-radius: 5px;
 }
 
 .row {
@@ -104,6 +105,7 @@
     display: flex;
     justify-content: space-evenly;
     align-items: flex-start;
+    border-radius: 5px;
 }
 
 .window-hole>ul {
