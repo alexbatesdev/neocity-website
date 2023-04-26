@@ -1,19 +1,13 @@
+let inputs = [];
 document.body.addEventListener("keydown", (event) => {
-    console.log(event.key)
-    switch (event.key) {
-        case "ArrowUp":
-            console.log("up")
-            break;
-        case "ArrowDown":
-            console.log("down")
-            break;
-        case "ArrowLeft":
-            console.log("left")
-            break;
-        case "ArrowRight":
-            console.log("right")
-        case "default":
-            break;
+    inputs.push(event.key);
+
+    if (inputs.length > 10) {
+        inputs.shift();
+    }
+
+    if (inputs.join("") == "ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightba") {
+        document.body.style.filter = "hue-rotate(" + Math.floor(Math.random() * 360) + "deg)";
     }
 })
 

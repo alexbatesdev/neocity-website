@@ -10,6 +10,9 @@
     <!-- css reset -->
     <link rel="stylesheet" href="https://meyerweb.com/eric/tools/css/reset/reset.css">
 
+    <!-- flaticon icons -->
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+
     <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,7 +34,18 @@
     <div class="body hexBackground">
         <div class="window-body">
             <div class="row">
-                <h1 class="greeting hexBackground hb-text">Hi, my name is <span class="name">Buzzo</span></h1>
+                <div class="greeting-container">
+                    <h1 class="greeting hexBackground hb-text">Hi, my name</h1>
+                    <div class="greeting-row">
+                        <h1 class="greeting hexBackground hb-text">is</h1>
+                        <span class="name greeting">Buzzo</span>
+                        <h1 class="greeting hexBackground hb-text">!</h1>
+                        <span class="greeting pronoun-container hexBackground hb-text">
+                            <span class="pronouns">(they</span>
+                            <span class="pronouns">/him)</span>
+                        </span>
+                    </div>
+                </div>
                 <div class="window-hole-round hexBackground center-contents">
                     <img src="./img/30419176.png" alt="Outline of Dave" id="user-outline">
                 </div>
@@ -42,6 +56,7 @@
                     <li>- Programming</li>
                     <li>- Cool Patterns</li>
                     <li>- Cool Websites</li>
+                    <li>- Secrets</li>
                 </ul>
                 <ul>
                     <b>Dislikes: </b>
@@ -49,7 +64,25 @@
                     <li>- How Long coding takes</li>
                 </ul>
             </div>
-            <p class="footnote">-- Cool Design Made By Buzzo --</p>
+            <div class="LoopRingWrapper">
+
+                <a href="https://loop.graycot.dev/webring.html?action=prev" class="LoopRingText">
+                    <i class="fi fi-rr-caret-left hexBackground hb-text"></i>
+                </a>
+                <a href="https://loop.graycot.dev/webring.html?action=list" class="LoopRingText hexBackground hb-text">
+                    <i class="fi fi-rr-menu-burger"></i>
+                </a>
+                <a href="https://loop.graycot.dev/webring.html?action=home" class="LoopRingText hexBackground hb-text">
+                    Loop
+                    Ring </a>
+                <a href="https://loop.graycot.dev/webring.html?action=rand" class="LoopRingText hexBackground hb-text">
+                    ?
+                </a>
+                <a href="https://loop.graycot.dev/webring.html?action=next" class="LoopRingText">
+                    <i class="fi fi-rr-caret-right hexBackground hb-text"></i>
+                </a>
+            </div>
+            <!-- <p class="footnote">-- Cool Design Made By Buzzo --</p> -->
         </div>
     </div>
 </body>
