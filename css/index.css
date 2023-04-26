@@ -191,3 +191,31 @@ i {
 a {
     text-decoration: none;
 }
+
+.err-code {
+    font-family: 'Inconsolata', monospace;
+    font-size: 8rem;
+}
+
+.err-message {
+    font-family: 'Inconsolata', monospace;
+    font-size: 4rem;
+}
+
+.err-link {
+    font-family: 'Inconsolata', monospace;
+    font-size: 2rem;
+    margin-top: 1rem;
+    filter: hue-rotate(100deg);
+}
+
+.hover-highlight-children>*:hover {
+    filter: hue-rotate(-100deg);
+}
+
+.err-link:hover {
+    cursor: pointer;
+    font-style: italic;
+    font-weight: 900;
+    filter: hue-rotate(100deg);
+}
