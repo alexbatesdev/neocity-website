@@ -1,0 +1,213 @@
+.body {
+    background-color: #331774;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* This was taken from a neocities website */
+    /* background-image:
+        linear-gradient(30deg, rgb(3, 13, 216) 12%, rgba(0, 0, 0, 0) 12.5%, rgba(0, 0, 0, 0) 87%, rgb(3, 13, 216) 87.5%, rgb(3, 13, 216)),
+        linear-gradient(150deg, rgb(3, 13, 216) 12%, rgba(0, 0, 0, 0) 12.5%, rgba(0, 0, 0, 0) 87%, rgb(3, 13, 216) 87.5%, rgb(3, 13, 216)),
+        linear-gradient(30deg, rgb(3, 13, 216) 12%, rgba(0, 0, 0, 0) 12.5%, rgba(0, 0, 0, 0) 87%, rgb(3, 13, 216) 87.5%, rgb(3, 13, 216)),
+        linear-gradient(150deg, rgb(3, 13, 216) 12%, rgba(0, 0, 0, 0) 12.5%, rgba(0, 0, 0, 0) 87%, rgb(3, 13, 216) 87.5%, rgb(3, 13, 216)),
+        linear-gradient(60deg, rgb(99, 216, 12) 25%, rgba(0, 0, 0, 0) 25.5%, rgba(0, 0, 0, 0) 75%, rgb(99, 216, 12) 75%, rgb(99, 216, 12)),
+        linear-gradient(60deg, rgb(99, 216, 12) 25%, rgba(0, 0, 0, 0) 25.5%, rgba(0, 0, 0, 0) 75%, rgb(99, 216, 12) 75%, rgb(99, 216, 12));
+    background-position: 0px 0px, 0px 0px, 40px 70px, 40px 70px, 0px 0px, 40px 70px;
+    background-size: 80px 140px, 80px 140px, 80px 140px, 80px 140px, 80px 140px, 80px 140px; 
+    background-color: rgb(65, 172, 214); */
+    min-height: 100vh;
+}
+
+.window-body {
+    width: 500px;
+    height: 400px;
+    background-color: black;
+    padding: 1rem 1rem 0 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
+    border-radius: 5px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.greeting {
+    color: white;
+    font-family: 'Inconsolata', monospace;
+    font-size: 4rem;
+    font-weight: 600;
+}
+
+.greeting-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.name {
+    /* -webkit-text-fill-color: #4e43e7; */
+    margin-left: 32px;
+    filter: hue-rotate(25deg);
+}
+
+.pronoun-container {
+    display: inline-flex;
+    max-width: 85px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+
+}
+
+.pronouns {
+    font-size: 1.6rem;
+}
+
+.window-hole {
+    background-color: white;
+    width: 500px;
+    height: 200px;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    border-radius: 5px;
+}
+
+.window-hole>ul {
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.window-hole>ul>b {
+    color: black;
+    font-family: 'Inconsolata', monospace;
+    font-size: 2rem;
+    font-weight: 600;
+    list-style-type: none;
+}
+
+.window-hole>ul>li {
+    color: black;
+    font-family: 'Inconsolata', monospace;
+    font-size: 1.5rem;
+    font-weight: 600;
+    list-style-type: none;
+    margin-top: 0.5rem;
+}
+
+.window-hole-round {
+    background-color: white;
+    min-width: 120px;
+    min-height: 120px;
+    border-radius: 50%;
+    filter: hue-rotate(25deg);
+}
+
+#user-outline {
+    filter: brightness(0);
+    margin-top: 5px;
+    margin-left: 6px;
+    width: 120px;
+    height: 120px;
+}
+
+.center-contents {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footnote {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #686696;
+}
+
+.LoopRingWrapper {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.LoopRingText {
+    font-family: 'Inconsolata', monospace;
+    font-size: 2rem;
+    font-weight: 600;
+    color: white;
+}
+
+.LoopRingText:hover {
+    filter: hue-rotate(100deg);
+    cursor: pointer;
+}
+
+i {
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+    filter: hue-rotate(200deg);
+}
+
+.err-code {
+    font-family: 'Inconsolata', monospace;
+    font-size: 8rem;
+}
+
+.err-message {
+    font-family: 'Inconsolata', monospace;
+    font-size: 4rem;
+}
+
+.err-link {
+    font-family: 'Inconsolata', monospace;
+    font-size: 2rem;
+    margin-top: 1rem;
+    filter: hue-rotate(100deg);
+}
+
+.hover-highlight-children>*:hover {
+    filter: hue-rotate(-100deg);
+}
+
+.err-link:hover {
+    cursor: pointer;
+    font-style: italic;
+    font-weight: 900;
+    filter: hue-rotate(100deg);
+}
+
+.back-button {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    font-family: 'Inconsolata', monospace;
+    font-size: 2rem;
+    background-color: black;
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+
+.back-button:hover {
+    cursor: pointer;
+    filter: hue-rotate(100deg);
+}

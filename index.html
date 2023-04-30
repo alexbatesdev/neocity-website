@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-    <!-- Boiler Plate -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,72 +22,155 @@
     <!-- Just the scrollbar -->
     <link rel="stylesheet" href="./css/retro98Scrollbar.css">
 
+
     <!-- My stuff -->
+    <link rel="stylesheet" href="./css/hexBackground.css">
+    <script src="./js/hexBackground.js" defer></script>
     <link rel="stylesheet" href="./css/index.css">
-    <script src="./js/index.js" defer></script>
-    <title>Buzzo's Page</title>
+
+    <title>Buzzo's Place</title>
 </head>
-<!-- https://github-contributions-api.deno.dev/mcbuzzerr.json -->
 
 <body class="retro-scrollbar">
-    <div class="body hexBackground">
-        <div class="window-body">
-            <div class="row">
-                <div class="greeting-container">
-                    <h1 class="greeting hexBackground hb-text">Hi, my name</h1>
-                    <div class="greeting-row">
-                        <h1 class="greeting hexBackground hb-text">is</h1>
-                        <span class="name greeting">Buzzo</span>
-                        <h1 class="greeting hexBackground hb-text">!</h1>
-                        <span class="greeting pronoun-container hexBackground hb-text">
-                            <span class="pronouns">(they</span>
-                            <span class="pronouns">/him)</span>
-                        </span>
+    <div class="page-body">
+        <class class="body">
+            <div class="flex-tricolumn">
+                <div class="flex-column risen-column">
+                    <div class="profile-picture-container">
+                        <a href="AboutMe.html">
+                            <img src="./img/BuzzoOutline1.png" alt="Buzzo!" class="profile-picture hexBackground">
+                        </a>
+                        <div class="profile-label">
+                            <div>I'm Buzzo!</div>
+                            <a href="https://www.imood.com/users/Mcbuzzerr"><img
+                                    src="https://moods.imood.com/display/uname-Mcbuzzerr/fg-000000/trans-1/imood.gif"
+                                    alt="The current mood of Mcbuzzerr at www.imood.com"></a>
+                        </div>
                     </div>
+                    <!-- <div class="updates-todo-container card">
+                        Todo/Updates
+                    </div> -->
                 </div>
-                <div class="window-hole-round hexBackground center-contents">
-                    <img src="./img/30419176.png" alt="Outline of Dave" id="user-outline">
-                </div>
-            </div>
-            <div class="window-hole hexBackground">
-                <ul>
-                    <b>Likes: </b>
-                    <li>- Programming</li>
-                    <li>- Cool Patterns</li>
-                    <li>- Cool Websites</li>
-                    <li>- <span onclick="anotherNeko();return false;">Secrets</span></li>
-                </ul>
-                <ul>
-                    <b>Dislikes: </b>
-                    <li>- Easily Readable Text</li>
-                    <li>- How Long coding takes</li>
-                </ul>
-            </div>
-            <div class="LoopRingWrapper">
+                <div class="flex-column wide-column">
+                    <div class="header card">
+                        Buzzo's Place
+                    </div>
+                    <div class="welcome-container card retro-scrollbar">
+                        <h1>Welcome to my website!</h1>
+                        <p>This is a place for me to share my thoughts, feelings, and
+                            interests. The site is small right now, but I plan to add a lot, come visit from time to
+                            time! (Any link in <span class="unfinished">red</span> doesn't go anywhere yet)
+                        </p>
+                        <p>Feel free to sign my guestbook (DOES NOT EXIST YET SORRY), or check out my <a
+                                href="AboutMe.html">About Me</a>
+                            page!</p>
+                        <br>
+                        <ol>
+                            <li>
+                                Todo:
+                            </li>
+                            <li>
+                                - Make the actual Todo list component
+                            </li>
+                            <li>
+                                - Make the Gallery Page
+                            </li>
+                            <li>
+                                - Make the Journal Page
+                            </li>
+                            <li>
+                                - Make the Quotes Page
+                            </li>
+                            <li>
+                                - Make the Cool Sites Page
+                            </li>
+                            <li>
+                                - Make the Shrines Page
+                            </li>
+                            <!-- <li>
+                                - Make the Pet Memorial Page
+                            </li>
+                            <li>
+                                - Make the Webrings Page
+                            </li>
+                            <li>
+                                - Make the Web Garden Page
+                            </li> -->
 
-                <a href="https://loop.graycot.dev/webring.html?action=prev" class="LoopRingText">
-                    <i class="fi fi-rr-caret-left hexBackground hb-text"></i>
-                </a>
-                <a href="https://loop.graycot.dev/webring.html?action=list" class="LoopRingText hexBackground hb-text">
-                    <i class="fi fi-rr-menu-burger"></i>
-                </a>
-                <a href="https://loop.graycot.dev/webring.html?action=home" class="LoopRingText hexBackground hb-text">
-                    Loop
-                    Ring </a>
-                <a href="https://loop.graycot.dev/webring.html?action=rand" class="LoopRingText hexBackground hb-text">
-                    ?
-                </a>
-                <a href="https://loop.graycot.dev/webring.html?action=next" class="LoopRingText">
-                    <i class="fi fi-rr-caret-right hexBackground hb-text"></i>
-                </a>
+                            <li>
+                                - Make the component switcher component <br /> This will be a panel that will switch
+                                between different components. It will be used for the guestbook and actual todo list,
+                                and
+                                the guestbook and the poll components.
+                            </li>
+                            <li>
+                                - Make the guestbook component <br /> This will be my own custom questbook component
+                                that will be connected to a mongoDB database.
+                            </li>
+                            <li>
+                                - Make the poll component <br /> This will be my own custom poll component that will be
+                                connected to a mongoDB database. (Honestly probably not, I'm probably just going to use
+                                the poll service I see others using)
+                            </li>
+                            <li>
+                                - Make the comment section component <br /> This will be my own custom comment section
+                                component that will be connected to a mongoDB database.
+                            </li>
+                        </ol>
+                    </div>
+                    <!-- <div class="flex-row card">
+                        <div class="guestbook-container"></div>
+                        <div class="square"></div>
+                        <div style="width: 150px; /* <- Set any width you'd like! */">
+                            <script src="https://jeith.neocities.org/assets/webring/wii-ring.js"></script>
+                            <wii-ring site="http://127.0.0.1:5500"></wii-ring>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="flex-column risen-column">
+                    <div class="links-container card">
+                        <ul class="navigation-list">
+                            <li>
+                                <a href="AboutMe.html">About Me</a>
+                            </li>
+                            <li>
+                                <a href="#" class="unfinished">Gallery</a>
+                            </li>
+                            <li>
+                                <a href="#" class="unfinished">Journal</a>
+                            </li>
+                            <li>
+                                <a href="#" class="unfinished">Quotes</a>
+                            </li>
+                            <li>
+                                <a href="#" class="unfinished">Cool Sites</a>
+                            </li>
+                            <li>
+                                <a href="#" class="unfinished">Shrines</a>
+                            </li>
+                            <li>
+                                <a href="#" class="unfinished">Pet Memorial</a>
+                            </li>
+                            <!-- <li>
+                                <a href="#" class="unfinished">Webrings</a>
+                            </li>
+                            <li>
+                                <a href="#" class="unfinished">Web Garden</a>
+                            </li> -->
+                            <li>
+                                <a href="#" class="unfinished">Sitemap</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- <div class="square card">
+                        Jukebox
+                    </div> -->
+                </div>
             </div>
-            <!-- <p class="footnote">-- Cool Design Made By Buzzo --</p> -->
-        </div>
+            <!-- <div class="flex-row-footer"></div> -->
+            <div class="buttons-n-blinkers"></div>
+        </class>
     </div>
-    <script>NekoType = "black"</script>
-    <h1 id=nl>
-        <script src="https://webneko.net/n20171213.js"></script><a href="https://webneko.net">Neko</a>
-    </h1>
 </body>
 
 </html>
