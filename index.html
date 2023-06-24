@@ -22,12 +22,14 @@
     <!-- Just the scrollbar -->
     <link rel="stylesheet" href="./css/retro98Scrollbar.css">
 
-
     <!-- My stuff -->
     <link rel="stylesheet" href="./css/hexBackground.css">
     <script src="./js/hexBackground.js" defer></script>
-    <link rel="stylesheet" href="./css/index.css">
 
+    <script src="./js/switchPanel.js" defer></script>
+    <link rel="stylesheet" href="./css/switchPanel.css">
+
+    <link rel="stylesheet" href="./css/index.css">
     <title>Buzzo's Place</title>
 </head>
 
@@ -47,9 +49,87 @@
                                     alt="The current mood of Mcbuzzerr at www.imood.com"></a>
                         </div>
                     </div>
-                    <!-- <div class="updates-todo-container card">
-                        Todo/Updates
-                    </div> -->
+                    <div class="left-long-container">
+                        <div class="switch-panel">
+                            <div class="switch-panel-button" onclick="handleSwitchPanelButtonClick(event)">
+                                <div id="sw-slot-a" tabindex="0" class="switch-panel-slot">1</div>
+                                <div id="sw-slot-b" tabindex="0" class="switch-panel-slot switch-panel-button-hidden">2
+                                </div>
+                            </div>
+                            <div class="switch-panel-label-box">
+                                <div id="sw-label-a" class="switch-panel-label">
+                                    Updates:
+                                </div>
+                                <div id="sw-label-b" class="switch-panel-label switch-panel-label-hidden">
+                                    Todo:
+                                </div>
+                            </div>
+                            <div class="switch-panel-content sw-panel-a">
+                                <ul>
+                                    <li>
+                                        <strong>
+                                            6/23/2023:
+                                        </strong>
+                                        Added this updates/todo dual component! and maybe more! Now I can
+                                        keep a history!
+                                    </li>
+                                    <li>
+                                        <strong>
+                                            4/24/2023:
+                                        </strong>
+                                        Site created! This is in retrospect, so I don't actually remember the
+                                        details.
+                                        I think this initial upload had just the hexagon card page that becamse About Me
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="switch-panel-content sw-panel-b sw-panel-hidden">
+                                <ul>
+                                    <li>
+                                        - Make the Gallery Page
+                                    </li>
+                                    <li>
+                                        - Make the Journal Page
+                                    </li>
+                                    <li>
+                                        - Make the Quotes Page
+                                    </li>
+                                    <li>
+                                        - Make the Cool Sites Page
+                                    </li>
+                                    <li>
+                                        - Make the Shrines Page
+                                    </li>
+                                    <!-- <li>
+                                        - Make the Pet Memorial Page
+                                    </li>
+                                    <li>
+                                        - Make the Webrings Page
+                                    </li>
+                                    <li>
+                                        - Make the Web Garden Page
+                                    </li> -->
+                                    <li>
+                                        - Make the guestbook component <br /> This will be my own custom questbook
+                                        component
+                                        that will be connected to a mongoDB database.
+                                    </li>
+                                    <li>
+                                        - Make the poll component <br /> This will be my own custom poll component that
+                                        will be
+                                        connected to a mongoDB database. (Honestly probably not, I'm probably just going
+                                        to use
+                                        the poll service I see others using)
+                                    </li>
+                                    <li>
+                                        - Make the comment section component <br /> This will be my own custom comment
+                                        section
+                                        component that will be connected to a mongoDB database.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="flex-column wide-column">
                     <div class="header card">
@@ -61,62 +141,13 @@
                             interests. The site is small right now, but I plan to add a lot, come visit from time to
                             time! (Any link in <span class="unfinished">red</span> doesn't go anywhere yet)
                         </p>
-                        <p>Feel free to sign my guestbook (DOES NOT EXIST YET SORRY), or check out my <a
-                                href="AboutMe.html">About Me</a>
-                            page!</p>
+                        <p>
+                            <br />
+                            Sorry I don't have much to do yet, I have a lotta plans, but I haven't had much programming
+                            bandwidth outside of work. For now you can check out my <a href="AboutMe.html"
+                                class="hexBackground hb-text">About Me</a>
+                        </p>
                         <br>
-                        <ol>
-                            <li>
-                                Todo:
-                            </li>
-                            <li>
-                                - Make the actual Todo list component
-                            </li>
-                            <li>
-                                - Make the Gallery Page
-                            </li>
-                            <li>
-                                - Make the Journal Page
-                            </li>
-                            <li>
-                                - Make the Quotes Page
-                            </li>
-                            <li>
-                                - Make the Cool Sites Page
-                            </li>
-                            <li>
-                                - Make the Shrines Page
-                            </li>
-                            <!-- <li>
-                                - Make the Pet Memorial Page
-                            </li>
-                            <li>
-                                - Make the Webrings Page
-                            </li>
-                            <li>
-                                - Make the Web Garden Page
-                            </li> -->
-
-                            <li>
-                                - Make the component switcher component <br /> This will be a panel that will switch
-                                between different components. It will be used for the guestbook and actual todo list,
-                                and
-                                the guestbook and the poll components.
-                            </li>
-                            <li>
-                                - Make the guestbook component <br /> This will be my own custom questbook component
-                                that will be connected to a mongoDB database.
-                            </li>
-                            <li>
-                                - Make the poll component <br /> This will be my own custom poll component that will be
-                                connected to a mongoDB database. (Honestly probably not, I'm probably just going to use
-                                the poll service I see others using)
-                            </li>
-                            <li>
-                                - Make the comment section component <br /> This will be my own custom comment section
-                                component that will be connected to a mongoDB database.
-                            </li>
-                        </ol>
                     </div>
                     <!-- <div class="flex-row card">
                         <div class="guestbook-container"></div>
@@ -131,34 +162,34 @@
                     <div class="links-container card">
                         <ul class="navigation-list">
                             <li>
-                                <a href="AboutMe.html">About Me</a>
+                                <a href="AboutMe.html" tabindex="0">About Me</a>
                             </li>
                             <li>
-                                <a href="#" class="unfinished">Gallery</a>
+                                <a href="gallery.html" tabindex="0">Gallery</a>
                             </li>
                             <li>
-                                <a href="#" class="unfinished">Journal</a>
+                                <a href="#" class="unfinished" tabindex="0">Journal</a>
                             </li>
                             <li>
-                                <a href="#" class="unfinished">Quotes</a>
+                                <a href="#" class="unfinished" tabindex="0">Quotes</a>
                             </li>
                             <li>
-                                <a href="#" class="unfinished">Cool Sites</a>
+                                <a href="#" class="unfinished" tabindex="0">Cool Sites</a>
                             </li>
                             <li>
-                                <a href="#" class="unfinished">Shrines</a>
+                                <a href="#" class="unfinished" tabindex="0">Shrines</a>
                             </li>
                             <li>
-                                <a href="#" class="unfinished">Pet Memorial</a>
+                                <a href="#" class="unfinished" tabindex="0">Pet Memorial</a>
                             </li>
                             <!-- <li>
-                                <a href="#" class="unfinished">Webrings</a>
+                                <a href="#" class="unfinished" tabindex="0">Webrings</a>
                             </li>
                             <li>
-                                <a href="#" class="unfinished">Web Garden</a>
+                                <a href="#" class="unfinished" tabindex="0">Web Garden</a>
                             </li> -->
                             <li>
-                                <a href="#" class="unfinished">Sitemap</a>
+                                <a href="#" class="unfinished" tabindex="0">Sitemap</a>
                             </li>
                         </ul>
                     </div>

@@ -107,10 +107,17 @@ a:hover {
     border: double 5px #000;
 }
 
-.updates-todo-container {
-    width: 150px;
+.left-long-container {
+    width: 320px;
     height: 300px;
-    background-color: #66f;
+    align-self: flex-end;
+    /* margin-left: -150px; */
+    /* background-color: #66f; */
+}
+
+.switch-panel-content {
+    overflow-y: auto;
+    max-height: 350px;
 }
 
 .welcome-container {
@@ -189,6 +196,19 @@ a:hover {
     border: double 5px #000;
     outline-offset: -5px;
     margin-bottom: 10px;
+}
+
+.todo-done {
+    text-decoration: line-through;
+    color: #000;
+}
+
+strong {
+    font-weight: bold;
+}
+
+li {
+    margin-bottom: 0.5rem;
 }
 
 @media screen and (max-width: 800px) {
