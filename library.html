@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="./css/library.css">
+    <script src="./js/library.js" defer></script>
+
+
+    <title>The Library</title>
+</head>
+
+<body>
+    <h1>Library in Space I guess</h1>
+    <div class="bookshelf">
+        <div class="topBar"></div>
+        <div class="shelf">
+            <div id="bk-1" class="book">
+                <div class="stripe"></div>
+                <p class="title">Digital Art</p>
+                <!-- Just some of my digital art and some notes on them -->
+                <div class="stripe"></div>
+                <div class="pages">
+                    <div class="page" id="bk-1-p2">
+                        <div class="formatted-page">
+                            <div class="image-container"
+                                style="background-image: url('https://cataas.com/cat?width=100&height=100');"
+                                onclick="window.location.href = 'https://cataas.com/cat';">
+                                >
+                            </div>
+                            <div class="image-desc">
+                                This is a picture of a really cool cat
+                                It's a randomly grabbed image from <a href="https://cataas.com/">Cataas</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page" id="bk-1-p1">
+                        <div class="formatted-page">
+                            <h2>My Digital Art</h2>
+                            <p>
+                                Nothing is actually here yet. Once I'm done with these pages I'll put some of my art
+                                here
+                            </p>
+                        </div>
+                    </div>
+                    <!-- <div class="page" id="bk-1-p3">
+                        <b>Page 3</b>
+                        Page template for future pages
+                    </div> -->
+                </div>
+            </div>
+            <div id="bk-2" class="book">
+                <div class="stripe"></div>
+                <p class="title">Traditional Art</p>
+                <!-- Just some of my sketchbook drawings and notes on themn -->
+                <div class="stripe"></div>
+                <div class="pages">
+                    <div class="page" id="bk-2-p1">
+                        <div class="formatted-page">
+                            <h2>My Traditional Art</h2>
+                            <p>
+                                Nothing is actually here yet. Once I'm done with some other parts of the site I'll come
+                                back and upload some of my drawings
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="bk-3" class="book">
+                <div class="stripe"></div>
+                <p class="title">Coding Projects/Gizmos</p>
+                <div class="stripe"></div>
+                <div class="pages">
+                    <div class="page" id="bk-3-p1">
+                        <div class="formatted-page">
+                            <h2>My Coding Projects</h2>
+                            <p>
+                                In the future I will outline some of my coding projects here. For now, I'm just going to
+                                link to my <a href="https://www.github.com/Mcbuzzerr">Github</a> page
+                            </p>
+                        </div>
+                    </div>
+                    <div class="page" id="bk-3-p2">
+                        <div class="formatted-page">
+                            <div class="image-container"
+                                style="background-image: url('https://avatars.githubusercontent.com/u/29442874?v=4');"
+                                onclick="window.location.href = 'https://www.github.com/Mcbuzzerr'"></div>
+                            <h2 style="margin: 0;">My Github</h2>
+                            <p style="margin: 0;">
+                                Here you will find some of my coding projects, some dating back to before I even started
+                                highschool.
+                                There are some projects that I'm proud of, and some that I'm not so proud of, and some I
+                                don't even remember making.
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="bk-4" class="book">
+                <div class="stripe"></div>
+                <p class="title">Quotes</p>
+                <!-- Just some of my sketchbook drawings and notes on themn -->
+                <div class="stripe"></div>
+                <div class="pages">
+                    <div class="page" id="bk-4-p1">
+                        <b>Quote 1</b>
+                        "To be or not to be, there is no try" - Yoda Montague
+                    </div>
+                    <div class="page" id="bk-4-p2">
+                        <b>Quote 2</b>
+                        "It's dangerous to go alone, take this" - Old Man
+                    </div>
+                    <div class="page" id="bk-4-p3">
+                        <b>Quote 3</b>
+                        "I'm Batman" - Batman
+                    </div>
+                    <div class="page" id="bk-4-p4">
+                        <b>Quote 4</b>
+                        "Wise man once said. Forgiveness is devine, but never pay full price for late pizza." -
+                        Michaelangelo
+                    </div>
+                </div>
+            </div>
+            <div id="bk-6" class="book">
+                <div class="stripe"></div>
+                <p class="title">Book of Future Book Ideas</p>
+                <!-- Just some of my sketchbook drawings and notes on themn -->
+                <div class="stripe"></div>
+                <div class="pages">
+                    <div class="page" id="bk-6-p1">
+                        <b>Idea 1:</b>
+                        Guest Book - A book where people can write their names and a message to me
+                        This one is waiting on me making it (they all are, but this one is especially difficult to
+                        make). This yellow book was actually originally labeled as
+                        the Guest Book!
+                    </div>
+                    <div class="page" id="bk-6-p2">
+                        <b>Idea 2</b>
+                        A History of my past usernames and profile pictures
+                    </div>
+                    <div class="page" id="bk-6-p3">
+                        <b>Idea 3</b>
+                        Infinite book of... something<br />
+                        Could be a book of: <br />
+                        - Cat pictures <br />
+                        - People who do not exist <br />
+                        - Randomly generated chat GPT text <br />
+                        - Randomly grabbed memes <br />
+                        - Motivational quotes <br />
+                    </div>
+                </div>
+            </div>
+            <div id="book-home" class="book-link" onclick="goHome(event)">
+                <div class="stripe"></div>
+                <p class="title">Back to homepage</p>
+                <!-- Just some of my sketchbook drawings and notes on themn -->
+                <div class="stripe"></div>
+            </div>
+            <div class="card card-1">
+                A webring link should go here <br />
+                Got a webring you think I'm eligible for? <br />
+                Want it to placed on this very spot? <br />
+                <a href="mailto:mcbuzzer@gmail.com">Email me</a> and I'll check it out!
+            </div>
+            <div class="card card-2">
+                Some object that links elsewhere can go here
+                Maybe I'll draw something, or find an image idk
+                Maybe I'll link to "About Me" or the Shrines page
+            </div>
+        </div>
+        <div class="bottomBar"></div>
+    </div>
+</body>
+
+</html>

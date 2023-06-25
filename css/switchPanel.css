@@ -26,10 +26,12 @@
     height: var(--switch-button-height);
     display: flex;
     justify-content: space-between;
+    transition: all 0.1s;
 }
 
 .switch-panel-button:hover {
     cursor: pointer;
+    transform: scale(1.1);
 }
 
 
@@ -52,6 +54,8 @@
     color: #000000;
     font-weight: bold;
     font-family: 'Dancing Script', cursive;
+    transition: all 0.3s;
+    user-select: none;
 }
 
 .switch-panel-button-hidden {

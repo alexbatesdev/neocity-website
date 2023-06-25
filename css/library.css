@@ -1,0 +1,334 @@
+@keyframes background-scroll {
+    from {
+        background-position: 100% 0;
+    }
+
+    to {
+        background-position: 0 100%;
+    }
+}
+
+body {
+    background-color: rgb(17, 17, 28);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 98vh;
+    overflow: hidden;
+    background-image: url("https://64.media.tumblr.com/e5da3cb3fbe9af8f2198f3459e72424a/tumblr_inline_n258tklDt11qhwjx8.png");
+    animation: forwards 180s linear infinite background-scroll;
+}
+
+h1 {
+    background-color: #070d1d;
+    padding: 1rem;
+    border: solid 5px rgb(75, 124, 248);
+    color: rgb(75, 124, 248);
+    width: 600px;
+    text-align: center;
+    font-size: 3rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.bookshelf {
+    width: 1000px;
+    height: 650px;
+    background-color: #001;
+    border: solid 5px rgb(75, 124, 248);
+    position: relative;
+    overflow: hidden;
+}
+
+.topBar {
+    width: 100%;
+    height: 10%;
+    background-color: #070d1d;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.bottomBar {
+    width: 100%;
+    height: 10%;
+    background-color: #070d1d;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.shelf {
+    width: 100%;
+    height: 80%;
+    background-color: #0f1a38;
+    /* background-image: url("https://i.ibb.co/YcHbhfx/wood001.jpg"); */
+    position: absolute;
+    top: 10%;
+    left: 0;
+    bottom: 10%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+
+.book,
+.book-link {
+    width: 40px;
+    background-color: #269136;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 10px;
+    transition: all 0.2s;
+    z-index: 1;
+}
+
+.book:hover {
+    transform: scale(1.1);
+}
+
+#bk-1 {
+    height: calc(100% - 40px);
+    width: 50px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#bk-2 {
+    width: 70px;
+    height: 90%;
+    background-color: #aaf;
+}
+
+
+#bk-3 {
+    height: 75%;
+    width: 60px;
+    background-color: rgb(255, 170, 172);
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+#bk-4 {
+    height: 90%;
+    width: 50px;
+    background-color: rgb(85, 85, 224);
+}
+
+#bk-5 {
+    height: 98%;
+    width: 50px;
+    background-color: rgb(168, 85, 224);
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#bk-6 {
+    height: 85%;
+    width: 80px;
+    background-color: rgb(214, 203, 49);
+    padding: 25px 0;
+}
+
+#book-home {
+    height: 89%;
+    width: 80px;
+    background-color: rgb(138, 35, 35);
+    padding-top: 5px;
+    padding-bottom: 5px;
+    transform: rotate(-3deg);
+    margin-left: 2px;
+}
+
+#book-home:hover {
+    transform: rotate(-3deg) scale(1.1);
+}
+
+.title {
+    transform: rotate(-90deg);
+    width: max-content;
+    font-size: 2rem;
+    font-family: cursive;
+    user-select: none;
+}
+
+.stripe {
+    background-color: #00000055;
+    width: 100%;
+    height: 10px;
+}
+
+.card {
+    width: 200px;
+    height: 200px;
+    background-color: rgb(84, 233, 164);
+    border: 10px double rgb(44, 172, 37);
+    position: absolute;
+    right: 1rem;
+    bottom: 0;
+    transition: all 0.2s;
+}
+
+.card-1 {
+    right: 250px;
+    background-color: rgb(84, 183, 233);
+    border: 10px double rgb(37, 84, 172);
+}
+
+
+.card:hover {
+    transform: scale(0.9);
+}
+
+.openBook {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 700px;
+    height: 500px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.closedBook {
+    display: none;
+}
+
+.left-half,
+.right-half {
+    width: 350px;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.left-half {
+    background-color: #26912d;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    justify-content: flex-end;
+}
+
+.right-half {
+    background-color: #26912d;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.left-page,
+.right-page {
+    width: calc(325px - 2rem);
+    height: calc(90% - 2rem);
+    background-color: #FFFDE9;
+    border-radius: 3px;
+    padding: 1rem;
+    user-select: none;
+}
+
+.left-page {
+    background-image: linear-gradient(90deg, rgba(255, 253, 233, 1) 90%, rgb(84, 61, 44) 100%);
+    box-shadow: 0 0 10px 5px #00000055;
+}
+
+.right-page {
+    background-image: linear-gradient(90deg, rgb(84, 61, 44) 0%, rgba(255, 253, 233, 1) 10%);
+    box-shadow: 0 0 10px 5px #00000055;
+}
+
+.close {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: -20px;
+    right: -15px;
+    background-image: url("../img/close.png");
+    background-size: 55px 55px;
+    transition: all 0.1s;
+}
+
+.close:hover {
+    filter: brightness(1.1);
+    transform: scale(1.1);
+}
+
+.close:active {
+    filter: brightness(0.9);
+    transform: scale(0.9);
+}
+
+.next {
+    position: absolute;
+    bottom: -30px;
+    right: -30px;
+    width: 80px;
+    height: 80px;
+    background-image: url("../img/arrow-right.png");
+    background-size: cover;
+    transition: all 0.1s;
+}
+
+.next:hover {
+    filter: brightness(1.1);
+    transform: scale(1.1);
+}
+
+.next:active {
+    filter: brightness(0.9);
+    transform: scale(0.9);
+}
+
+.prev {
+    position: absolute;
+    bottom: -30px;
+    left: -30px;
+    width: 80px;
+    height: 80px;
+    background-image: url("../img/arrow-left.png");
+    background-size: cover;
+    transition: all 0.1s;
+}
+
+.prev:hover {
+    filter: brightness(1.1);
+    transform: scale(1.1);
+}
+
+.prev:active {
+    filter: brightness(0.9);
+    transform: scale(0.9);
+}
+
+.pages {
+    display: none;
+}
+
+.formatted-page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.image-container {
+    width: 200px;
+    height: 200px;
+    background-color: #aeaa82;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    transition: all 0.1s;
+}
+
+.image-container:hover {
+    transform: scale(1.1);
+}
