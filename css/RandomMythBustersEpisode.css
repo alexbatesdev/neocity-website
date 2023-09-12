@@ -1,0 +1,29 @@
+body {
+    min-height: 100vh;
+    margin: 0;
+    background-color: blue;
+    color: yellow;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.button {
+    background-color: yellow;
+    color: blue;
+    border: 2px solid blue;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    display: inline-block;
+    width: 200px;
+    user-select: none;
+}
+
+.button:hover {
+    filter: brightness(0.8);
+}
