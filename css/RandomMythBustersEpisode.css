@@ -2,6 +2,7 @@ body {
     min-height: 100vh;
     margin: 0;
     background-color: blue;
+    background-image: url("../img/blueBG.jpg");
     color: yellow;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     display: flex;
@@ -9,12 +10,22 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
+    gap: 1rem;
+}
+
+.container {
+    background-image: url("../img/metalBG.jpg");
+    padding: 10px;
+    border: 3px dashed yellow;
+    outline: 3px dashed yellow;
+    outline-offset: -0px;
 }
 
 .button {
     background-color: yellow;
     color: blue;
     border: 2px solid blue;
+    outline: 2px solid blue;
     border-radius: 5px;
     padding: 10px;
     font-size: 20px;
@@ -26,4 +37,54 @@ body {
 
 .button:hover {
     filter: brightness(0.8);
+}
+
+.episode-data-container {
+    width: 800px;
+    height: 400px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 1rem;
+}
+
+.episode-data-container>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-container {
+    border: 3px dashed yellow;
+    outline: 3px dashed yellow;
+    width: 300px;
+    height: 225px;
+    background-color: black;
+}
+
+img {
+    width: 300px;
+    height: 225px;
+    object-fit: cover;
+}
+
+.text-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 440px;
+}
+
+.tv-outer {
+    height: 230px;
+    width: 300px;
+}
+
+a {
+    /* text-decoration: none; */
+    color: yellow;
 }

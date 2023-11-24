@@ -332,3 +332,15 @@ h1 {
 .image-container:hover {
     transform: scale(1.1);
 }
+
+.tv-outer {
+    width: 200px;
+    height: 150px;
+    position: absolute;
+    right: 12px;
+    bottom: 5px;
+}
+
+.tv-screen-outer {
+    background-image: url("https://static.wikia.nocookie.net/maditsmadfunny/images/4/4a/Mythbusters_Logo.jpg");
+}

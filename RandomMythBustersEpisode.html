@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/tvDiv.css">
     <link rel="stylesheet" href="./css/RandomMythBustersEpisode.css">
     <script src="./js/RandomMythBustersEpisode.js" defer></script>
     <title>RME by RNG</title>
@@ -21,6 +22,47 @@
         </div>
         <div class="button" onclick="generateRandomMythBustersEpisode()">
             Random Episode
+        </div>
+    </div>
+    <div class="container episode-data-container">
+
+        <div class="tv-outer">
+            <div class="tv-antenna-base">
+                <div class="tv-antenna ant-a">
+                    <div class="tv-antenna-ball"></div>
+                </div>
+                <div class="tv-antenna ant-b">
+                    <div class="tv-antenna-ball"></div>
+                </div>
+
+                <div class="tv-antenna-base-cover"></div>
+            </div>
+            <div class="tv-screen-outer" id="tv-screen">
+                <div class="tv-screen-inner">
+                    <a class="tv-fullscreen" target="_blank" href="https://sflix.to/tv/free-mythbusters-hd-38891">
+                    </a>
+                </div>
+            </div>
+            <div class="tv-control-bar">
+                <div class="tv-button">
+                </div>
+                <div class="tv-button">
+                </div>
+                <div class="tv-button">
+                </div>
+                <div class="tv-button">
+                </div>
+                <div class="tv-button">
+                </div>
+            </div>
+            <div class="tv-legs">
+
+            </div>
+        </div>
+        <div class="text-container">
+            <h1 id="episode-title">Episode Title</h1>
+            <p id="episode-plot">Episode Plot</p>
+            <p>Data from: <a href="https://www.omdbapi.com">https://www.omdbapi.com</a></p>
         </div>
     </div>
 </body>
