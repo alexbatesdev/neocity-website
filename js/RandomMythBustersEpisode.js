@@ -84,9 +84,15 @@ const generateRandomMythBustersEpisode = () => {
     console.log(randomMythBustersSeason, randomMythBustersEpisode);
     episodeData.then(data => {
         console.log(data);
-        document.getElementById("tv-screen").style.backgroundImage = data.Poster == undefined ? "url(/img/blackBG.png)" : `url(${data.Poster}`;
+        document.getElementById("tv-screen").style.backgroundImage = data.Poster == undefined ? "url('../img/giphy.gif')" : `url(${data.Poster}`;
         document.getElementById("episode-title").innerHTML = data.Title == undefined ? "Episode Not Found" : data.Title;
         document.getElementById("episode-plot").innerHTML = data.Plot == undefined ? "The database is missing some episodes, it may still exist idk check for yourself" : data.Plot;
+
+        if (data.Poster == undefined) {
+            document.getElementsByClassName("tv-fullscreen")[0].href = "/dvd.html";
+        } else {
+            document.getElementsByClassName("tv-fullscreen")[0].href = "https://sflix.to/tv/free-mythbusters-hd-38891";
+        }
     });
     document.getElementById("episode").innerHTML = string;
 }

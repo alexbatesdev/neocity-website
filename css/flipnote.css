@@ -11,6 +11,8 @@ body {
     /* This sets the position of the grid */
 
     display: flex;
+    overflow: hidden;
+    position: relative;
 }
 
 h1 {
@@ -21,6 +23,10 @@ h1 {
     top: 2rem;
     left: 130px;
     color: #ff6300;
+}
+
+b {
+    font-weight: bold;
 }
 
 .center-insides {
@@ -44,15 +50,136 @@ h1 {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 100px;
+    width: 125px;
     aspect-ratio: 1/1;
-    background-color: #6347ff;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 50%;
+    /* box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1); */
+    z-index: 1;
 }
 
 #arrow-left {
     left: 1rem;
+    background-image: url("../img/flipnote/flipnote_arrow_flip.png");
 }
 
 #arrow-right {
+    right: 1rem;
+    background-image: url("../img/flipnote/flipnote_arrow.png");
+
+}
+
+.drawing-page {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 75px;
+    text-align: center;
+    top: 55%;
+}
+
+.drawing-outer {
+    background-color: #ff6300;
+    padding: 7px;
+    border-radius: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    position: relative;
+    transition: transform 0.2s;
+    z-index: 0;
+    box-shadow: 0px 3px 10px -3px rgb(0, 0, 0);
+    width: 320px;
+}
+
+.drawing-outer img {
+    border-radius: 5px;
+    width: 320px;
+    height: 240px;
+}
+
+.drawing-outer:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+#pg-1 {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#pg-2 {
+    position: absolute;
+    left: 150%;
+    transform: translate(-50%, -50%);
+}
+
+#pg-3 {
+    position: absolute;
+    left: 150%;
+    transform: translate(-50%, -50%);
+}
+
+.hidden {
+    display: none;
+}
+
+.big-note {
+    padding: 1rem;
+    background-color: #ff6300;
+    border-radius: 10px;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2rem;
+    position: absolute;
+    top: 150%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 3;
+    transition: transform 0.2s;
+    width: 640px;
+    height: 510px;
+}
+
+.big-note:hover {
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+.big-note img {
+    width: calc(320px * 2);
+    border-radius: 10px;
+}
+
+.big-note-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #2d2d3c9d;
+    z-index: 2;
+}
+
+.backside {
+    background-color: white;
+    color: black;
+    border-radius: 7px;
+    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    text-align: left;
+    height: calc(100% - 2rem);
+    line-height: 110%;
+}
+
+.backside>b {
+    text-decoration-line: none;
+}
+
+#ringnote {
+    position: absolute;
+    top: 1rem;
     right: 1rem;
 }

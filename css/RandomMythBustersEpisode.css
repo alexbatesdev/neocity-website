@@ -84,7 +84,25 @@ img {
     width: 300px;
 }
 
+.tv-screen-outer {
+    background-image: url("../img/giphy.gif");
+}
+
 a {
     /* text-decoration: none; */
     color: yellow;
+}
+
+#home {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    width: 100px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+#home:hover {
+    color: blue;
+    cursor: pointer;
 }
