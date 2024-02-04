@@ -68,7 +68,7 @@ const main = () => {
                 return;
         }
         const drawing = target.querySelector('img');
-        const bigNote = document.getElementsByClassName('big-note')[0];
+        const bigNote = document.getElementById('big-drawing-card');
         const bigNoteImg = bigNote.querySelector('img');
         bigNoteImg.src = drawing.src;
         const bigNoteClose = document.getElementsByClassName('big-note-close')[0];
@@ -225,6 +225,29 @@ const main = () => {
 
     arrowLeft.addEventListener('click', () => handleChangePage(-1));
     arrowRight.addEventListener('click', () => handleChangePage(1));
+
+
+    const infoButton = document.getElementById('info-button');
+    const bigNoteClose = document.getElementsByClassName('big-note-close')[0];
+
+    const handleOpenInfo = () => {
+        const infoDiv = document.getElementById('info-div');
+        infoDiv.style.top = "50%";
+        infoButton.removeEventListener('click', handleOpenInfo);
+        bigNoteClose.classList.remove('hidden');
+        bigNoteClose.addEventListener('click', handleCloseInfo);
+    }
+    
+    const handleCloseInfo = () => {
+        const infoDiv = document.getElementById('info-div');
+        infoDiv.style.top = "150%";
+        infoButton.removeEventListener('click', handleCloseInfo);
+        infoButton.addEventListener('click', handleOpenInfo);
+        bigNoteClose.classList.add('hidden');
+        bigNoteClose.removeEventListener('click', handleCloseInfo);
+    }
+
+    infoButton.addEventListener('click', handleOpenInfo);
 }
 
 window.onload = main;

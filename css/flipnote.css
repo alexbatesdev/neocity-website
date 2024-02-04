@@ -104,23 +104,18 @@ b {
     cursor: pointer;
 }
 
+.content > .drawing-page {
+    position: absolute;
+    left: 150%;
+    transform: translate(-50%, -50%);
+}
+
 #pg-1 {
     position: absolute;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-#pg-2 {
-    position: absolute;
-    left: 150%;
-    transform: translate(-50%, -50%);
-}
-
-#pg-3 {
-    position: absolute;
-    left: 150%;
-    transform: translate(-50%, -50%);
-}
 
 .hidden {
     display: none;
@@ -181,5 +176,53 @@ b {
 #ringnote {
     position: absolute;
     top: 1rem;
+    right: 20rem;
+    background-color: greenyellow;
+}
+
+.info {
+    position: absolute;
+    top: 1rem;
     right: 1rem;
+    font-size: 2rem;
+    font-family: 'Flipnote';
+    color: #ff6300;
+    background-color: white;
+    border-radius: 50%;
+    border: #ff6300 5px solid;
+    width: 50px;
+    aspect-ratio: 1/1;
+    text-align: center;
+    line-height: 50px;
+    transition: transform 0.2s;
+    user-select: none;
+}
+
+.info:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+#info-div {
+    position: absolute;
+    top: 150%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: 0.5s;
+}
+
+h2 {
+    font-size: 3rem;
+    font-family: 'Flipnote';
+    margin-bottom: 1rem;
+}
+
+a {
+    color: #3b078f;
+    text-decoration-line: none;
+}
+
+a:hover {
+    color: #3b078f;
+    text-decoration-line: underline;
 }
