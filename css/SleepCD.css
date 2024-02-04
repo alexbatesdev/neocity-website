@@ -1,0 +1,182 @@
+body {
+    --background: #2b2d3d;
+    --outline: #212124;
+    /* Color for top/left borders */
+    --top-right-border: #37435c;
+    /* Color for bottom/right borders */
+    --bottom-left-border: #24201a;
+    --line-width: 2.5px;
+    /* Width of the lines */
+    --grid-size: 27px;
+    /* Size of the grid */
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--background);
+    background-image:
+        /* Cover Borders borders */
+        linear-gradient(0deg, var(--outline) var(--line-width), transparent var(--line-width)),
+        linear-gradient(90deg, var(--outline) var(--line-width), transparent var(--line-width)),
+        /* Top/Right borders */
+        linear-gradient(0deg, transparent calc(var(--grid-size) - var(--line-width)), var(--top-right-border) var(--line-width)),
+        linear-gradient(90deg, transparent calc(var(--grid-size) - var(--line-width)), var(--top-right-border) var(--line-width)),
+        /* Bottom/Left borders */
+        linear-gradient(0deg, var(--bottom-left-border) calc(2*var(--line-width)), transparent calc(var(--line-width))),
+        linear-gradient(90deg, var(--bottom-left-border) calc(2*var(--line-width)), transparent calc(var(--line-width)));
+    background-size: var(--grid-size) var(--grid-size);
+    background-position: 10px 10px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    font-family: "Pixelify Sans", sans-serif;
+    color: white;
+}
+
+h1 {
+    font-size: 40px;
+    color: #daf1fa;
+    font-weight: 100;
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    font-size: 20px;
+    color: #daf1fa;
+    font-weight: 100;
+    margin: 0;
+    padding: 0;
+}
+
+.center-insides {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-flex-section {
+    width: 900px;
+    height: 100%;
+    /* background-color: #8966e92f; */
+}
+
+
+
+.disc-menu-flex-section {
+    width: 100%;
+    height: 100%;
+    /* background-color: #17ad3c36; */
+    position: relative;
+}
+
+.info-card {
+    width: 500px;
+    height: 600px;
+    /* background-color: #2121247c; */
+    border: solid 4px #0b0b0e;
+    background-image: url(../img/New\ Piskel\ \(1\).png);
+    /* filter: brightness(0.5); */
+    background-size: 8px 8px;
+    padding: 5px 10px;
+}
+
+.cd-image {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    width: 550px;
+    aspect-ratio: 1/1;
+}
+
+.disc-menu-flex-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    gap: 3px;
+    font-size: 30px;
+    width: 100%;
+    color: #daf1fa;
+}
+
+#sng-1 {
+    margin-right: calc(275px + 75px);
+}
+
+#sng-2 {
+    margin-right: calc(365px + 75px);
+}
+
+#sng-3 {
+    margin-right: calc(430px + 75px);
+}
+
+#sng-4 {
+    margin-right: calc(480px + 75px);
+}
+
+#sng-5 {
+    margin-right: calc(510px + 75px);
+}
+
+#sng-6 {
+    margin-right: calc(530px + 75px);
+}
+
+#sng-7 {
+    margin-right: calc(540px + 75px);
+}
+
+#sng-8 {
+    margin-right: calc(550px + 75px);
+}
+
+#sng-9 {
+    margin-right: calc(555px + 75px);
+}
+
+#sng-10 {
+    margin-right: calc(550px + 75px);
+}
+
+#sng-11 {
+    margin-right: calc(545px + 75px);
+}
+
+#sng-12 {
+    margin-right: calc(535px + 75px);
+}
+
+#sng-13 {
+    margin-right: calc(515px + 75px);
+}
+
+#sng-14 {
+    margin-right: calc(490px + 75px);
+}
+
+#sng-15 {
+    margin-right: calc(450px + 75px);
+}
+
+#sng-16 {
+    margin-right: calc(375px + 75px);
+}
+
+#sng-17 {
+    margin-right: calc(275px + 75px);
+}
+
+.selected {
+    list-style: square;
+    color: rgb(120, 128, 252);
+}
