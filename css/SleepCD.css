@@ -72,6 +72,7 @@ p {
 }
 
 .info-card {
+    position: relative;
     width: 500px;
     height: 600px;
     /* background-color: #2121247c; */
@@ -82,13 +83,45 @@ p {
     padding: 5px 10px;
 }
 
+.controls {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.controls :first-child {
+    position: absolute;
+    left: 10px;
+}
+
+.controls :last-child {
+    position: absolute;
+    right: 10px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 .cd-image {
     position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
+    top: calc(50% - 275px);
+    left: 400px;
     width: 550px;
     aspect-ratio: 1/1;
+    /* animation: spin 10s linear infinite; */
 }
 
 .disc-menu-flex-section ul {
@@ -97,7 +130,7 @@ p {
     margin: 0;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-start;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -108,75 +141,103 @@ p {
     color: #daf1fa;
 }
 
+li {
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+li:hover {
+    color: #bec2fd;
+    transform: translate(5px, 0);
+}
+
 #sng-01 {
-    margin-right: calc(275px + 75px);
+    position: relative;
+    left: 410px;
+
 }
 
 #sng-02 {
-    margin-right: calc(365px + 75px);
+    position: relative;
+    left: 320px;
 }
 
 #sng-03 {
-    margin-right: calc(430px + 75px);
+    position: relative;
+    left: 240px;
 }
 
 #sng-04 {
-    margin-right: calc(480px + 75px);
+    position: relative;
+    left: 190px;
 }
 
 #sng-05 {
-    margin-right: calc(510px + 75px);
+    position: relative;
+    left: 160px;
 }
 
 #sng-06 {
-    margin-right: calc(530px + 75px);
+    position: relative;
+    left: 135px;
 }
 
 #sng-07 {
-    margin-right: calc(540px + 75px);
+    position: relative;
+    left: 120px;
 }
 
 #sng-08 {
-    margin-right: calc(550px + 75px);
+    position: relative;
+    left: 105px;
 }
 
 #sng-09 {
-    margin-right: calc(555px + 75px);
+    position: relative;
+    left: 105px;
 }
 
 #sng-10 {
-    margin-right: calc(550px + 75px);
+    position: relative;
+    left: 110px;
 }
 
 #sng-11 {
-    margin-right: calc(545px + 75px);
+    position: relative;
+    left: 120px;
 }
 
 #sng-12 {
-    margin-right: calc(535px + 75px);
+    position: relative;
+    left: 130px;
 }
 
 #sng-13 {
-    margin-right: calc(515px + 75px);
+    position: relative;
+    left: 145px;
 }
 
 #sng-14 {
-    margin-right: calc(490px + 75px);
+    position: relative;
+    left: 180px;
 }
 
 #sng-15 {
-    margin-right: calc(450px + 75px);
+    position: relative;
+    left: 230px;
 }
 
 #sng-16 {
-    margin-right: calc(375px + 75px);
+    position: relative;
+    left: 320px;
 }
 
 #sng-17 {
-    margin-right: calc(275px + 75px);
+    position: relative;
+    left: 410px;
 }
 
 .selected {
     list-style: square;
-    color: rgb(120, 128, 252);
+    color: #7880fc;
 }

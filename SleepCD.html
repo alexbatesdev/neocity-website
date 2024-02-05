@@ -27,7 +27,11 @@
                 dicta culpa exercitationem mollitia iure eveniet id cumque obcaecati qui ut nulla officiis. Maxime
                 pariatur at corrupti reprehenderit?
             </p>
-            <button class="stop-button" onclick="stop()">Stop</button>
+            <div class="controls">
+                <button onclick="prev()">Previous</button>
+                <button onclick="pause_or_play(event)" id="pause-button">Play</button>
+                <button onclick="next()">Next</button>
+            </div>
         </div>
     </div>
     <div class="disc-menu-flex-section">
@@ -50,7 +54,7 @@
             <li id="sng-16" onclick="clicked('16')">Song 16 - Song Name</li>
             <li id="sng-17" onclick="clicked('17')">Song 17 - Song Name</li>
         </ul>
-        <img src="./img/Sleep_CD_Edit.png" alt="CD" class="cd-image">
+        <img src="./img/Sleep_CD_Edit.png" alt="CD" class="cd-image" id="disk">
     </div>
 </body>
 
