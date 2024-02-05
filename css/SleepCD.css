@@ -117,9 +117,9 @@ p {
 
 .cd-image {
     position: absolute;
-    top: calc(50% - 275px);
+    top: calc(50% - 325px);
     left: 400px;
-    width: 550px;
+    width: 650px;
     aspect-ratio: 1/1;
     /* animation: spin 10s linear infinite; */
 }
@@ -153,68 +153,69 @@ li:hover {
 
 #sng-01 {
     position: relative;
-    left: 410px;
+    left: 230px;
 
 }
 
 #sng-02 {
     position: relative;
-    left: 320px;
+    left: 370px;
 }
 
 #sng-03 {
     position: relative;
-    left: 240px;
+    left: 280px;
 }
 
 #sng-04 {
     position: relative;
-    left: 190px;
+    left: 290px;
 }
 
 #sng-05 {
     position: relative;
-    left: 160px;
+    left: 280px;
 }
 
 #sng-06 {
     position: relative;
-    left: 135px;
+    left: 310px;
 }
 
 #sng-07 {
     position: relative;
-    left: 120px;
+    left: 320px;
 }
 
 #sng-08 {
     position: relative;
-    left: 105px;
+    left: 150px;
 }
 
 #sng-09 {
     position: relative;
-    left: 105px;
+    left: 0px;
 }
 
 #sng-10 {
     position: relative;
-    left: 110px;
+    left: 80px;
+    text-align: right;
 }
 
 #sng-11 {
     position: relative;
-    left: 120px;
+    left: 150px;
 }
 
 #sng-12 {
     position: relative;
-    left: 130px;
+    left: 150px;
 }
 
 #sng-13 {
     position: relative;
-    left: 145px;
+    left: 230px;
 }
 
 #sng-14 {
@@ -224,12 +225,12 @@ li:hover {
 
 #sng-15 {
     position: relative;
-    left: 230px;
+    left: 80px;
 }
 
 #sng-16 {
     position: relative;
-    left: 320px;
+    left: 280px;
 }
 
 #sng-17 {
