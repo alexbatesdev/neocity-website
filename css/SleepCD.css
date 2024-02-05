@@ -29,7 +29,7 @@ body {
     display: flex;
     flex-direction: row;
     margin: 0;
-    font-family: "Pixelify Sans", sans-serif;
+    font-family: "VT323", monospace;
     color: white;
 }
 
@@ -144,6 +144,7 @@ p {
 li {
     cursor: pointer;
     transition: 0.2s;
+    font-size: 35px;
 }
 
 li:hover {
@@ -153,13 +154,13 @@ li:hover {
 
 #sng-01 {
     position: relative;
-    left: 230px;
+    left: 240px;
 
 }
 
 #sng-02 {
     position: relative;
-    left: 370px;
+    left: 360px;
 }
 
 #sng-03 {
@@ -169,68 +170,68 @@ li:hover {
 
 #sng-04 {
     position: relative;
-    left: 290px;
+    left: 320px;
 }
 
 #sng-05 {
     position: relative;
-    left: 280px;
+    left: 265px;
 }
 
 #sng-06 {
     position: relative;
-    left: 310px;
+    left: 300px;
 }
 
 #sng-07 {
     position: relative;
-    left: 320px;
+    left: 345px;
 }
 
 #sng-08 {
     position: relative;
-    left: 150px;
+    left: 175px;
 }
 
 #sng-09 {
     position: relative;
-    left: 0px;
+    left: 45px;
 }
 
 #sng-10 {
     position: relative;
-    left: 80px;
+    left: 110px;
     text-align: right;
 }
 
 #sng-11 {
     position: relative;
-    left: 150px;
+    left: 180px;
 }
 
 #sng-12 {
     position: relative;
-    left: 150px;
+    left: 180px;
 }
 
 #sng-13 {
     position: relative;
-    left: 230px;
+    left: 250px;
 }
 
 #sng-14 {
     position: relative;
-    left: 180px;
+    left: 220px;
 }
 
 #sng-15 {
     position: relative;
-    left: 80px;
+    left: 75px;
 }
 
 #sng-16 {
     position: relative;
-    left: 280px;
+    left: 250px;
 }
 
 #sng-17 {
