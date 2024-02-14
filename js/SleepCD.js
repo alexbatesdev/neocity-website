@@ -7,7 +7,7 @@ const clicked = (new_track_number) => {
     let pause_button = document.getElementById('pause-button');
     pause_button.innerHTML = 'Pause';
     if (last_track_number != new_track_number) {
-        if (audio != null) audio.pause(); //https://github.com/Mcbuzzerr/neocity-website/raw/master/Sleep%20CD/01%20Track%2001.mp3
+        if (audio != null) audio.pause();
         audio = new Audio(`https://github.com/Mcbuzzerr/neocity-website/raw/master/Sleep%20CD/${new_track_number}%20Track%20${new_track_number}.mp3`);
 
         audio.addEventListener("ended", () => {
@@ -26,7 +26,6 @@ const clicked = (new_track_number) => {
         }
 
     }
-    console.log(new_track_number)
     audio.play();
     selected_item = document.getElementById(`sng-${new_track_number}`);
     selected_item.classList.add('selected');
