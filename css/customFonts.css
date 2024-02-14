@@ -6,3 +6,12 @@
 .flipnote-font {
     font-family: 'Flipnote';
 }
+
+@font-face {
+    font-family: 'KitKat';
+    src: url("../fonts/KittyKatt.ttf");
+}
+
+.kitkat-font {
+    font-family: 'KitKat';
+}
