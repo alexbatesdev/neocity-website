@@ -2,16 +2,22 @@
 <html lang="en">
 
 <head>
+    <!-- css reset -->
+    <link rel="stylesheet" href="https://meyerweb.com/eric/tools/css/reset/reset.css">
 
     <link rel="stylesheet" href="./css/ISS.css">
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ISS</title>
+    <script src="./js/space-feed.js" defer></script>
 </head>
 
 <body>
     <div class="flex-container">
+        <div class="mini-menu hidden" onclick="europaClick()">
+            Menu
+        </div>
         <div class="flex-container-row">
             <div class="iss-poss-div">
                 <iframe src="https://isstracker.spaceflight.esa.int/" id="iss-pos" scrolling="no"
@@ -24,7 +30,18 @@
                 allow="autoplay;" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
         </div>
         <div class="flex-container-row">
-            <iframe
+            <div class="info-frame">
+                <h1>ISS Live Feed</h1>
+                <p>
+                    This page is a collection of live feeds and a tracking map of the International Space Station.
+                    These are provided by the European Space Agency and NASA. The feeds are live, the top right is HD
+                    but usually points at boring things, and the bottom right is low res but often has interesting
+                    views and radio chatter! :D
+                </p>
+                <p class="back-button" href="index.html" onclick="window.location.href ='/index.html'">Back to home</p>
+                <p class="clipper-button" onclick="europaClick()">Europa Clipper?</p>
+            </div>
+            <iframe class="hidden" id="clipper-feed"
                 src="https://www.youtube-nocookie.com/embed/yKDA6smS9_k?si=L6_dcp5_teQAcKrU&amp;autoplay=1&amp;mute=1"
                 allow="autoplay;" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
             <iframe
