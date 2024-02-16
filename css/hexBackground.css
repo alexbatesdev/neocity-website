@@ -14,11 +14,7 @@
     --ending-position: 0px 0px;
     --background-size: 1920px 1080px;
     background-image: url("../img/tiledIllusion.png");
-    /* background-size: 150px 131.25px; */
-    /* background-image: url("https://getwallpapers.com/wallpaper/full/e/c/1/17575.jpg"); */
     background-size: var(--background-size);
-    /* aspect-ratio: 600/525; */
-    /* animation: background-scroll 5s linear infinite; */
 }
 
 .hb-text {
