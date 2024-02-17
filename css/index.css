@@ -332,3 +332,27 @@ li {
     left: 0;
     z-index: 0;
 }
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.sleepCD {
+    width: 100%;
+    aspect-ratio: 1/1;
+    background-image: url("../img/New_Sleep_CD_Edit.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.sleepCD:hover {
+    cursor: pointer;
+    animation: spin 2s ease-in-out infinite;
+}

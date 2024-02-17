@@ -289,6 +289,32 @@ p {
     right: 10px;
 }
 
+.bigger {
+    font-size: 30px;
+}
+
+#back-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 40px;
+    line-height: 20px;
+    padding: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+    border-width: 4px;
+    background-image: url(../img/New\ Piskel\ \(1\).png);
+    background-size: 8px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#back-button:hover {
+    color: #bec2fd;
+    transform: translate(0, -5px);
+}
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);
