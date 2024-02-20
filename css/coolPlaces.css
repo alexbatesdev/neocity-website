@@ -1,0 +1,145 @@
+body {
+    min-height: 100vh;
+    background-image: url("../img/SunshineGif.gif");
+    font-family: 'flipnote';
+    color: white;
+}
+
+div {
+    background-color: #131d5996;
+    padding: 10px;
+    border-radius: 10px;
+    display: inline-block;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    text-align: center;
+    font-size: 4em;
+    margin: 0;
+    font-family: 'flipnote';
+}
+
+h2 {
+    font-size: 2em;
+    font-family: 'flipnote';
+}
+
+p {
+    margin-top: 10px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 10px 10px;
+    margin: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+li {
+    padding: 5px 0;
+    text-wrap: nowrap;
+}
+
+a {
+    color: #00b7ff;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+/* a:visited {
+    color: #9970ff;
+} */
+
+a:hover {
+    padding-left: 10px;
+}
+
+img {
+    max-width: 100%;
+}
+
+.cool {
+    width: 400px;
+    height: 300px;
+}
+
+#title {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    transition: all 0.2s;
+}
+
+@keyframes wobble {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(5deg);
+    }
+
+    50% {
+        transform: rotate(-5deg);
+    }
+
+    75% {
+        transform: rotate(5deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+#back-button:hover {
+    animation: wobble 0.5s;
+    cursor: pointer;
+    color: #00eeff;
+}
+
+#cool-sites {
+    position: absolute;
+    bottom: 100px;
+    right: 50%;
+    transform: translateX(50%);
+}
+
+#cool-resources {
+    position: absolute;
+    top: 150px;
+    left: 25%;
+    transform: translateX(-50%);
+}
+
+#cool-things {
+    position: absolute;
+    top: 150px;
+    right: 25%;
+    transform: translateX(50%);
+}
+
+#cool-moots {
+    position: absolute;
+    top: 150px;
+    left: 50%;
+    transform: translateX(-50%)
+}
+
+#link-me {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    height: 200px;
+}
