@@ -72,6 +72,7 @@ img {
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
+    text-wrap: nowrap;
 }
 
 #back-button {
@@ -111,7 +112,7 @@ img {
 
 #cool-sites {
     position: absolute;
-    bottom: 100px;
+    bottom: 50px;
     right: 50%;
     transform: translateX(50%);
 }
@@ -119,15 +120,13 @@ img {
 #cool-resources {
     position: absolute;
     top: 150px;
-    left: 25%;
-    transform: translateX(-50%);
+    left: 50px;
 }
 
 #cool-things {
     position: absolute;
     top: 150px;
-    right: 25%;
-    transform: translateX(50%);
+    right: 50px;
 }
 
 #cool-moots {
