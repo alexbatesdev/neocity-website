@@ -1,27 +1,15 @@
 /* This file defines how custom elements will look like, setting CSS that breaks main nekoweb site on purpose is prohibited and may result in ban and site deletion! */
-@keyframes background-scroll {
-    from {
-        background-position: var(--starting-position);
-    }
-
-    to {
-        background-position: var(--ending-position);
-    }
-}
 
 /* Must start with ".site-box". Change how your website will appear on main nekoweb site: https://lune.dimden.dev/405a44b7e5.png */
 .site-box {
     text-align: center;
-    /* background-image: url(/static/assets/cookiebox.png); */
+    background-image: url("https://nekkostarr.nekoweb.org/img/Outset_scene.jpg");
     /* Only nekoweb URLs allowed, use full url to your site like https://example.nekoweb.org/images/coolbg.png */
-    --starting-position: 0px 0px;
-    --ending-position: 0px 0px;
-    --background-size: 1920px 1080px;
-    background-image: url("https://nekkostarr.nekoweb.org/img/tiledIllusion.png");
-    background-size: var(--background-size);
-    color: #7143ce;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    color: #b08271;
     font-size: 12px;
-    animation: background-scroll 20s linear infinite;
 }
 
 .site-box>a>p {
