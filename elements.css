@@ -11,6 +11,8 @@
     color: #c9c9fb;
     font-size: 12px;
     position: relative;
+    transition: all ease-in-out 0.3s;
+    border-radius: 4px;
 }
 
 .site-box::after {
@@ -19,6 +21,10 @@
     left: 0;
     bottom: 0;
     transform: scale(0.8) translate(-30px, 15px);
+}
+
+.site-box:hover {
+    transform: scale(1.1);
 }
 
 .site-box>a>p {
