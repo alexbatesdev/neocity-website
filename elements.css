@@ -14,7 +14,7 @@
 }
 
 .site-box::after {
-    content: url("https://nekkostarr.nekoweb.org/img/Frog-removebg.jpg");
+    content: url("https://nekkostarr.nekoweb.org/img/Frog-removebg.png");
     position: absolute;
     left: 0;
     bottom: 0;
