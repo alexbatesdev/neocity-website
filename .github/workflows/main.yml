@@ -4,7 +4,7 @@ name: FTP-Deploy
 on:
   push:
     branches:
-      - master  # Set this to your default branch
+      - nekoweb  # Set this to your default branch
 
 jobs:
   ftp-deploy:
