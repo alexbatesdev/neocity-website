@@ -24,6 +24,7 @@
 .site-box>a>p {
     color: #c9c9fb;
     font-weight: bold;
+    padding-right: 5px;
 }
 
 .site-box>a>p>span.follow {
@@ -32,4 +33,5 @@
 
 .site-box>a>span {
     color: #c9c9fb;
+    padding-right: 10px;
 }
