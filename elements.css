@@ -21,6 +21,7 @@
     background-size: var(--background-size);
     color: #7143ce;
     font-size: 12px;
+    animation: background-scroll 20s linear infinite;
 }
 
 .site-box>a>p {
