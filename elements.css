@@ -2,21 +2,34 @@
 
 /* Must start with ".site-box". Change how your website will appear on main nekoweb site: https://lune.dimden.dev/405a44b7e5.png */
 .site-box {
-    text-align: center;
-    background-image: url("https://nekkostarr.nekoweb.org/img/Outset_scene.jpg");
+    text-align: right;
+    background-image: url("https://nekkostarr.nekoweb.org/img/pattern%20239.gif");
     /* Only nekoweb URLs allowed, use full url to your site like https://example.nekoweb.org/images/coolbg.png */
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    color: #b08271;
+    color: #c9c9fb;
     font-size: 12px;
+    position: relative;
+}
+
+.site-box::after {
+    content: url("https://nekkostarr.nekoweb.org/img/Frog-removebg.jpg");
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 100px;
 }
 
 .site-box>a>p {
-    color: var(--darkbrown);
+    color: #c9c9fb;
     font-weight: bold;
 }
 
+.site-box>a>p>span.follow {
+    color: #f5f5a5;
+}
+
 .site-box>a>span {
-    color: var(--darkbrown);
+    color: #c9c9fb;
 }
