@@ -21,6 +21,5 @@ jobs:
         port: 54345
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: /path/to/your/server/directory  # Adjust to your server structure
 
 # End of code written by an AI assistant.
