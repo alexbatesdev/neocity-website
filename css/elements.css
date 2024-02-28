@@ -6,6 +6,7 @@
     /* background-image: url(/static/assets/cookiebox.png); */
     /* Only nekoweb URLs allowed, use full url to your site like https://example.nekoweb.org/images/coolbg.png */
     background-repeat: no-repeat;
+    background-color: black;
     color: #7143ce;
     font-size: 12px;
 }
