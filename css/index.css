@@ -22,8 +22,6 @@ body {
     overflow: hidden;
 }
 
-
-
 .body {
     width: 800px;
     min-height: 500px;
@@ -396,4 +394,14 @@ li {
     cursor: pointer;
     box-shadow: 0 0 40px #3157ff inset;
     transform: translate(40%, 40%) rotate(30deg) scale(1.1);
+}
+
+.webring-info {
+    text-align: center;
+}
+
+.webring-prev,
+.webring-next {
+    text-wrap: nowrap;
+    padding: 20px 0;
 }
