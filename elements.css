@@ -11,7 +11,7 @@
     color: #c9c9fb;
     font-size: 12px;
     position: relative;
-    transition: all ease-in-out 0.3s;
+    transition: all ease-in-out 0.25s;
     border-radius: 4px;
 }
 
@@ -24,7 +24,7 @@
 }
 
 .site-box:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 .site-box>a>p {
