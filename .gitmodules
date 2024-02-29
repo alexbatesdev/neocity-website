@@ -1,3 +1,6 @@
 [submodule "Homepage"]
 	path = Homepage
 	url = https://github.com/Mcbuzzerr/Homepage.git
+[submodule "DarknessMaze"]
+	path = DarknessMaze
+	url = https://github.com/Mcbuzzerr/DarknessMaze.git
