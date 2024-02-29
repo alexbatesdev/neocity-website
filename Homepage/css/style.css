@@ -1,0 +1,436 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* Reset over*/
+
+
+
+
+/* Color Theme Stuff */
+:root {
+    --primary-color: #201A23;
+    --secondary-color: #2E2532;
+    --tertiary-color: #43344A;
+    --accent-color: #6A477B;
+    --text-color: #f8e5ee;
+}
+
+.primary-bg {
+    background-color: var(--primary-color);
+}
+
+.secondary-bg {
+    background-color: var(--secondary-color);
+}
+
+.tertiary-bg {
+    background-color: var(--tertiary-color);
+}
+
+.accent-bg {
+    background-color: var(--accent-color);
+}
+
+/* Basic css */
+body {
+    background-size: cover;
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    color: var(--text-color);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+section {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+#flex1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
+}
+
+#flex1::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150%;
+    height: 105%;
+    transform: translate(-50%, -50%);
+    box-shadow: inset 0px 0px 60px 50px black;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.box {
+    border-radius: 20px;
+    text-align: center;
+    font-size: larger;
+    min-width: 15vw;
+    background-color: var(--accent-color);
+    position: relative;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 3px 3px 25px -4px black;
+    background-image: linear-gradient(30deg, var(--accent-color), var(--tertiary-color));
+}
+
+.box:hover {
+    transform: scale(1.05);
+    box-shadow: 15px 15px 25px -4px black;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    padding: 0 5px;
+    z-index: 1;
+    background-image: linear-gradient(0, #00000000, var(--primary-color));
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 5px;
+    background-image: linear-gradient(180deg, #00000000, #09084650);
+}
+
+p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+}
+
+a {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+a p {
+    margin: 15px 0;
+}
+
+img.icon {
+    width: 14vw;
+    height: 14vw;
+    border-radius: 20px;
+    margin-top: .5vw;
+    position: relative;
+    box-shadow: 0 2px 15px -2px black;
+}
+
+img#movies {
+    background-color: #1E2129;
+}
+
+img#sugeanime {
+    background-color: #161616;
+}
+
+#snapdrop {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    right: 8px;
+    top: 8px;
+}
+
+.icon-small {
+    width: 40px;
+    height: 40px;
+}
+
+/* Dropdown Stuff */
+
+.menu {
+    width: 200px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 50px;
+    user-select: none;
+}
+
+.palette {
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+    background-color: var(--accent-color);
+    display: inline-block;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+}
+
+.title-box {
+    display: inline-block;
+    position: absolute;
+    left: 30%;
+    right: 30%;
+    top: 8px;
+    text-align: center;
+}
+
+.drop-arrow {
+    width: 10px;
+    height: 10px;
+    transform: rotate(45deg);
+    border: var(--secondary-color) solid 5px;
+    border-top: none;
+    border-left: none;
+    margin-bottom: 5px;
+    display: inline-block;
+    position: absolute;
+    right: 15px;
+    top: 8px;
+}
+
+.dropdown {
+    display: inline-block;
+    user-select: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.drop-btn {
+    display: inline-block;
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 2;
+    height: 35px;
+    width: 220px;
+}
+
+.drop-content {
+    display: none;
+    min-width: 200px;
+    z-index: 1;
+    position: relative;
+    top: 50px;
+    left: 17px;
+    margin-top: -10px;
+}
+
+.drop-item {
+    color: var(--text-color);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    background-color: var(--tertiary-color);
+}
+
+.drop-item:hover {
+    background-color: var(--accent-color);
+    transition: all .2s ease-in;
+}
+
+.b-bot-rad-20 {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.show {
+    display: block;
+}
+
+.up {
+    top: 15px;
+    transform: rotate(225deg);
+}
+
+.absolute-decorations {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+#wizard {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+}
+
+#pirate {
+    position: absolute;
+    top: 0;
+}
+
+#runepirate {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-40%);
+}
+
+#space-path {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500%;
+}
+
+#skeleton {
+    position: absolute;
+    left: 300px;
+    height: 200px;
+}
