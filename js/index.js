@@ -1,5 +1,6 @@
 const USERNAME = "nekkostarr";
 const BASE_URL = `https://lastfm-last-played.biancarosa.com.br/${USERNAME}/latest-song`;
+let Track = {};
 
 const getTrack = async () => {
     const tracks = await fetch(BASE_URL)
@@ -11,8 +12,12 @@ const getTrack = async () => {
     if (!tracks.hasOwnProperty('track')) return console.log('No track found');
 
     let current_song = tracks['track'];
+    Track = current_song;
     let isPlaying = current_song['@attr']?.nowplaying || false;
     let cover_image_url = current_song.image[2]['#text'];
+    if (cover_image_url === "") {
+        cover_image_url = "https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png";
+    }
 
     let title = current_song.name;
     let artist = current_song.artist['#text'];
