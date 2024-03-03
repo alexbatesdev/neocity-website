@@ -403,6 +403,21 @@ li {
     transform: rotate(-45deg);
 }
 
+.kitkat {
+    position: absolute;
+    height: 295px;
+    width: 100px;
+    top: 25%;
+    right: 0;
+    transition: all 0.2s;
+    transform: translateY(-50%);
+}
+
+.kitkat:hover {
+    cursor: pointer;
+    transform: translate(-6px, -50%) scale(1.1);
+}
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);
