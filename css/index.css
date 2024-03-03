@@ -54,7 +54,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: baseline;
-    align-items: flex-end;
+    align-items: center;
     width: 200px;
     margin-top: 1rem;
     /* background-color: #0e0; */
@@ -68,6 +68,10 @@ body {
 .wide-column {
     width: 450px;
     /* background-color: #66f; */
+}
+
+#left-column {
+    align-items: flex-end;
 }
 
 .square {
