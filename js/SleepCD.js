@@ -173,7 +173,7 @@ let song_data = [
         this! XD The song gives good sleepy vibes, and the playground element was more fitting 
         in the past when I was a kid.`
     }
-]
+];
 
 const clicked = (new_track_number) => {
     let disk = document.getElementById('disk');
@@ -183,6 +183,8 @@ const clicked = (new_track_number) => {
         if (audio != null) audio.pause();
         audio = new Audio(`https://github.com/Mcbuzzerr/neocity-website/raw/master/Sleep%20CD/${new_track_number}%20Track%20${new_track_number}.mp3`);
 
+        updateDurationText();
+        updateProgressBar();
         audio.addEventListener("ended", () => {
             audio.currentTime = 0;
             next();
@@ -271,6 +273,86 @@ const prev = () => {
     clicked(prev_track_str);
 }
 
-onload = () => {
 
+const getSongProgressString = () => {
+    const currentTime = audio?.currentTime || 0;
+    const duration = audio?.duration || 0;
+    return `${Math.floor(currentTime / 60)}:${Math.floor(currentTime % 60).toString().padStart(2, '0')} / ${Math.floor(duration / 60)}:${Math.floor(duration % 60).toString().padStart(2, '0')}`
 }
+
+const getSongProgressPercent = () => {
+    if (audio == null) return 0;
+    const currentTime = audio.currentTime;
+    const duration = audio.duration;
+    return currentTime / duration;
+}
+
+const updateProgressBar = () => {
+    let progressFloat = getSongProgressPercent() * 100;
+    let progressTruncated = progressFloat.toFixed(2);
+    let progressBar = document.getElementById('progress-bar');
+    progressBar.style.width = progressTruncated + "%";
+}
+
+const updateDurationText = () => {
+    let progressText = document.getElementById('duration');
+    progressText.innerHTML = getSongProgressString();
+}
+
+setInterval(() => {
+    updateProgressBar();
+    updateDurationText();
+}, 1000);
+
+
+const progressBar = document.getElementById('progress-bar-outer');
+// This code was written by an AI assistant. (Based on my code)
+
+// Define a variable to track whether the user is dragging the progress bar knob.
+let isDragging = false;
+
+// Add event listener for mousedown on the progress bar knob.
+const progressBarKnob = document.getElementById('progress-bar-knob');
+progressBarKnob.addEventListener('mousedown', (event) => {
+    isDragging = true;
+    // Prevent default behavior to avoid selecting text on drag.
+    event.preventDefault();
+});
+
+// Add event listener for mousemove on the entire document.
+document.addEventListener('mousemove', (event) => {
+    if (!isDragging || audio == null) return;
+    const bounding = progressBar.getBoundingClientRect();
+    let percent = (event.clientX - bounding.left) / bounding.width;
+    percent = Math.max(0, Math.min(1, percent)); // Ensure percent is between 0 and 1
+    audio.currentTime = audio.duration * percent;
+    updateProgressBar();
+});
+
+// Add event listener for mouseup on the entire document.
+document.addEventListener('mouseup', () => {
+    isDragging = false;
+});
+
+// Modify the existing click event listener on the progress bar to be more responsive.
+progressBar.addEventListener('click', (event) => {
+    if (audio == null || isDragging) return; // Skip if dragging or audio is not initialized
+    const bounding = progressBar.getBoundingClientRect();
+    const percent = (event.clientX - bounding.left) / bounding.width;
+    audio.currentTime = audio.duration * percent;
+    updateProgressBar();
+});
+
+// Ensure the updateProgressBar function is periodically called.
+// This could be done within a function that updates the UI based on the current audio playback state.
+const updateUI = () => {
+    if (!isDragging) {
+        updateProgressBar();
+    }
+    requestAnimationFrame(updateUI);
+}
+
+// Start the UI update loop when the page loads.
+updateUI();
+
+// This code was written by an AI assistant.

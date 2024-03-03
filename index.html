@@ -26,7 +26,7 @@
     <!-- Retro windows98 css (I'm not using it all) -->
     <!-- <link rel="stylesheet" href="https://unpkg.com/98.css"> -->
     <!-- Just the scrollbar -->
-    <!-- <link rel="stylesheet" href="./css/retro98Scrollbar.css"> -->
+    <link rel="stylesheet" href="./css/retro98Scrollbar.css">
 
     <!-- My stuff -->
     <link rel="stylesheet" href="./css/hexBackground.css">
@@ -49,234 +49,32 @@
 </head>
 
 <body class="page-body">
-    <div class="body">
+    <div class="body retro-scrollbar">
         <div class="flex-tricolumn">
             <div class="flex-column risen-column" id="left-column">
-                <div class="wide-box">
-                    <div class="card" id="last-fm-tracker">
-                        <p class="card" id="listening-label">Recently Listened to:</p>
-                        <img src="https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png"
-                            alt="Album art" id="album-art">
-                        <div id="title-wrapper">
-                            -
-                            <a id="title">A Good Song</a>
-                            -
-                        </div>
-                        <p id="artist">Made By Someone</p>
-                    </div>
-
-                    <div class="profile-picture-container">
-                        <a href="AboutMe.html">
-                            <img src="./img/BuzzoOutline1.png" alt="Buzzo!" class="profile-picture hexBackground">
-                        </a>
-                        <div class="profile-label">
-                            <div>I'm Starr!</div>
-                            <a href="https://www.imood.com/users/Mcbuzzerr"><img
-                                    src="https://moods.imood.com/display/uname-Mcbuzzerr/fg-000000/trans-1/imood.gif"
-                                    alt="The current mood of Mcbuzzerr at www.imood.com"></a>
-                        </div>
+                <div class="profile-picture-container">
+                    <a href="AboutMe.html">
+                        <img src="./img/BuzzoOutline1.png" alt="Buzzo!" class="profile-picture hexBackground">
+                    </a>
+                    <div class="profile-label">
+                        <div>I'm Starr!</div>
+                        <a href="https://www.imood.com/users/Mcbuzzerr"><img
+                                src="https://moods.imood.com/display/uname-Mcbuzzerr/fg-000000/trans-1/imood.gif"
+                                alt="The current mood of Mcbuzzerr at www.imood.com"></a>
                     </div>
                 </div>
-                <div class="left-long-container">
-                    <div class="switch-panel">
-                        <div class="switch-panel-button" onclick="handleSwitchPanelButtonClick(event)">
-                            <div id="sw-slot-a" tabindex="0" class="switch-panel-slot">1</div>
-                            <div id="sw-slot-b" tabindex="0" class="switch-panel-slot switch-panel-button-hidden">2
-                            </div>
-                        </div>
-                        <div class="switch-panel-label-box">
-                            <div id="sw-label-a" class="switch-panel-label">
-                                Updates:
-                            </div>
-                            <div id="sw-label-b" class="switch-panel-label switch-panel-label-hidden">
-                                Random:
-                            </div>
-                        </div>
-                        <div class="switch-panel-content sw-panel-a">
-                            <ul>
-                                <li>
-                                    <strong>
-                                        3/2/2024
-                                    </strong>
-                                    I added a last.fm tracker to the site! It's really simple, and if you're reading
-                                    this you likely already know that since it's right above this text! I also
-                                    lowered the resolution of the big images on this page for performance reasons.
-                                    I lowered the globe by way more than I needed to because it kinda looks vibey
-                                    crunched up like that. There's also a link to the <a href="kitkat.html">KitKat
-                                        review page</a> here on index page!
-                                </li>
-                                <li>
-                                    <strong>
-                                        2/29/2024
-                                    </strong>
-                                    Happy Leap Day!!
-                                    I added some unrelated web projects to the site! I added my personal homepage
-                                    that I use on my home media PC, and I added a page that's just a maze in the dark.
-                                    I'll integrate the maze into the site, but for now you can find it <a
-                                        href="https://nekkostarr.nekoweb.org/DarknessMaze/">here</a>!
-                                    You can find the homepage <a
-                                        href="https://nekkostarr.nekoweb.org/Homepage/">here</a>, dunno why you would
-                                    use it though
-                                </li>
-                                <li>
-                                    <strong>
-                                        2/28/2024
-                                    </strong>
-                                    I added customization to the sitebox on nekoweb, as well as updating some username
-                                    stuff! I also joined a nekoweb webring! I think that might be broken on neocities.
-                                    I also reworked the second tab of this component. It used to be a ToDo, but I never
-                                    did anything on it so now the second tab is just a spot for thoughts.
-                                </li>
-                                <li>
-                                    <strong>
-                                        2/25/2024:
-                                    </strong>
-                                    I added a cool links page! It's called the <a href="cool-places.html">Cool Places
-                                        Airport</a>! It's a page for me to share links to cool sites and thingsies! You
-                                    can find it over there on earth! I also moved my site over to <a
-                                        href="https://lilystarr.nekoweb.org/index.html">nekoweb.org</a>! They seem
-                                    pretty
-                                    cool, and I want to support every small web revival I can! Right now it's easier to
-                                    update my site on neocities because I have the neocities cli installed, but there
-                                    are
-                                    less restrictions and more personality on nekoweb.org! I'm going to try to keep both
-                                    updated for the time being, but I might forget to update one or the other sometimes.
-                                    This update technically also pushed a new unfinished page, but I doubt you'll find
-                                    it :)
-                                </li>
-                                <li>
-                                    <strong>
-                                        2/16/2024:
-                                    </strong>
-                                    I added a new page! This is a page for my childhood Sleep CD! I think you
-                                    could consider this a shrine, but I made it more for preservation than anything.
-                                    You can listen to the whole CD and read my thoughts on each track <a
-                                        href="/SleepCD.html">here</a>!
-                                    The CD means a lot to me, but the page is bare minimum presentable to me at the
-                                    moment.
-                                    I want to make the page much more "aethetically in line" with the contents of
-                                    the CD.
-                                    Oh I also added some dancing cats to the homepage!
-                                </li>
-                                <li>
-                                    <strong>
-                                        2/15/2024:
-                                    </strong>
-                                    I just finished upgrading the ISS page. Now it has a title and little blurb,
-                                    as well as a back button and a button to toggle all the new stuff. There are
-                                    also the beginnings of some new pages, but I haven't linked to them anywhere
-                                    yet.
-                                </li>
-                                <li>
-                                    <strong>
-                                        1/26/2024:
-                                    </strong>
-                                    I actually pushed these changes. I had reinstalled windows on my computer so I
-                                    didn't
-                                    have the neocities cli installed, and manually uploading everything sucks, then
-                                    I was
-                                    way too busy with school until now! I'm still busy, but I have enought time
-                                    today.
-                                </li>
-                                <li>
-                                    <strong>
-                                        1/14/2024:
-                                    </strong>
-                                    The ISS is now in orbit around Buzzo's Place! Click it as it goes by to see
-                                    where the
-                                    real ISS is! I also added some pieces to my Flipnote still gallery! I also also
-                                    changed
-                                    all my blinky buttons at the bottom of the page to be in a marquee!
-                                </li>
-                                <li>
-                                    <strong>
-                                        12/12/2023:
-                                    </strong>
-                                    This is a little update! I spontaneously got hyperfixated on space/NASA and set
-                                    up a 24/7 monitor in my living room to display a live feed from the ISS.
-                                    Unfortunately I could only view one camera feed at a time, and switching sucked.
-                                    This beings us to the update, I made a page <a href="ISS.html">here</a> that
-                                    displays the HD and SD ISS feeds, its location, and a feed of the Europa Clipper
-                                    being built! The page is super bare bones right now, but I plan to polish it up
-                                    and make it look pretty in the future!
-                                </li>
-                                <li>
-                                    <strong>
-                                        12/8/2023:
-                                    </strong>
-                                    This is a big update! The homepage has a ton more neocities flair and there's
-                                    more interconnecting happening on the site now! I also made a page to show off
-                                    drawings I made in Flipnote! You can find it <a href="/flipnote.html">here</a>!
-                                    I also polished a bunch more random pages, so look at those if you'd like :)
-                                </li>
-                                <li>
-                                    <strong>
-                                        11/24/2023:
-                                    </strong>
-                                    I made an update and pushed it secretly! That was an accident lol! I made the
-                                    page, pushed changes, then I made the update message and forgot to push the new
-                                    changes. Anyways, check out the library or the update post below this for the
-                                    new stuff, also happy turkey day! 🦃
-                                </li>
-                                <li>
-                                    <strong>
-                                        11/19/2023:
-                                    </strong>
-                                    I randomly got on a mythBusters kick and decided to make a page for it! It's not
-                                    a shrine, but a random episode picker!
-                                    There's no reason to watch mythBusters in order, so this is a good way to pick a
-                                    random episode to watch.
-                                    You can find it <a href="/RandomMythBustersEpisode.html">here</a> or in the
-                                    library!
-                                </li>
-                                <li>
-                                    <strong>
-                                        7/23/2023:
-                                    </strong>
-                                    I randomly decided to make a bouncing dvd logo page! You can find a link to it
-                                    in the library! On a completely unrelated note, does anyone know any iconic
-                                    cheat codes that aren't the Konami code? Maybe UDLR A UDLR B start?
-                                </li>
-                                <li>
-                                    <strong>
-                                        6/24/2023:
-                                    </strong>
-                                    Started the library page! Right now it's just a couple empty books and couple
-                                    not empty books. I plan to add more books and to redo the theming of the page. I
-                                    don't really think the space vibe works well, but it's the best I've got for
-                                    now. What I do really like about the library page is that you can open multiple
-                                    books at once, drag them around, flip pages, and close the books
-                                </li>
-                                <li>
-                                    <strong>
-                                        6/23/2023:
-                                    </strong>
-                                    Added this updates/todo dual component and I got started on the gallery page,
-                                    but it's not public yet! It's going to have a theme that maybe warrants renaming
-                                    the page
-                                </li>
-                                <li>
-                                    <strong>
-                                        4/24/2023:
-                                    </strong>
-                                    Site created! This is in retrospect, so I don't actually remember the
-                                    details.
-                                    I think this initial upload had just the hexagon card page that became About Me
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="switch-panel-content sw-panel-b sw-panel-hidden">
-                            <p>
-                                Hey! Thank you for reading this line of text! <br />
-                                Recently I've been hyperfixated on speedrun world record histories.
-                                It's absolutely fascinating how these records evolve. The Ultrakill
-                                speedruns and Mario Kart histories are wild! <br />
-                                Anyways here's the leaf of the day: <br />
-                            </p>
-                            <img src="https://www.leaf.com/daily.jpg" alt="A leaf" height="150px" />
-                        </div>
+                <div class="card" id="last-fm-tracker">
+                    <p class="card" id="listening-label">Recently Listened to:</p>
+                    <img src="https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png"
+                        alt="Album art" id="album-art">
+                    <div id="title-wrapper">
+                        -
+                        <a id="title">A Good Song</a>
+                        -
                     </div>
+                    <p id="artist">Made By Someone</p>
                 </div>
+                <img src="./img/TWW_Link_Outset_Clothes_Artwork.png" id="link-img" width="100px" />
             </div>
             <div class="flex-column wide-column">
                 <div class="header card flipnote-font">
@@ -289,13 +87,10 @@
                     <p>This is a place for me to share my thoughts, feelings, and
                         interests, and more importantly make random nonsense. The site is small right now, but I
                         plan to add a lot, come visit from time to
-                        time! (Any link in <span class="unfinished">red</span> doesn't go anywhere yet)
-                    </p>
-                    <br>
-                    <p>
-                        Me from the more recent past: I did not follow my plans but I did still make random
-                        nonsense!
-                        The links in red might get moved to the library, or the library might get scrapped idk.
+                        time!<br /><br />
+                        This page is never going to have a strong theme, but I want to make some pages that are
+                        way more aesthetically unique and vivid! First on that list is a Frutiger Aero underwater
+                        page or a wind waker beach page.
                     </p>
                 </div>
                 <div id='nekowebring' class="card">
@@ -336,17 +131,222 @@
 
                         </div>
                     </div>
-                    <!-- <div class="guestbook-container">
-
-                        </div> -->
-                    <img src="./img/TWW_Link_Outset_Clothes_Artwork.png" id="link-img" />
-                    <!-- <div style="width: 150px;">
-                            <script src="https://jeith.neocities.org/assets/webring/wii-ring.js"></script>
-                            <wii-ring site="http://127.0.0.1:5500"></wii-ring>
-                        </div> -->
+                    <div style="width: 150px;">
+                        <script src="https://jeith.neocities.org/assets/webring/wii-ring.js"></script>
+                        <wii-ring site="https://nekkostarr.nekoweb.org"></wii-ring>
+                    </div>
+                </div>
+                <div class="switch-panel">
+                    <div class="switch-panel-button" onclick="handleSwitchPanelButtonClick(event)">
+                        <div id="sw-slot-a" tabindex="0" class="switch-panel-slot">1</div>
+                        <div id="sw-slot-b" tabindex="0" class="switch-panel-slot switch-panel-button-hidden">2
+                        </div>
+                    </div>
+                    <div class="switch-panel-label-box">
+                        <div id="sw-label-a" class="switch-panel-label">
+                            Updates:
+                        </div>
+                        <div id="sw-label-b" class="switch-panel-label switch-panel-label-hidden">
+                            Random:
+                        </div>
+                    </div>
+                    <div class="switch-panel-content sw-panel-a retro-scrollbar">
+                        <ul>
+                            <li>
+                                <strong>
+                                    3/3/2024
+                                </strong>
+                                I added a progress scroller/tracker to the sleepCD page! Now you can see how
+                                long a track is, how far into it you are, and you can move to any part of the
+                                track! I also added a fullscreen button on the ISS page, but that's mostly for
+                                the raspberry pi I have hooked up to the ISS feed on my TV. I also scrambled
+                                the layout of the homepage a bit, I think opening up the page for scrolling
+                                gives me more freedom to add stuff.
+                            </li>
+                            <li>
+                                <strong>
+                                    3/2/2024
+                                </strong>
+                                I added a last.fm tracker to the site! It's really simple, and if you're reading
+                                this you likely already know that since it's right above this text! I also
+                                lowered the resolution of the big images on this page for performance reasons.
+                                I lowered the globe by way more than I needed to because it kinda looks vibey
+                                crunched up like that. There's also a link to the <a href="kitkat.html">KitKat
+                                    review page</a> here on index page!
+                            </li>
+                            <li>
+                                <strong>
+                                    2/29/2024
+                                </strong>
+                                Happy Leap Day!!
+                                I added some unrelated web projects to the site! I added my personal homepage
+                                that I use on my home media PC, and I added a page that's just a maze in the dark.
+                                I'll integrate the maze into the site, but for now you can find it <a
+                                    href="https://nekkostarr.nekoweb.org/DarknessMaze/">here</a>!
+                                You can find the homepage <a href="https://nekkostarr.nekoweb.org/Homepage/">here</a>,
+                                dunno why you would
+                                use it though
+                            </li>
+                            <li>
+                                <strong>
+                                    2/28/2024
+                                </strong>
+                                I added customization to the sitebox on nekoweb, as well as updating some username
+                                stuff! I also joined a nekoweb webring! I think that might be broken on neocities.
+                                I also reworked the second tab of this component. It used to be a ToDo, but I never
+                                did anything on it so now the second tab is just a spot for thoughts.
+                            </li>
+                            <li>
+                                <strong>
+                                    2/25/2024:
+                                </strong>
+                                I added a cool links page! It's called the <a href="cool-places.html">Cool Places
+                                    Airport</a>! It's a page for me to share links to cool sites and thingsies! You
+                                can find it over there on earth! I also moved my site over to <a
+                                    href="https://lilystarr.nekoweb.org/index.html">nekoweb.org</a>! They seem
+                                pretty
+                                cool, and I want to support every small web revival I can! Right now it's easier to
+                                update my site on neocities because I have the neocities cli installed, but there
+                                are
+                                less restrictions and more personality on nekoweb.org! I'm going to try to keep both
+                                updated for the time being, but I might forget to update one or the other sometimes.
+                                This update technically also pushed a new unfinished page, but I doubt you'll find
+                                it :)
+                            </li>
+                            <li>
+                                <strong>
+                                    2/16/2024:
+                                </strong>
+                                I added a new page! This is a page for my childhood Sleep CD! I think you
+                                could consider this a shrine, but I made it more for preservation than anything.
+                                You can listen to the whole CD and read my thoughts on each track <a
+                                    href="/SleepCD.html">here</a>!
+                                The CD means a lot to me, but the page is bare minimum presentable to me at the
+                                moment.
+                                I want to make the page much more "aethetically in line" with the contents of
+                                the CD.
+                                Oh I also added some dancing cats to the homepage!
+                            </li>
+                            <li>
+                                <strong>
+                                    2/15/2024:
+                                </strong>
+                                I just finished upgrading the ISS page. Now it has a title and little blurb,
+                                as well as a back button and a button to toggle all the new stuff. There are
+                                also the beginnings of some new pages, but I haven't linked to them anywhere
+                                yet.
+                            </li>
+                            <li>
+                                <strong>
+                                    1/26/2024:
+                                </strong>
+                                I actually pushed these changes. I had reinstalled windows on my computer so I
+                                didn't
+                                have the neocities cli installed, and manually uploading everything sucks, then
+                                I was
+                                way too busy with school until now! I'm still busy, but I have enought time
+                                today.
+                            </li>
+                            <li>
+                                <strong>
+                                    1/14/2024:
+                                </strong>
+                                The ISS is now in orbit around Buzzo's Place! Click it as it goes by to see
+                                where the
+                                real ISS is! I also added some pieces to my Flipnote still gallery! I also also
+                                changed
+                                all my blinky buttons at the bottom of the page to be in a marquee!
+                            </li>
+                            <li>
+                                <strong>
+                                    12/12/2023:
+                                </strong>
+                                This is a little update! I spontaneously got hyperfixated on space/NASA and set
+                                up a 24/7 monitor in my living room to display a live feed from the ISS.
+                                Unfortunately I could only view one camera feed at a time, and switching sucked.
+                                This beings us to the update, I made a page <a href="ISS.html">here</a> that
+                                displays the HD and SD ISS feeds, its location, and a feed of the Europa Clipper
+                                being built! The page is super bare bones right now, but I plan to polish it up
+                                and make it look pretty in the future!
+                            </li>
+                            <li>
+                                <strong>
+                                    12/8/2023:
+                                </strong>
+                                This is a big update! The homepage has a ton more neocities flair and there's
+                                more interconnecting happening on the site now! I also made a page to show off
+                                drawings I made in Flipnote! You can find it <a href="/flipnote.html">here</a>!
+                                I also polished a bunch more random pages, so look at those if you'd like :)
+                            </li>
+                            <li>
+                                <strong>
+                                    11/24/2023:
+                                </strong>
+                                I made an update and pushed it secretly! That was an accident lol! I made the
+                                page, pushed changes, then I made the update message and forgot to push the new
+                                changes. Anyways, check out the library or the update post below this for the
+                                new stuff, also happy turkey day! 🦃
+                            </li>
+                            <li>
+                                <strong>
+                                    11/19/2023:
+                                </strong>
+                                I randomly got on a mythBusters kick and decided to make a page for it! It's not
+                                a shrine, but a random episode picker!
+                                There's no reason to watch mythBusters in order, so this is a good way to pick a
+                                random episode to watch.
+                                You can find it <a href="/RandomMythBustersEpisode.html">here</a> or in the
+                                library!
+                            </li>
+                            <li>
+                                <strong>
+                                    7/23/2023:
+                                </strong>
+                                I randomly decided to make a bouncing dvd logo page! You can find a link to it
+                                in the library! On a completely unrelated note, does anyone know any iconic
+                                cheat codes that aren't the Konami code? Maybe UDLR A UDLR B start?
+                            </li>
+                            <li>
+                                <strong>
+                                    6/24/2023:
+                                </strong>
+                                Started the library page! Right now it's just a couple empty books and couple
+                                not empty books. I plan to add more books and to redo the theming of the page. I
+                                don't really think the space vibe works well, but it's the best I've got for
+                                now. What I do really like about the library page is that you can open multiple
+                                books at once, drag them around, flip pages, and close the books
+                            </li>
+                            <li>
+                                <strong>
+                                    6/23/2023:
+                                </strong>
+                                Added this updates/todo dual component and I got started on the gallery page,
+                                but it's not public yet! It's going to have a theme that maybe warrants renaming
+                                the page
+                            </li>
+                            <li>
+                                <strong>
+                                    4/24/2023:
+                                </strong>
+                                Site created! This is in retrospect, so I don't actually remember the
+                                details.
+                                I think this initial upload had just the hexagon card page that became About Me
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="switch-panel-content sw-panel-b sw-panel-hidden">
+                        <p>
+                            Hey! Thank you for reading this line of text! <br />
+                            Recently I've been hyperfixated on speedrun world record histories.
+                            It's absolutely fascinating how these records evolve. The Ultrakill
+                            speedruns and Mario Kart histories are wild! <br />
+                            Anyways here's the leaf of the day: <br />
+                        </p>
+                        <img src="https://www.leaf.com/daily.jpg" alt="A leaf" height="150px" />
+                    </div>
                 </div>
             </div>
-            <div class="flex-column risen-column">
+            <div class="flex-column risen-column" id="right-column">
                 <div class="links-container card">
                     <ul class="navigation-list">
                         <li>
@@ -358,12 +358,6 @@
                         <li>
                             <a href="cool-places.html" tabindex="0">Cool Sites</a>
                         </li>
-                        <!-- <li>
-                                <a href="#" class="unfinished" tabindex="0">Pet Memorial</a>
-                            </li>
-                            <li>
-                                <a href="#" class="unfinished" tabindex="0">Webrings</a>
-                            </li> -->
                     </ul>
                 </div>
                 <div class="card flipnote-card">
@@ -376,8 +370,10 @@
                 <div class="sleepCD" onclick="window.location.href='SleepCD.html'">
 
                 </div>
+                <img src="./img/FSA_Tingle_Balloon.png" id="link-img" width="100px" />
             </div>
         </div>
+        <img onclick="window.location.href = 'kitkat.html'" src="./img/banner_deco_crop_rotate.gif" class="kitkat">
         <marquee class="buttons-n-blinkers">
             <img src="./img/e7uykoN.gif" />
             <a href="/flipnote.html">
@@ -399,6 +395,9 @@
             </a>
         </marquee>
     </div>
+    <marquee scrollamount="20" id="space-path">
+        <img src="./img/spaceship.gif" alt="spaceship" id="spacecraft">
+    </marquee>
     <marquee class="ISS-orbit" direction="right" scrollamount="10">
         <a href="/ISS.html">
             <img src="./img/SpaceStation_small.png" id="ISS" />
@@ -406,7 +405,7 @@
     </marquee>
     <div class="globe" onclick="window.location.href='cool-places.html'">
     </div>
-    <img onclick="window.location.href = 'kitkat.html'" src="./img/banner_deco_crop_rotate.gif" class="kitkat"></div>
+    </div>
 </body>
 
 </html>

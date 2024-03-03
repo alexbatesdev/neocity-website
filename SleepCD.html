@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="./js/SleepCD.js"></script>
+    <script src="./js/SleepCD.js" defer></script>
     <link rel="stylesheet" href="./css/SleepCD.css">
     <title>My Childhood Sleep CD</title>
     <link rel="icon"
@@ -22,6 +22,7 @@
             <h1 id="name">Guy Gets Promoted / End Title</h1>
             <p class="bigger">Artist: <span id="artist">Tom Hiel</span></p>
             <p class="bigger">Release Date: <span id="date">09/10/1994</span></p>
+            <p class="bigger">Duration: <span id="duration">0:00 / 5:06</span></p>
             <br />
             <p class="bigger">My thoughts on this song:</p>
             <p id="blurb">
@@ -31,9 +32,16 @@
                 in a sleep CD are allowed to be a little louder.
             </p>
             <div class="controls">
-                <p onclick="prev()">Previous</p>
-                <p onclick="pause_or_play(event)" id="pause-button">Play</p>
-                <p onclick="next()">Next</p>
+                <div class="row">
+                    <p onclick="prev()">Previous</p>
+                    <p onclick="pause_or_play(event)" id="pause-button">Play</p>
+                    <p onclick="next()">Next</p>
+                </div>
+                <div class="progress-bar-outer" id="progress-bar-outer">
+                    <div id="progress-bar" class="progress-bar-fill">
+                        <div id="progress-bar-knob" class="progress-bar-knob"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

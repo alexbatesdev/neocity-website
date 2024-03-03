@@ -79,8 +79,16 @@ h1 {
     font-size: 20px;
 }
 
+.fullscreen-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 20px;
+}
+
 .back-button:hover,
-.clipper-button:hover {
+.clipper-button:hover,
+.fullscreen-button:hover {
     cursor: pointer;
     text-decoration: underline;
 }

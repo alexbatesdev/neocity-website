@@ -13,3 +13,11 @@ const europaClick = () => {
         miniMenu.classList.add('hidden');
     }
 }
+
+const toggleFullScreen = () => {
+    if (document.fullscreenElement) {
+        document.exitFullscreen();
+    } else {
+        document.documentElement.requestFullscreen();
+    }
+}
