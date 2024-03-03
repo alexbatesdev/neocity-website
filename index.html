@@ -40,6 +40,7 @@
     <link rel="stylesheet" href="./css/customFonts.css">
 
     <link rel="stylesheet" href="./css/index.css">
+    <script src="./js/index.js" defer></script>
     <title>Starr's Space</title>
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⭐</text></svg>">
@@ -51,15 +52,29 @@
     <div class="body">
         <div class="flex-tricolumn">
             <div class="flex-column risen-column">
-                <div class="profile-picture-container">
-                    <a href="AboutMe.html">
-                        <img src="./img/BuzzoOutline1.png" alt="Buzzo!" class="profile-picture hexBackground">
-                    </a>
-                    <div class="profile-label">
-                        <div>I'm Starr!</div>
-                        <a href="https://www.imood.com/users/Mcbuzzerr"><img
-                                src="https://moods.imood.com/display/uname-Mcbuzzerr/fg-000000/trans-1/imood.gif"
-                                alt="The current mood of Mcbuzzerr at www.imood.com"></a>
+                <div class="wide-box">
+                    <div class="card" id="last-fm-tracker">
+                        <p class="card" id="listening-label">Recently Listened to:</p>
+                        <img src="https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png"
+                            alt="Album art" id="album-art">
+                        <div id="title-wrapper">
+                            -
+                            <a id="title">A Good Song</a>
+                            -
+                        </div>
+                        <p id="artist">Made By Someone</p>
+                    </div>
+
+                    <div class="profile-picture-container">
+                        <a href="AboutMe.html">
+                            <img src="./img/BuzzoOutline1.png" alt="Buzzo!" class="profile-picture hexBackground">
+                        </a>
+                        <div class="profile-label">
+                            <div>I'm Starr!</div>
+                            <a href="https://www.imood.com/users/Mcbuzzerr"><img
+                                    src="https://moods.imood.com/display/uname-Mcbuzzerr/fg-000000/trans-1/imood.gif"
+                                    alt="The current mood of Mcbuzzerr at www.imood.com"></a>
+                        </div>
                     </div>
                 </div>
                 <div class="left-long-container">

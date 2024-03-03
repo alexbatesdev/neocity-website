@@ -53,8 +53,8 @@ body {
 .flex-column {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+    justify-content: baseline;
+    align-items: flex-end;
     width: 200px;
     margin-top: 1rem;
     /* background-color: #0e0; */
@@ -76,8 +76,56 @@ body {
     background-color: #0c9617;
 }
 
+.wide-box {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+#last-fm-tracker {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 1rem 1rem 7px 1rem;
+    text-align: center;
+    position: relative;
+}
+
+#last-fm-tracker img {
+    /* width: 150px;
+    height: 150px; */
+    border: solid 5px #000;
+}
+
+#artist {
+    font-style: italic;
+}
+
+#title {
+    font-weight: bold;
+    color: #000;
+}
+
+#title-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 5px;
+}
+
+#listening-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 5px;
+    transform: translate(3%, -65%);
+}
+
 .profile-picture-container {
-    width: 200px;
+    min-width: 200px;
     height: 200px;
     background-color: #bcbcff;
     text-align: center;

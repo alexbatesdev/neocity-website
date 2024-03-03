@@ -18,5 +18,5 @@ const syncBackgrounds = () => {
     }
 }
 
-window.onload = syncBackgrounds;
+window.addEventListener("load", syncBackgrounds)
 window.addEventListener("resize", syncBackgrounds)
