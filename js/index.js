@@ -37,7 +37,7 @@ const getTrack = async () => {
 };
 
 
-window.onload = () => {
+window.addEventListener("load", () => {
     setInterval(() => { getTrack(); }, 10000);
     getTrack();
-}
+});
