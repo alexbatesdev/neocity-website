@@ -416,7 +416,7 @@ li {
 .sleepCD {
     width: 100%;
     aspect-ratio: 1/1;
-    background-image: url("../img/New_Sleep_CD_Edit.png");
+    background-image: url("../img/New_Sleep_CD_Edit_Smallest.png");
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: center;
@@ -429,7 +429,7 @@ li {
 
 .globe {
     position: absolute;
-    background-image: url("../img/Rotating_earth_animated_transparent.gif");
+    background-image: url("../img/Rotating_earth_animated_transparent_small.gif");
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: center;
