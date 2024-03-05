@@ -7,7 +7,7 @@ const getGameList = async () => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${getCookie('token')}`,
+            'Authorization': `Bearer ${getCookie('authToken')}`,
         },
     }).then((response) => {
         return response.json();
@@ -147,7 +147,7 @@ const handleConcedeClicked = (gameId) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${getCookie('token')}`,
+                'Authorization': `Bearer ${getCookie('authToken')}`,
             },
         }).then((response) => {
             return response.json();
@@ -164,7 +164,7 @@ const handleNewGameClicked = (event) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${getCookie('token')}`,
+                'Authorization': `Bearer ${getCookie('authToken')}`,
             },
         }).then((response) => {
             return response.json();

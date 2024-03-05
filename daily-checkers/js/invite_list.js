@@ -11,7 +11,7 @@ const getInviteList = async () => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${getCookie('token')}`,
+            'Authorization': `Bearer ${getCookie('authToken')}`,
         },
     }).then((response) => {
         return response.json();
@@ -72,7 +72,7 @@ const acceptInviteClicked = async (inviteId) => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${getCookie('token')}`,
+            'Authorization': `Bearer ${getCookie('authToken')}`,
         },
     }).then((response) => {
         return response.json();
@@ -102,7 +102,7 @@ const declineInviteClicked = async (inviteId) => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${getCookie('token')}`,
+            'Authorization': `Bearer ${getCookie('authToken')}`,
         },
     }).then((response) => {
         return response.json();
@@ -123,7 +123,7 @@ const handleNewInviteClicked = async () => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${getCookie('token')}`,
+                'Authorization': `Bearer ${getCookie('authToken')}`,
             },
         }).then((response) => {
             if (response.status === 404) {

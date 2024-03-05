@@ -355,7 +355,7 @@ const handleSubmitMove = async (event) => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${getCookie('token')}`,
+            'Authorization': `Bearer ${getCookie('authToken')}`,
         },
         body: JSON.stringify(data)
     }).then((response) => {

@@ -81,7 +81,7 @@ const handleSaveClicked = (event) => {
     };
 
     const url = 'https://hjpe29d12e.execute-api.us-east-1.amazonaws.com/1/user/update/' + user.id;
-    const token = getCookie('token');
+    const token = getCookie('authToken');
     fetch(url, {
         method: 'PUT',
         headers: {
@@ -144,7 +144,7 @@ const handleDeleteClicked = (event) => {
 
     const user = getUser();
     const url = 'https://hjpe29d12e.execute-api.us-east-1.amazonaws.com/1/user/delete/' + user.id;
-    const token = getCookie('token');
+    const token = getCookie('authToken');
     fetch(url, {
         method: 'DELETE',
         headers: {
@@ -157,7 +157,7 @@ const handleDeleteClicked = (event) => {
             button.innerHTML = 'Delete';
             if (response.status === 200) {
                 setUser(null);
-                setCookie('token', '', 0);
+                setCookie('authToken', '', 0);
                 alert('Account deleted successfully.');
                 window.location.href = 'index.html';
             } else {
@@ -235,7 +235,7 @@ const handleSaveCustomizeClicked = (event) => {
         pieces: pieces,
     }
     const url = "https://hjpe29d12e.execute-api.us-east-1.amazonaws.com/1/user/update-customization/" + id;
-    const token = getCookie('token');
+    const token = getCookie('authToken');
     fetch(url, {
         method: 'PUT',
         headers: {
@@ -436,7 +436,7 @@ window.onload = () => {
         fetch(url, {
             headers: {
                 'content-type': 'application/json',
-                'Authorization': getCookie('token'),
+                'Authorization': getCookie('authToken'),
             }
         })
             .then(
