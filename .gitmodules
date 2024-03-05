@@ -4,3 +4,6 @@
 [submodule "DarknessMaze"]
 	path = DarknessMaze
 	url = https://github.com/Mcbuzzerr/DarknessMaze.git
+[submodule "daily-checkers-frontend"]
+	path = daily-checkers-frontend
+	url = https://github.com/Mcbuzzerr/daily-checkers-frontend.git
