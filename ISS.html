@@ -15,7 +15,7 @@
 
 <body>
     <div class="flex-container">
-        <div class="mini-menu hidden" onclick="europaClick()">
+        <div class="mini-menu hidden" onclick="toggleMenu()">
             Menu
         </div>
         <div class="flex-container-row">
@@ -39,12 +39,11 @@
                     views and radio chatter! :D
                 </p>
                 <p class="back-button" href="index.html" onclick="window.location.href ='/index.html'">Back to home</p>
-                <p class="clipper-button" onclick="europaClick()">Europa Clipper?</p>
+                <a class="telescope-button" target="_blank" href="https://spacetelescopelive.org">Space
+                    Telescope Feeds!</a>
                 <p class="fullscreen-button" onclick="toggleFullScreen()">Toggle Fullscreen</p>
+                <p class="menu-button" onclick="toggleMenu()">Toggle Menu</p>
             </div>
-            <iframe class="hidden" id="clipper-feed"
-                src="https://www.youtube-nocookie.com/embed/yKDA6smS9_k?si=L6_dcp5_teQAcKrU&amp;autoplay=1&amp;mute=1"
-                allow="autoplay;" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
             <iframe
                 src="https://www.youtube-nocookie.com/embed/jPTD2gnZFUw?si=A2zhX3EjRfTr4x_q&amp;autoplay=1&amp;mute=1"
                 allow="autoplay;" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
