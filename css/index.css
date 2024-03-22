@@ -494,3 +494,7 @@ li {
     width: 500%;
     pointer-events: none;
 }
+
+#the-maze-link {
+    filter: contrast(1.5) brightness(0.8);
+}
