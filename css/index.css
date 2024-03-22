@@ -498,3 +498,11 @@ li {
 #the-maze-link {
     filter: contrast(1.5) brightness(0.8);
 }
+
+.view-counter {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.3rem;
+}
