@@ -36,10 +36,34 @@ body {
     position: absolute;
     left: 50%;
     bottom: 0;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     font-size: 3rem;
 }
 
 .alt {
     background-color: rgb(255, 221, 0);
+}
+
+.console-message {
+    position: absolute;
+    bottom: 0.5rem;
+    left: 0.5rem;
+    font-size: 16px;
+    color: darkgray;
+}
+
+.back-link {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.back-link:hover {
+    color: royalblue;
 }

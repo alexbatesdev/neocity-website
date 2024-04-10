@@ -1,3 +1,6 @@
+// Bogo Sort Code from https://sortvisualizer.com/bogosort/
+// Me and ChatGPT have adapted the code for our own use.
+
 function isSorted(arr) {
     for (let i = 1; i < arr.length; i++) {
         if (arr[i - 1] > arr[i]) {
@@ -19,51 +22,48 @@ function shuffle(arr) {
         arr[index] = temp;
     }
 
-    return arr;
-}
-
-function bogoSort(arr) {
-    let sorted = false;
-    while (!sorted) {
-        arr = shuffle(arr);
-        sorted = isSorted(arr);
-    }
+    totalShuffles += 1;
+    currentListShuffles += 1;
     return arr;
 }
 
 // This code is an adaptation of the provided script to use requestAnimationFrame by an AI assistant.
 
-let a = []; // Global array to sort
+let the_array = [];
 let N = 1; // Starting array size
 let animationFrameId; // ID to keep track of the requestAnimationFrame
+let totalShuffles = 0;
+let currentListShuffles = 0;
+let sortingAlgorithms = [shuffleAndCheckSort, cocktailShakerSort];
+let sortIndex = 0;
 
 function shuffleAndCheckSort() {
-    shuffle(a);
-    if (isSorted(a)) {
-        console.log("Sorted array: ", a);
-        console.log("====================================");
+    if (isSorted(the_array)) {
         N += 1;
-        document.getElementById("N").innerText = N;
-        if (N < 10) {
-            renderArray(a, true);
-            setTimeout(initializeArray, 1000); // Wait for 1 second before moving to the next array size
-        } else {
-            console.log("Bogo sort visualization completed.");
-            cancelAnimationFrame(animationFrameId); // Stop the animation frame when done
-        }
+        renderArray(the_array, true);
+        setTimeout(initializeArray, 750);
+
     } else {
         animationFrameId = requestAnimationFrame(shuffleAndCheckSort); // Keep shuffling and checking
     }
+    shuffle(the_array);
 }
 
 function initializeArray() {
-    a = Array.from({ length: N }, () => Math.floor(Math.random() * 100) + 1);
-    console.log("Original array: ", a);
-    shuffleAndCheckSort(); // Start the sort process
+    console.log("Sorted array: ", the_array);
+    console.log("Total shuffles: ", totalShuffles);
+    console.log("Shuffles for this array: ", currentListShuffles);
+    console.log("====================================");
+    currentListShuffles = 0;
+    document.getElementById("N").innerText = N;
+    the_array = Array.from({ length: N }, () => Math.floor(Math.random() * 100) + 1);
+    console.log("Original array: ", the_array);
+    renderArray(the_array);
+    sortingAlgorithms[sortIndex](); // Start the sort process
 }
 
 console.log("If ur reading this ur really cool! 🎉");
-// Kick off the visualization with the initial array size
+console.log(`Dev Note: Don't forget you can check the "totalShuffles" variable to see how many shuffles we're at`);
 initializeArray();
 
 function renderArray(array, isSorted = false) {
@@ -79,4 +79,60 @@ function renderArray(array, isSorted = false) {
         element.innerHTML = `<span>${value}</span>`
         container.appendChild(element);
     });
+}
+
+// https://sortvisualizer.com/shakersort/
+
+// AI-generated code snippet for adapting the cocktailShakerSort function to render intermediate steps
+
+function cocktailShakerSort() {
+    let start = 0;
+    let end = the_array.length;
+    let swapped = true;
+    let sortStep = () => {
+        totalShuffles += 1;
+        currentListShuffles += 1;
+        if (!swapped) {
+            N += 1;
+            renderArray(the_array, true);
+            setTimeout(initializeArray, 750);
+            return;
+        }
+
+        swapped = false;
+        // Forward pass
+        for (let i = start; i < end - 1; ++i) {
+            if (the_array[i] > the_array[i + 1]) {
+                [the_array[i], the_array[i + 1]] = [the_array[i + 1], the_array[i]];
+                swapped = true;
+                renderArray(the_array);
+                setTimeout(sortStep, 50); // Adjust delay as needed
+                return;
+            }
+        }
+        end--;
+
+        if (!swapped) {
+            N += 1;
+            renderArray(the_array, true);
+            setTimeout(initializeArray, 750);
+            return;
+        }
+
+        // Backward pass
+        for (let i = end - 1; i > start; --i) {
+            if (the_array[i - 1] > the_array[i]) {
+                [the_array[i], the_array[i - 1]] = [the_array[i - 1], the_array[i]];
+                swapped = true;
+                renderArray(the_array);
+                setTimeout(sortStep, 50); // Adjust delay as needed
+                return;
+            }
+        }
+        start++;
+
+        if (swapped) setTimeout(sortStep, 50); // Adjust delay as needed
+    };
+
+    sortStep(); // Kick off the sorting process
 }
