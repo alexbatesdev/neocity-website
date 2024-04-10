@@ -41,6 +41,7 @@ function shuffleAndCheckSort() {
     shuffle(a);
     if (isSorted(a)) {
         console.log("Sorted array: ", a);
+        console.log("====================================");
         N += 1;
         document.getElementById("N").innerText = N;
         if (N < 10) {
@@ -57,11 +58,11 @@ function shuffleAndCheckSort() {
 
 function initializeArray() {
     a = Array.from({ length: N }, () => Math.floor(Math.random() * 100) + 1);
-    console.log("====================================");
     console.log("Original array: ", a);
     shuffleAndCheckSort(); // Start the sort process
 }
 
+console.log("If ur reading this ur really cool! 🎉");
 // Kick off the visualization with the initial array size
 initializeArray();
 
