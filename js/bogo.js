@@ -36,6 +36,7 @@ let totalShuffles = 0;
 let currentListShuffles = 0;
 let sortingAlgorithms = [shuffleAndCheckSort, cocktailShakerSort];
 let sortIndex = 0;
+let previousSortTime = new Date().getTime();
 
 function shuffleAndCheckSort() {
     if (isSorted(the_array)) {
@@ -51,8 +52,13 @@ function shuffleAndCheckSort() {
 
 function initializeArray() {
     console.log("Sorted array: ", the_array);
+    console.log("- - - - - - - - - - - - - - - - - - ");
     console.log("Total shuffles: ", totalShuffles);
     console.log("Shuffles for this array: ", currentListShuffles);
+    console.log("- - - - - - - - - - - - - - - - - - ");
+    console.log("Time Sorted at:", new Date().toLocaleTimeString());
+    console.log("Time taken to sort: ", formatElapsedTime(previousSortTime, new Date().getTime()));
+    previousSortTime = new Date();
     console.log("====================================");
     currentListShuffles = 0;
     document.getElementById("N").innerText = N;
@@ -136,3 +142,34 @@ function cocktailShakerSort() {
 
     sortStep(); // Kick off the sorting process
 }
+
+
+// TypeScript code snippet written by an AI assistant
+
+function formatElapsedTime(timestamp1, timestamp2) {
+    let difference = Math.abs(timestamp1 - timestamp2);
+
+    const weeks = Math.floor(difference / (7 * 24 * 60 * 60 * 1000));
+    difference -= weeks * (7 * 24 * 60 * 60 * 1000);
+    const days = Math.floor(difference / (24 * 60 * 60 * 1000));
+    difference -= days * (24 * 60 * 60 * 1000);
+    const hours = Math.floor(difference / (60 * 60 * 1000));
+    difference -= hours * (60 * 60 * 1000);
+    const minutes = Math.floor(difference / (60 * 1000));
+    difference -= minutes * (60 * 1000);
+    const seconds = (difference / 1000).toFixed(2); // Keep two decimal places
+
+    const parts = [];
+    if (weeks > 0) parts.push(`${weeks} week${weeks > 1 ? 's' : ''}`);
+    if (days > 0) parts.push(`${days} day${days > 1 ? 's' : ''}`);
+    if (hours > 0) parts.push(`${hours} hour${hours > 1 ? 's' : ''}`);
+    if (minutes > 0) parts.push(`${minutes} minute${minutes > 1 ? 's' : ''}`);
+    if (parseFloat(seconds) > 0) parts.push(`${parseFloat(seconds)} second${parseFloat(seconds) === "1.00" ? '' : 's'}`);
+
+    if (parts.length === 0) {
+        return '0 seconds';
+    }
+
+    return parts.join(', ').replace(/, (?=[^,]*$)/, ' and ');
+}
+// End of TypeScript code snippet
