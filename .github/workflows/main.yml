@@ -19,8 +19,8 @@ jobs:
     - name: FTP-Deploy-Action
       uses: SamKirkland/FTP-Deploy-Action@4.3.0
       with:
-        server: 161.97.73.150
-        port: 54345
+        server: ftp.nekoweb.org
+        port: 30000
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
 
