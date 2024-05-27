@@ -2,7 +2,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: darkblue;
+    position: relative;
     height: 100vh;
     width: 100vw;
     margin: 0;
@@ -10,18 +10,44 @@ body {
     overflow: hidden;
 }
 
+body::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(./img/pattern\ 155.gif);
+    z-index: -2;
+}
+
 .background {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
     flex-direction: row;
-    background-color: white;
     padding: 1rem;
+    position: relative;
+    border: 1px solid black;
+    border-radius: 1px;
+}
+
+.background::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(./img/pattern\ 63.gif);
+    z-index: -1;
+    filter: contrast(0.2) brightness(1.9);
 }
 
 .text {
-    background-color: whitesmoke;
+
 }
+
 
 .music_player_holder {
     display: flex;
@@ -30,6 +56,15 @@ body {
     flex-direction: column;
     background-color: #2f2d31;
     padding: 1rem;
+}
+
+#back {
+    position: absolute;
+    left: 0;
+    top: 0;
+    image-rendering: pixelated;
+    cursor: pointer;
+    filter: drop-shadow(0px 0px 10px #000000);
 }
 
 /* ------------------------------------------------------------- */
@@ -46,36 +81,6 @@ body {
 
 /* Styles for track and artist names */
 #SP-track-name, #SP-artist-name {
-    display: inline-block;
-    white-space: nowrap;
-    width: 100%;
-    overflow: hidden;
-}
-
-/* Container to manage overflow and animation */
-.marquee {
-    display: block;
-    overflow: hidden;
-    position: relative;
-}
-
-/* Apply animation only if the content is overflowing */
-.marquee span {
-    display: inline-block;
-    padding-left: 100%;
-    animation: marquee 10s linear infinite;
-}
-
-/* Ensure continuous scrolling without a gap */
-.marquee::after {
-    content: attr(data-text);
-    position: absolute;
-    white-space: nowrap;
-    animation: marquee 10s linear infinite;
-}
-
-/* Default styling for short names */
-.no-marquee span {
     display: inline-block;
 }
 
@@ -106,7 +111,6 @@ body {
     font-size: 1.5rem;
     font-weight: bold;
     padding: 0.25rem;
-    text-wrap: nowrap;
     width: 100%;
 }
 
@@ -114,9 +118,8 @@ body {
     font-size: 1.25rem;
     padding: 0.25rem;
     font-style: italic;
-    text-wrap: nowrap;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: row;
     flex-wrap: nowrap;
     width: 100%;

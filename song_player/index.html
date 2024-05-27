@@ -8,17 +8,20 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <a href="../index.html" id="back">
+        <img src="./img/aniback.gif" alt="Back button with a pirate skull theme">
+    </a>
     <!-- Your HTML content goes here -->
     <div class="background">
         <div class="text">
             <h1>Song Player</h1>
-            <p>Listen to your favorite songs with our music player.</p>
+            <p>Listen to your favorite songs with our music player. WIP</p>
         </div>
         <div class="music_player_holder">
             <div id="SP-outer">
                 <div id="SP-track-info">
-                    <div id="SP-track"><span id="SP-track-name">Guy Gets Promoted / End Title - Guy Gets Promoted / End Title</span></div>
-                    <div id="SP-artist">By: <span id="SP-artist-name">Tom Hiel - Tom Hiel - Tom Hiel - Tom Hiel - Tom Hiel</span></div>
+                    <div id="SP-track"><span id="SP-track-name">Guy Gets Promoted / End Title</span></div>
+                    <div id="SP-artist">By: <span id="SP-artist-name">Tom Hiel</span></div>
                     <div id="SP-duration">
                         <span id="SP-duration-current">
                             0:00
@@ -43,22 +46,5 @@
             
         </div>
     </div>
-    <!-- Add your JavaScript code here -->
-    <script>
-    window.addEventListener('DOMContentLoaded', (event) => {
-        function applyMarquee(selector) {
-            const element = document.querySelector(selector);
-            if (element.scrollWidth > element.clientWidth) {
-                element.parentElement.classList.add('marquee');
-            } else {
-                element.parentElement.classList.add('no-marquee');
-            }
-        }
-
-        applyMarquee('#SP-track-name');
-        applyMarquee('#SP-artist-name');
-    });
-</script>
-
 </body>
 </html>
