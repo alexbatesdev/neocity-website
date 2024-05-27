@@ -1,0 +1,180 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: darkblue;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    background-color: white;
+    padding: 1rem;
+}
+
+.text {
+    background-color: whitesmoke;
+}
+
+.music_player_holder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #2f2d31;
+    padding: 1rem;
+}
+
+/* ------------------------------------------------------------- */
+
+/* CSS for marquee scrolling effect */
+@keyframes marquee {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* Styles for track and artist names */
+#SP-track-name, #SP-artist-name {
+    display: inline-block;
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Container to manage overflow and animation */
+.marquee {
+    display: block;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Apply animation only if the content is overflowing */
+.marquee span {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marquee 10s linear infinite;
+}
+
+/* Ensure continuous scrolling without a gap */
+.marquee::after {
+    content: attr(data-text);
+    position: absolute;
+    white-space: nowrap;
+    animation: marquee 10s linear infinite;
+}
+
+/* Default styling for short names */
+.no-marquee span {
+    display: inline-block;
+}
+
+#SP-outer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #470808;
+    padding: 1rem;
+    color: white;
+    max-width: 330px;
+}
+
+#SP-track-info {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    background-color: #270404;
+    padding: 0;
+    padding-bottom: 2rem;
+    width: 100%;
+    position: relative;
+}
+
+#SP-track {
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 0.25rem;
+    text-wrap: nowrap;
+    width: 100%;
+}
+
+#SP-artist {
+    font-size: 1.25rem;
+    padding: 0.25rem;
+    font-style: italic;
+    text-wrap: nowrap;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 100%;
+    overflow: hidden;
+}
+
+#SP-duration {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    gap: 1rem;
+    background-color: #270404;
+    padding: 0 0.5rem;
+    width: calc(100% - 1rem);
+}
+
+#progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0.2rem;
+    background-color: #ff0000;
+    margin-bottom: 0.8rem;
+}
+
+#progress-bar-fill {
+    height: 100%;
+    background-color: #0099ff;
+    width: 50%;
+}
+
+#progress-bar-knob {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0.75rem;
+    height: 0.75rem;
+    background-color: #e100ff;
+    border-radius: 50%;
+}
+
+#SP-button-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    background-color: #080427;
+    padding: 1rem 0;
+    gap: 1rem;
+}
+
+.SP-button {
+    background-color: #ff0000;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border: none;
+    cursor: pointer;
+}

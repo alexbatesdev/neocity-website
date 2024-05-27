@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Song Player</title>
+    <!-- Add your CSS and JavaScript files here -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Your HTML content goes here -->
+    <div class="background">
+        <div class="text">
+            <h1>Song Player</h1>
+            <p>Listen to your favorite songs with our music player.</p>
+        </div>
+        <div class="music_player_holder">
+            <div id="SP-outer">
+                <div id="SP-track-info">
+                    <div id="SP-track"><span id="SP-track-name">Guy Gets Promoted / End Title - Guy Gets Promoted / End Title</span></div>
+                    <div id="SP-artist">By: <span id="SP-artist-name">Tom Hiel - Tom Hiel - Tom Hiel - Tom Hiel - Tom Hiel</span></div>
+                    <div id="SP-duration">
+                        <span id="SP-duration-current">
+                            0:00
+                        </span>
+                        <span id="SP-duration-total">
+                            5:06
+                        </span>
+                    </div>
+                    <div id="progress-bar">
+                        <div id="progress-bar-fill"></div>
+                        <div id="progress-bar-knob"></div>
+                    </div>
+                </div>
+                <div id="SP-button-row">
+                    <div id="SP-prev" class="SP-button">&lt;&lt;</div>
+                    <div id="SP-play" class="SP-button">Play</div>
+                    <div id="SP-stop" class="SP-button">Stop</div>
+                    <div id="SP-shuffle" class="SP-button">Shuffle</div>
+                    <div id="SP-next" class="SP-button">&gt;&gt;</div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <!-- Add your JavaScript code here -->
+    <script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        function applyMarquee(selector) {
+            const element = document.querySelector(selector);
+            if (element.scrollWidth > element.clientWidth) {
+                element.parentElement.classList.add('marquee');
+            } else {
+                element.parentElement.classList.add('no-marquee');
+            }
+        }
+
+        applyMarquee('#SP-track-name');
+        applyMarquee('#SP-artist-name');
+    });
+</script>
+
+</body>
+</html>
