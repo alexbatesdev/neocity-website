@@ -1,9 +1,189 @@
-let SP_audio = null;
-let SP_last_track_number = -1;
-let SP_track_element = document.getElementById("SP-track-name");
-let SP_track_scrolling_left = true;
-let SP_artist_element = document.getElementById("SP-artist-name");
-let SP_artist_scrolling_left = true;
+class MusicPlayer {
+    constructor(element, song_data) {
+        this.SP_parent_element = element;
+        this.SP_audio = null;
+        this.SP_last_track_number = -1;
+        console.log(this.SP_parent_element, element);
+        this.SP_track_element = this.SP_parent_element.querySelector(".SP-track-name");
+        this.SP_track_scrolling_left = true;
+        this.SP_artist_element = this.SP_parent_element.querySelector(".SP-artist-name");
+        this.SP_artist_scrolling_left = true;
+        this.SP_song_data = song_data;
+    }
+
+    start = () => {
+        let buttons = this.SP_parent_element.querySelectorAll('.SP-button');
+        buttons.forEach((button) => {
+            button.addEventListener('click', (event) => {
+                if (event.target.classList.contains("SP-play")) {
+                    this.play_song();
+                } else if (event.target.classList.contains("SP-pause")) {
+                    this.pause_song();
+                } else if (event.target.classList.contains("SP-next")) {
+                    this.next_song();
+                } else if (event.target.classList.contains("SP-prev")) {
+                    this.prev_song();
+                } else if (event.target.classList.contains("SP-stop")) {
+                    this.stop_song();
+                }
+            });
+        });
+
+        setInterval(() => {
+            this.scrollTrackText();
+            this.scrollArtistText();
+            this.updateProgressBar(this.getSongProgressPercent(this.SP_audio) * 100)
+            this.updateProgressText(this.SP_audio);
+            this.updateDurationText(this.SP_audio);
+            this.renderPauseOrPlayButton();
+        }, 50);
+    }
+
+    play_song = (track_number) => {
+        console.log("Playing song", track_number)
+        if (this.SP_audio && this.SP_audio.paused) {
+            console.log("Resuming song")
+            this.SP_audio.play();
+            return;
+        } else if (this.SP_audio && track_number == null) {
+            console.log(track_number, this.SP_last_track_number)
+            console.log("Pausing song")
+            this.SP_audio.pause();
+            return;
+        }
+        if (!track_number && this.SP_last_track_number === -1) {
+            track_number = 0;
+        } else if (track_number >= song_data.length) {
+            track_number = 0;
+        } else if (track_number < 0) {
+            track_number = song_data.length - 1;
+        }
+    
+        if (this.SP_audio && !this.SP_audio.paused) {
+            this.stop_song();
+        }
+    
+        let song_url = song_data[track_number].url;
+        console.log(track_number)
+        console.log("Playing song: " + song_data[track_number].name + " by " + song_data[track_number].artist);
+        this.SP_parent_element.querySelector(".SP-track-name").innerHTML = song_data[track_number].name;
+        this.SP_parent_element.querySelector(".SP-artist-name").innerHTML = song_data[track_number].artist;
+        this.SP_audio = new Audio(song_url);
+        this.SP_audio.play();
+        this.SP_last_track_number = track_number;
+    }
+    
+    pause_song = () => {
+        console.log("Pausing song")
+        this.SP_audio.pause();
+    }
+    
+    next_song = () => {
+        console.log("Playing next song")
+        let next_track_number = this.SP_last_track_number + 1;
+        if (next_track_number >= song_data.length) {
+            next_track_number = 0;
+        }
+    
+        this.play_song(next_track_number);
+    }
+    
+    prev_song = () => {
+        console.log("Playing previous song")
+        let prev_track_number = this.SP_last_track_number - 1;
+        if (prev_track_number < 0) {
+            prev_track_number = song_data.length - 1;
+        }
+    
+        this.play_song(prev_track_number);
+    }
+    
+    stop_song = () => {
+        console.log("Stopping music")
+        this.SP_audio.pause();
+        this.SP_audio = null;
+        this.SP_last_track_number = -1;
+    }
+    
+    getSongProgressString = (audio_object) => {
+        if (!audio_object) {
+            return "0:00";
+        }
+        const current_time = audio_object.currentTime || 0;
+        return `${Math.floor(current_time / 60)}:${Math.floor(current_time % 60).toString().padStart(2, '0')}`;
+    }
+    
+    getSongDurationString = (audio_object) => {
+        if (!audio_object) {
+            return "0:00";
+        }
+        const duration = audio_object.duration || 0;
+        return `${Math.floor(duration / 60)}:${Math.floor(duration % 60).toString().padStart(2, '0')}`
+    }
+    
+    updateDurationText = (audio_object) => {
+        let progressText = this.SP_parent_element.querySelector('.SP-duration-total');
+        progressText.innerHTML = this.getSongDurationString(audio_object);
+    }
+    
+    updateProgressText = (audio_object) => {
+        let progressText = this.SP_parent_element.querySelector('.SP-duration-current');
+        progressText.innerHTML = this.getSongProgressString(audio_object);
+    }
+    
+    getSongProgressPercent = (audio_object) => {
+        if (audio_object == null) return 0;
+        const currentTime = audio_object.currentTime;
+        const duration = audio_object.duration;
+        return currentTime / duration;
+    }
+    
+    updateProgressBar = (progressFloat) => {
+        let progressTruncated = progressFloat.toFixed(2);
+        let progressBar = this.SP_parent_element.querySelector('.SP-progress-bar-fill');
+        progressBar.style.width = progressTruncated + "%";
+    }
+    
+    scrollTrackText = () => {
+        if (this.SP_track_element.scrollWidth > this.SP_track_element.clientWidth + this.SP_track_element.scrollLeft && this.SP_track_scrolling_left) {
+            this.SP_track_element.scrollBy(1, 0);
+        } else {
+            this.SP_track_scrolling_left = false;
+        }
+        if (!this.SP_track_scrolling_left) {
+            this.SP_track_element.scrollBy(-0.5, 0);
+            if (this.SP_track_element.scrollLeft === 0) {
+                this.SP_track_scrolling_left = true;
+            }
+        }
+    }
+    
+    scrollArtistText = () => {
+        if (this.SP_artist_element.scrollWidth > this.SP_artist_element.clientWidth + this.SP_artist_element.scrollLeft && this.SP_artist_scrolling_left) {
+            this.SP_artist_element.scrollBy(1, 0);
+        } else {
+            this.SP_artist_scrolling_left = false;
+        }
+        if (!this.SP_artist_scrolling_left) {
+            this.SP_artist_element.scrollBy(-0.5, 0);
+            if (this.SP_artist_element.scrollLeft === 0) {
+                this.SP_artist_scrolling_left = true;
+            }
+        }
+    }
+    
+    renderPauseOrPlayButton = () => {
+        let play_button = this.SP_parent_element.querySelector('.SP-play');
+        let pause_button = this.SP_parent_element.querySelector('.SP-pause');
+        if (this.SP_audio && !this.SP_audio.paused) {
+            play_button.style.display = "none";
+            pause_button.style.display = "block";
+        } else {
+            play_button.style.display = "block";
+            pause_button.style.display = "none";
+        }
+    }
+}
 
 let song_data = [
     {
@@ -92,160 +272,6 @@ let song_data = [
         "url": "https://github.com/alexbatesdev/neocity-website/raw/master/Sleep%20CD/17%20Track%2017.mp3"
     }
 ];
-
-const play_song = (track_number) => {
-    if (SP_audio && SP_audio.paused) {
-        console.log("Resuming song")
-        SP_audio.play();
-        return;
-    } else if (SP_audio && track_number == null) {
-        console.log(track_number, SP_last_track_number)
-        console.log("Pausing song")
-        SP_audio.pause();
-        return;
-    }
-    if (!track_number && SP_last_track_number === -1) {
-        track_number = 0;
-    } else if (track_number >= song_data.length) {
-        track_number = 0;
-    } else if (track_number < 0) {
-        track_number = song_data.length - 1;
-    }
-
-    if (SP_audio && !SP_audio.paused) {
-        stop_song();
-    }
-    
-    let song_url = song_data[track_number].url;
-    console.log("Playing song: " + song_data[track_number].name + " by " + song_data[track_number].artist);
-    document.getElementById("SP-track-name").innerHTML = song_data[track_number].name;
-    document.getElementById("SP-artist-name").innerHTML = song_data[track_number].artist;
-    SP_audio = new Audio(song_url);
-    SP_audio.play();
-    SP_last_track_number = track_number;
-}
-
-const pause_song = () => {
-    console.log("Pausing song")
-    SP_audio.pause();
-}
-
-const next_song = () => {
-    console.log("Playing next song")
-    let next_track_number = SP_last_track_number + 1;
-    if (next_track_number >= song_data.length) {
-        next_track_number = 0;
-    }
-
-    play_song(next_track_number);
-}
-
-const prev_song = () => {
-    console.log("Playing previous song")
-    let prev_track_number = SP_last_track_number - 1;
-    if (prev_track_number < 0) {
-        prev_track_number = song_data.length - 1;
-    }
-
-    play_song(prev_track_number);
-}
-
-const stop_song = () => {
-    console.log("Stopping music")
-    SP_audio.pause();
-    SP_audio = null;
-    SP_last_track_number = -1;
-}
-
-const getSongProgressString = (audio_object) => {
-    if (!audio_object) {
-        return "0:00";
-    }
-    const current_time = audio_object.currentTime || 0;
-    return `${Math.floor(current_time / 60)}:${Math.floor(current_time % 60).toString().padStart(2, '0')}`;
-}
-
-const getSongDurationString = (audio_object) => {
-    if (!audio_object) {
-        return "0:00";
-    }
-    const duration = audio_object.duration || 0;
-    return `${Math.floor(duration / 60)}:${Math.floor(duration % 60).toString().padStart(2, '0')}`
-}
-
-const updateDurationText = (audio_object) => {
-    let progressText = document.getElementById('SP-duration-total');
-    progressText.innerHTML = getSongDurationString(audio_object);
-}
-
-const updateProgressText = (audio_object) => {
-    let progressText = document.getElementById('SP-duration-current');
-    progressText.innerHTML = getSongProgressString(audio_object);
-}
-
-const getSongProgressPercent = (audio_object) => {
-    if (audio_object == null) return 0;
-    const currentTime = audio_object.currentTime;
-    const duration = audio_object.duration;
-    return currentTime / duration;
-}
-
-const updateProgressBar = (progressFloat) => {
-    let progressTruncated = progressFloat.toFixed(2);
-    let progressBar = document.getElementById('progress-bar-fill');
-    progressBar.style.width = progressTruncated + "%";
-}
-
-const scrollTrackText = () => {
-    if (SP_track_element.scrollWidth > SP_track_element.clientWidth + SP_track_element.scrollLeft && SP_track_scrolling_left) {
-        console.log("Scrolling text");
-        SP_track_element.scrollBy(1, 0);
-    } else {
-        SP_track_scrolling_left = false;
-    }
-    if (!SP_track_scrolling_left) {
-        console.log("Scrolling text back");
-        SP_track_element.scrollBy(-0.5, 0);
-        if (SP_track_element.scrollLeft === 0) {
-            SP_track_scrolling_left = true;
-        }
-    }
-}
-
-const scrollArtistText = () => {
-    if (SP_artist_element.scrollWidth > SP_artist_element.clientWidth + SP_artist_element.scrollLeft && SP_artist_scrolling_left) {
-        console.log("Scrolling text");
-        SP_artist_element.scrollBy(1, 0);
-    } else {
-        SP_artist_scrolling_left = false;
-    }
-    if (!SP_artist_scrolling_left) {
-        console.log("Scrolling text back");
-        SP_artist_element.scrollBy(-0.5, 0);
-        if (SP_artist_element.scrollLeft === 0) {
-            SP_artist_scrolling_left = true;
-        }
-    }
-}
-
-const renderPauseOrPlayButton = () => {
-    let play_button = document.getElementById('SP-play');
-    let pause_button = document.getElementById('SP-pause');
-    if (SP_audio && !SP_audio.paused) {
-        play_button.style.display = "none";
-        pause_button.style.display = "block";
-    } else {
-        play_button.style.display = "block";
-        pause_button.style.display = "none";
-    }
-}
-
-
-setInterval(() => {
-    scrollTrackText();
-    scrollArtistText();
-    updateProgressBar(getSongProgressPercent(SP_audio) * 100)
-    updateProgressText(SP_audio);
-    updateDurationText(SP_audio);
-    renderPauseOrPlayButton();
-}, 50);
+let song_player_element = document.querySelector(".SP-outer");
+let audio_player = new MusicPlayer(song_player_element, song_data);
+audio_player.start();

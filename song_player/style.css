@@ -69,14 +69,14 @@ body::after {
 
 /* ------------------------------------------------------------- */
 /* Styles for track and artist names */
-#SP-track-name, #SP-artist-name {
+.SP-track-name, .SP-artist-name {
     display: inline-block;
     text-wrap: nowrap;
     width: calc(100% - 0.5rem);
     overflow: hidden;
 }
 
-#SP-outer {
+.SP-outer {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -87,7 +87,7 @@ body::after {
     width: 330px;
 }
 
-#SP-track-info {
+.SP-track-info {
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -99,14 +99,14 @@ body::after {
     position: relative;
 }
 
-#SP-track {
+.SP-track {
     font-size: 1.5rem;
     font-weight: bold;
     padding: 0.25rem;
     width: 100%;
 }
 
-#SP-artist {
+.SP-artist {
     font-size: 1.25rem;
     padding: 0.25rem;
     font-style: italic;
@@ -118,7 +118,7 @@ body::after {
     overflow: hidden;
 }
 
-#SP-duration {
+.SP-duration {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -129,7 +129,7 @@ body::after {
     width: calc(100% - 1rem);
 }
 
-#progress-bar {
+.SP-progress-bar {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -139,13 +139,13 @@ body::after {
     margin-bottom: 0.8rem;
 }
 
-#progress-bar-fill {
+.SP-progress-bar-fill {
     height: 100%;
     background-color: #0099ff;
     position: relative;
 }
 
-#progress-bar-knob {
+.SP-progress-bar-knob {
     position: absolute;
     top: 50%;
     right: 0%;
@@ -156,7 +156,7 @@ body::after {
     border-radius: 50%;
 }
 
-#SP-button-row {
+.SP-button-row {
     display: flex;
     justify-content: center;
     align-items: center;
