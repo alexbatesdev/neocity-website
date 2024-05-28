@@ -1,18 +1,18 @@
 class MusicPlayer {
     constructor(element, song_data) {
-        this.SP_parent_element = element;
-        this.SP_audio = null;
-        this.SP_last_track_number = -1;
-        console.log(this.SP_parent_element, element);
-        this.SP_track_element = this.SP_parent_element.querySelector(".SP-track-name");
-        this.SP_track_scrolling_left = true;
-        this.SP_artist_element = this.SP_parent_element.querySelector(".SP-artist-name");
-        this.SP_artist_scrolling_left = true;
-        this.SP_song_data = song_data;
+        this.parent_element = element;
+        this.audio = null;
+        this.last_track_number = -1;
+        this.track_element = this.parent_element.querySelector(".SP-track-name");
+        this.track_scrolling_left = true;
+        this.artist_element = this.parent_element.querySelector(".SP-artist-name");
+        this.artist_scrolling_left = true;
+        this.song_data = song_data;
+        this.start();
     }
 
     start = () => {
-        let buttons = this.SP_parent_element.querySelectorAll('.SP-button');
+        let buttons = this.parent_element.querySelectorAll('.SP-button');
         buttons.forEach((button) => {
             button.addEventListener('click', (event) => {
                 if (event.target.classList.contains("SP-play")) {
@@ -32,56 +32,49 @@ class MusicPlayer {
         setInterval(() => {
             this.scrollTrackText();
             this.scrollArtistText();
-            this.updateProgressBar(this.getSongProgressPercent(this.SP_audio) * 100)
-            this.updateProgressText(this.SP_audio);
-            this.updateDurationText(this.SP_audio);
+            this.updateProgressBar(this.getSongProgressPercent(this.audio) * 100)
+            this.updateProgressText(this.audio);
+            this.updateDurationText(this.audio);
             this.renderPauseOrPlayButton();
         }, 50);
     }
 
     play_song = (track_number) => {
-        console.log("Playing song", track_number)
-        if (this.SP_audio && this.SP_audio.paused) {
-            console.log("Resuming song")
-            this.SP_audio.play();
+        if (this.audio && this.audio.paused) {
+            this.audio.play();
             return;
-        } else if (this.SP_audio && track_number == null) {
-            console.log(track_number, this.SP_last_track_number)
-            console.log("Pausing song")
-            this.SP_audio.pause();
+        } else if (this.audio && track_number == null) {
+            this.audio.pause();
             return;
         }
-        if (!track_number && this.SP_last_track_number === -1) {
+        if (!track_number && this.last_track_number === -1) {
             track_number = 0;
-        } else if (track_number >= song_data.length) {
+        } else if (track_number >= this.song_data.length) {
             track_number = 0;
         } else if (track_number < 0) {
-            track_number = song_data.length - 1;
+            track_number = this.song_data.length - 1;
         }
     
-        if (this.SP_audio && !this.SP_audio.paused) {
+        if (this.audio && !this.audio.paused) {
             this.stop_song();
         }
     
-        let song_url = song_data[track_number].url;
-        console.log(track_number)
-        console.log("Playing song: " + song_data[track_number].name + " by " + song_data[track_number].artist);
-        this.SP_parent_element.querySelector(".SP-track-name").innerHTML = song_data[track_number].name;
-        this.SP_parent_element.querySelector(".SP-artist-name").innerHTML = song_data[track_number].artist;
-        this.SP_audio = new Audio(song_url);
-        this.SP_audio.play();
-        this.SP_last_track_number = track_number;
+        let song_url = this.song_data[track_number].url;
+        this.parent_element.querySelector(".SP-track-name").innerHTML = this.song_data[track_number].name;
+        this.parent_element.querySelector(".SP-artist-name").innerHTML = this.song_data[track_number].artist;
+        this.audio = new Audio(song_url);
+        console.log("Playing song: " + this.song_data[track_number].name + " by " + this.song_data[track_number].artist + " from " + this.audio.src);
+        this.audio.play();
+        this.last_track_number = track_number;
     }
     
     pause_song = () => {
-        console.log("Pausing song")
-        this.SP_audio.pause();
+        this.audio.pause();
     }
     
     next_song = () => {
-        console.log("Playing next song")
-        let next_track_number = this.SP_last_track_number + 1;
-        if (next_track_number >= song_data.length) {
+        let next_track_number = this.last_track_number + 1;
+        if (next_track_number >= this.song_data.length) {
             next_track_number = 0;
         }
     
@@ -89,20 +82,18 @@ class MusicPlayer {
     }
     
     prev_song = () => {
-        console.log("Playing previous song")
-        let prev_track_number = this.SP_last_track_number - 1;
+        let prev_track_number = this.last_track_number - 1;
         if (prev_track_number < 0) {
-            prev_track_number = song_data.length - 1;
+            prev_track_number = this.song_data.length - 1;
         }
     
         this.play_song(prev_track_number);
     }
     
     stop_song = () => {
-        console.log("Stopping music")
-        this.SP_audio.pause();
-        this.SP_audio = null;
-        this.SP_last_track_number = -1;
+        this.audio.pause();
+        this.audio = null;
+        this.last_track_number = -1;
     }
     
     getSongProgressString = (audio_object) => {
@@ -122,12 +113,12 @@ class MusicPlayer {
     }
     
     updateDurationText = (audio_object) => {
-        let progressText = this.SP_parent_element.querySelector('.SP-duration-total');
+        let progressText = this.parent_element.querySelector('.SP-duration-total');
         progressText.innerHTML = this.getSongDurationString(audio_object);
     }
     
     updateProgressText = (audio_object) => {
-        let progressText = this.SP_parent_element.querySelector('.SP-duration-current');
+        let progressText = this.parent_element.querySelector('.SP-duration-current');
         progressText.innerHTML = this.getSongProgressString(audio_object);
     }
     
@@ -140,42 +131,42 @@ class MusicPlayer {
     
     updateProgressBar = (progressFloat) => {
         let progressTruncated = progressFloat.toFixed(2);
-        let progressBar = this.SP_parent_element.querySelector('.SP-progress-bar-fill');
+        let progressBar = this.parent_element.querySelector('.SP-progress-bar-fill');
         progressBar.style.width = progressTruncated + "%";
     }
     
     scrollTrackText = () => {
-        if (this.SP_track_element.scrollWidth > this.SP_track_element.clientWidth + this.SP_track_element.scrollLeft && this.SP_track_scrolling_left) {
-            this.SP_track_element.scrollBy(1, 0);
+        if (this.track_element.scrollWidth > this.track_element.clientWidth + this.track_element.scrollLeft && this.track_scrolling_left) {
+            this.track_element.scrollBy(1, 0);
         } else {
-            this.SP_track_scrolling_left = false;
+            this.track_scrolling_left = false;
         }
-        if (!this.SP_track_scrolling_left) {
-            this.SP_track_element.scrollBy(-0.5, 0);
-            if (this.SP_track_element.scrollLeft === 0) {
-                this.SP_track_scrolling_left = true;
+        if (!this.track_scrolling_left) {
+            this.track_element.scrollBy(-0.5, 0);
+            if (this.track_element.scrollLeft === 0) {
+                this.track_scrolling_left = true;
             }
         }
     }
     
     scrollArtistText = () => {
-        if (this.SP_artist_element.scrollWidth > this.SP_artist_element.clientWidth + this.SP_artist_element.scrollLeft && this.SP_artist_scrolling_left) {
-            this.SP_artist_element.scrollBy(1, 0);
+        if (this.artist_element.scrollWidth > this.artist_element.clientWidth + this.artist_element.scrollLeft && this.artist_scrolling_left) {
+            this.artist_element.scrollBy(1, 0);
         } else {
-            this.SP_artist_scrolling_left = false;
+            this.artist_scrolling_left = false;
         }
-        if (!this.SP_artist_scrolling_left) {
-            this.SP_artist_element.scrollBy(-0.5, 0);
-            if (this.SP_artist_element.scrollLeft === 0) {
-                this.SP_artist_scrolling_left = true;
+        if (!this.artist_scrolling_left) {
+            this.artist_element.scrollBy(-0.5, 0);
+            if (this.artist_element.scrollLeft === 0) {
+                this.artist_scrolling_left = true;
             }
         }
     }
     
     renderPauseOrPlayButton = () => {
-        let play_button = this.SP_parent_element.querySelector('.SP-play');
-        let pause_button = this.SP_parent_element.querySelector('.SP-pause');
-        if (this.SP_audio && !this.SP_audio.paused) {
+        let play_button = this.parent_element.querySelector('.SP-play');
+        let pause_button = this.parent_element.querySelector('.SP-pause');
+        if (this.audio && !this.audio.paused) {
             play_button.style.display = "none";
             pause_button.style.display = "block";
         } else {
@@ -185,7 +176,7 @@ class MusicPlayer {
     }
 }
 
-let song_data = [
+let song_data_absolute = [
     {
         "name": "Guy Gets Promoted / End Title",
         "artist": "Tom Hiel",
@@ -272,6 +263,99 @@ let song_data = [
         "url": "https://github.com/alexbatesdev/neocity-website/raw/master/Sleep%20CD/17%20Track%2017.mp3"
     }
 ];
-let song_player_element = document.querySelector(".SP-outer");
-let audio_player = new MusicPlayer(song_player_element, song_data);
-audio_player.start();
+
+let song_data_relative = [
+    {
+        "name": "Guy Gets Promoted / End Title",
+        "artist": "Tom Hiel",
+        "url": "../Sleep CD/01 Track 01.mp3"
+    },
+    {
+        "name": "The Singing Sea",
+        "artist": "Tulivu-Donna Cumberbatch",
+        "url": "../Sleep CD/02 Track 02.mp3"
+    },
+    {
+        "name": "La Valse d'Amelie",
+        "artist": "Yann Tiersen",
+        "url": "../Sleep CD/03 Track 03.mp3"
+    },
+    {
+        "name": "Come Undone",
+        "artist": "Duran Duran",
+        "url": "../Sleep CD/04 Track 04.mp3"
+    },
+    {
+        "name": "This Is a Lie",
+        "artist": "The Cure",
+        "url": "../Sleep CD/05 Track 05.mp3"
+    },
+    {
+        "name": "Millennia",
+        "artist": "Hotel de Ville",
+        "url": "../Sleep CD/06 Track 06.mp3"
+    },
+    {
+        "name": "Trust",
+        "artist": "The Cure",
+        "url": "../Sleep CD/07 Track 07.mp3"
+    },
+    {
+        "name": "Perfect Disguise",
+        "artist": "Modest Mouse",
+        "url": "../Sleep CD/08 Track 08.mp3"
+    },
+    {
+        "name": "The Last Beat of My Heart",
+        "artist": "Siouxsie and the Banshees",
+        "url": "../Sleep CD/09 Track 09.mp3"
+    },
+    {
+        "name": "The World Has Turned and Left Me Here",
+        "artist": "Christopher John",
+        "url": "../Sleep CD/10 Track 10.mp3"
+    },
+    {
+        "name": "Moonlight Sonata",
+        "artist": "Depeche Mode",
+        "url": "../Sleep CD/11 Track 11.mp3"
+    },
+    {
+        "name": "Fear of the South",
+        "artist": "Tin Hat Trio",
+        "url": "../Sleep CD/12 Track 12.mp3"
+    },
+    {
+        "name": "One More Time",
+        "artist": "The Cure",
+        "url": "../Sleep CD/13 Track 13.mp3"
+    },
+    {
+        "name": "Max Payne 2 Theme",
+        "artist": "Kärtsy Hatakka & Kimmo Kajasto",
+        "url": "../Sleep CD/14 Track 14.mp3"
+    },
+    {
+        "name": "If Only Tonight We Could Sleep",
+        "artist": "The Cure",
+        "url": "../Sleep CD/15 Track 15.mp3"
+    },
+    {
+        "name": "This Side of the Blue",
+        "artist": "Joanna Newsom",
+        "url": "../Sleep CD/16 Track 16.mp3"
+    },
+    {
+        "name": "Playground Love",
+        "artist": "Air",
+        "url": "../Sleep CD/17 Track 17.mp3"
+    }
+];
+
+let song_player_elements = document.querySelectorAll(".StarrPlayer");
+let audio_players = [];
+
+song_player_elements.forEach((element) => {
+    let audio_player = new MusicPlayer(element, song_data_relative);
+    audio_players.push(audio_player);
+});

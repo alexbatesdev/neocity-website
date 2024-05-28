@@ -6,6 +6,7 @@
     <title>Song Player</title>
     <!-- Add your CSS and JavaScript files here -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="StarrPlayer.css">
     <script src="./song_player.js" defer></script>
 </head>
 <body>
@@ -16,10 +17,15 @@
     <div class="background">
         <div class="text">
             <h1>Song Player</h1>
-            <p>Listen to your favorite songs with our music player. WIP</p>
+            <p>
+                Listen to your favorite songs with our music player. WIP
+                Style the player however you like and add your own songs.
+                Configure everything to your liking with HTML and CSS.
+                No JavaScript required!
+            </p>
         </div>
         <div class="music_player_holder">
-            <div class="SP-outer">
+            <div class="StarrPlayer">
                 <div class="SP-track-info">
                     <div class="SP-track"><span class="SP-track-name">Really Cool Song</span></div>
                     <div class="SP-artist">By: <span class="SP-artist-name">Really Cool Artist</span></div>
@@ -46,6 +52,32 @@
                 </div>
             </div>
             
+            <div class="StarrPlayer">
+                <div class="SP-track-info">
+                    <div class="SP-track"><span class="SP-track-name">Really Cool Song</span></div>
+                    <div class="SP-artist">By: <span class="SP-artist-name">Really Cool Artist</span></div>
+                    <div class="SP-duration">
+                        <span class="SP-duration-current">
+                            0:00
+                        </span>
+                        <span class="SP-duration-total">
+                            X:XX
+                        </span>
+                    </div>
+                    <div class="SP-progress-bar">
+                        <div class="SP-progress-bar-fill">
+                            <div class="SP-progress-bar-knob"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="SP-button-row">
+                    <div class="SP-prev SP-button" >&lt;&lt;</div>
+                    <div class="SP-play SP-button" >Play</div>
+                    <div class="SP-pause SP-button" >Pause</div>
+                    <div class="SP-stop SP-button" >Stop</div>
+                    <div class="SP-next SP-button" >&gt;&gt;</div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
