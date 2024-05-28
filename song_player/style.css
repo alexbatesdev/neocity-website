@@ -68,20 +68,12 @@ body::after {
 }
 
 /* ------------------------------------------------------------- */
-
-/* CSS for marquee scrolling effect */
-@keyframes marquee {
-    0% {
-        transform: translateX(100%);
-    }
-    100% {
-        transform: translateX(-100%);
-    }
-}
-
 /* Styles for track and artist names */
 #SP-track-name, #SP-artist-name {
     display: inline-block;
+    text-wrap: nowrap;
+    width: calc(100% - 0.5rem);
+    overflow: hidden;
 }
 
 #SP-outer {
@@ -92,7 +84,7 @@ body::after {
     background-color: #470808;
     padding: 1rem;
     color: white;
-    max-width: 330px;
+    width: 330px;
 }
 
 #SP-track-info {
@@ -150,14 +142,14 @@ body::after {
 #progress-bar-fill {
     height: 100%;
     background-color: #0099ff;
-    width: 50%;
+    position: relative;
 }
 
 #progress-bar-knob {
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    right: 0%;
+    transform: translate(0%, -50%);
     width: 0.75rem;
     height: 0.75rem;
     background-color: #e100ff;
