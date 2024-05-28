@@ -8,6 +8,7 @@ class MusicPlayer {
         this.artist_element = this.parent_element.querySelector(".SP-artist-name");
         this.artist_scrolling_left = true;
         this.song_data = song_data;
+        this.isDragging = false;
         this.start();
     }
 
@@ -37,10 +38,38 @@ class MusicPlayer {
             this.updateDurationText(this.audio);
             this.renderPauseOrPlayButton();
         }, 50);
+
+        let progressKnob = this.parent_element.querySelector('.SP-progress-bar-knob');
+        let progressBar = this.parent_element.querySelector('.SP-progress-bar');
+        progressKnob.addEventListener('mousedown', (event) => {
+            this.isDragging = true;
+            event.preventDefault();
+        });
+
+        this.parent_element.addEventListener('mousemove', (event) => {
+            if (!this.isDragging || !this.audio) return;
+            const boundingRect = progressBar.getBoundingClientRect();
+            let percent = (event.clientX - boundingRect.left) / boundingRect.width;
+            percent = Math.max(0, Math.min(1, percent));
+            this.audio.currentTime = this.audio.duration * percent;
+            this.updateProgressBar(percent * 100);
+        });
+        document.addEventListener('mouseup', () => {
+            this.isDragging = false;
+        });
+        
+        progressBar.addEventListener('click', (event) => {
+            if (this.audio == null || this.isDragging) return; // Skip if dragging or audio is not initialized
+            const bounding = progressBar.getBoundingClientRect();
+            const percent = (event.clientX - bounding.left) / bounding.width;
+            this.audio.currentTime = this.audio.duration * percent;
+            this.updateProgressBar(percent * 100);
+        });
+
     }
 
     play_song = (track_number) => {
-        if (this.audio && this.audio.paused) {
+        if (this.audio && this.audio.paused && (track_number === this.last_track_number || track_number == null)) {
             this.audio.play();
             return;
         } else if (this.audio && track_number == null) {
@@ -63,7 +92,10 @@ class MusicPlayer {
         this.parent_element.querySelector(".SP-track-name").innerHTML = this.song_data[track_number].name;
         this.parent_element.querySelector(".SP-artist-name").innerHTML = this.song_data[track_number].artist;
         this.audio = new Audio(song_url);
-        console.log("Playing song: " + this.song_data[track_number].name + " by " + this.song_data[track_number].artist + " from " + this.audio.src);
+        this.audio.addEventListener('ended', () => {
+            this.audio.currentTime = 0;
+            this.next_song();
+        });
         this.audio.play();
         this.last_track_number = track_number;
     }
@@ -77,7 +109,6 @@ class MusicPlayer {
         if (next_track_number >= this.song_data.length) {
             next_track_number = 0;
         }
-    
         this.play_song(next_track_number);
     }
     
