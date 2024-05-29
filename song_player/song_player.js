@@ -2,7 +2,7 @@ class MusicPlayer {
     constructor(element, song_data) {
         this.parent_element = element;
         this.audio = null;
-        this.last_track_number = -1;
+        this.current_track_index = -1;
         this.track_element = this.parent_element.querySelector(".SP-track-name");
         this.track_scrolling_left = true;
         this.artist_element = this.parent_element.querySelector(".SP-artist-name");
@@ -16,16 +16,24 @@ class MusicPlayer {
         let buttons = this.parent_element.querySelectorAll('.SP-button');
         buttons.forEach((button) => {
             button.addEventListener('click', (event) => {
-                if (event.target.classList.contains("SP-play")) {
-                    this.play_song();
-                } else if (event.target.classList.contains("SP-pause")) {
-                    this.pause_song();
-                } else if (event.target.classList.contains("SP-next")) {
-                    this.next_song();
-                } else if (event.target.classList.contains("SP-prev")) {
-                    this.prev_song();
-                } else if (event.target.classList.contains("SP-stop")) {
-                    this.stop_song();
+                switch (true) {
+                    case event.target.classList.contains("SP-play"):
+                        this.play_song();
+                        break;
+                    case event.target.classList.contains("SP-pause"):
+                        this.pause_song();
+                        break;
+                    case event.target.classList.contains("SP-next"):
+                        this.next_song();
+                        break;
+                    case event.target.classList.contains("SP-prev"):
+                        this.prev_song();
+                        break;
+                    case event.target.classList.contains("SP-stop"):
+                        this.stop_song();
+                        break;
+                    default:
+                        break;
                 }
             });
         });
@@ -69,14 +77,14 @@ class MusicPlayer {
     }
 
     play_song = (track_number) => {
-        if (this.audio && this.audio.paused && (track_number === this.last_track_number || track_number == null)) {
+        if (this.audio && this.audio.paused && (track_number === this.current_track_index || track_number == null)) {
             this.audio.play();
             return;
         } else if (this.audio && track_number == null) {
             this.audio.pause();
             return;
         }
-        if (!track_number && this.last_track_number === -1) {
+        if (!track_number && this.current_track_index === -1) {
             track_number = 0;
         } else if (track_number >= this.song_data.length) {
             track_number = 0;
@@ -97,7 +105,7 @@ class MusicPlayer {
             this.next_song();
         });
         this.audio.play();
-        this.last_track_number = track_number;
+        this.current_track_index = track_number;
     }
     
     pause_song = () => {
@@ -105,7 +113,7 @@ class MusicPlayer {
     }
     
     next_song = () => {
-        let next_track_number = this.last_track_number + 1;
+        let next_track_number = this.current_track_index + 1;
         if (next_track_number >= this.song_data.length) {
             next_track_number = 0;
         }
@@ -113,7 +121,7 @@ class MusicPlayer {
     }
     
     prev_song = () => {
-        let prev_track_number = this.last_track_number - 1;
+        let prev_track_number = this.current_track_index - 1;
         if (prev_track_number < 0) {
             prev_track_number = this.song_data.length - 1;
         }
@@ -124,7 +132,7 @@ class MusicPlayer {
     stop_song = () => {
         this.audio.pause();
         this.audio = null;
-        this.last_track_number = -1;
+        this.current_track_index = -1;
     }
     
     getSongProgressString = (audio_object) => {
