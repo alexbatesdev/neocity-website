@@ -1,5 +1,5 @@
-
-.SP-track-name, .SP-artist-name {
+.SP-track-name,
+.SP-artist-name {
     display: inline-block;
     text-wrap: nowrap;
     overflow: hidden;
@@ -88,8 +88,7 @@
     align-items: center;
     flex-direction: row;
     background-color: #00000085;
-    /* padding: 1rem 0;
-    gap: 1rem; */
+    width: 100%;
 }
 
 .SP-button {
@@ -186,4 +185,184 @@
 #SP-stone .SP-button:hover {
     border-style: inset;
     transform: scale(0.9);
+}
+
+/* SP-tv --------------------------------------- */
+@keyframes flicker {
+    0% {
+        opacity: 0.37861;
+    }
+
+    5% {
+        opacity: 0.34769;
+    }
+
+    10% {
+        opacity: 0.23604;
+    }
+
+    15% {
+        opacity: 0.80626;
+    }
+
+    20% {
+        opacity: 0.38128;
+    }
+
+    25% {
+        opacity: 0.83891;
+    }
+
+    30% {
+        opacity: 0.65583;
+    }
+
+    35% {
+        opacity: 0.67807;
+    }
+
+    40% {
+        opacity: 0.36559;
+    }
+
+    45% {
+        opacity: 0.84693;
+    }
+
+    50% {
+        opacity: 0.86019;
+    }
+
+    55% {
+        opacity: 0.38594;
+    }
+
+    60% {
+        opacity: 0.30313;
+    }
+
+    65% {
+        opacity: 0.71988;
+    }
+
+    70% {
+        opacity: 0.53455;
+    }
+
+    75% {
+        opacity: 0.37288;
+    }
+
+    80% {
+        opacity: 0.71428;
+    }
+
+    85% {
+        opacity: 0.70419;
+    }
+
+    90% {
+        opacity: 0.7003;
+    }
+
+    95% {
+        opacity: 0.36108;
+    }
+
+    100% {
+        opacity: 0.34387;
+    }
+}
+
+#SP-tv.StarrPlayer {
+    color: black;
+    text-shadow: black 0 0 5px;
+    background-color: #4a4a4a;
+    padding: 1rem 1.5rem 0.75rem 1.5rem;
+    border-radius: 5px;
+}
+
+#SP-tv .SP-track-info {
+    padding: 0.75rem;
+    border-radius: 10px;
+    background-image: url(./img/tv-test.jpg);
+    background-size: cover;
+    background-position-y: 72%;
+}
+
+#SP-tv .SP-track-info::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 5px, 10px 100%;
+    animation: flicker 0.05s infinite;
+    pointer-events: none;
+}
+
+#SP-tv .SP-track {
+    background-color: transparent;
+}
+
+#SP-tv .SP-track-name {
+    background-color: transparent;
+}
+
+#SP-tv .SP-artist {
+    background-color: transparent;
+}
+
+#SP-tv .SP-artist-name {
+    background-color: transparent;
+}
+
+#SP-tv .SP-duration {
+    background-color: transparent;
+}
+
+#SP-tv .SP-progress-bar {
+    background-color: black;
+
+}
+
+#SP-tv .SP-button-row {
+    background-color: transparent;
+    width: 100%;
+    justify-content: space-evenly;
+    padding: 0.5rem 0 0 0;
+}
+
+#SP-tv .SP-button {
+    background-color: #868686;
+    /* border: solid 5px rgb(39, 39, 39);
+    border-top: 0;
+    border-left: 0;
+    border-right: 0; */
+    border-radius: 3px;
+    position: relative;
+}
+
+#SP-tv .SP-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100%);
+    height: calc(100%);
+    border-bottom: solid 3px #393939;
+    border-radius: 3px;
+}
+
+#SP-tv .SP-button:hover {
+    background-color: #868686;
+    border: none;
+    transform: translate(0, 3px);
+}
+
+#SP-tv .SP-button:hover::before {
+    border: none;
 }
