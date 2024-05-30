@@ -20,7 +20,7 @@ body {
     background-size: 80%;
     image-rendering: pixelated;
     background-repeat: repeat;
-    z-index: -1;
+    /* z-index: -1; */
 }
 
 .wrapper::after {
@@ -45,6 +45,7 @@ h1, p {
     padding: 1rem;
     position: relative;
     margin-bottom: 4rem;
+    z-index: 1;
 }
 
 .background::after {
@@ -109,6 +110,7 @@ h1, p {
     image-rendering: pixelated;
     cursor: pointer;
     filter: drop-shadow(0px 0px 10px #000000);
+    z-index: 1;
 }
 
 /* Custom styles element */
