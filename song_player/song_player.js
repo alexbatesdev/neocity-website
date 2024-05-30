@@ -61,12 +61,12 @@ class MusicPlayer {
     initializeProgressBar = () => {
         let progressKnob = this.parent_element.querySelector('.SP-progress-bar-knob');
         let progressBar = this.parent_element.querySelector('.SP-progress-bar');
-        progressKnob.addEventListener('mousedown', (event) => {
+        progressKnob.addEventListener('pointerdown', (event) => {
             this.isDragging = true;
             event.preventDefault();
         });
 
-        this.parent_element.addEventListener('mousemove', (event) => {
+        this.parent_element.addEventListener('pointermove', (event) => {
             if (!this.isDragging || !this.audio) return;
             const boundingRect = progressBar.getBoundingClientRect();
             let percent = (event.clientX - boundingRect.left) / boundingRect.width;
@@ -74,7 +74,7 @@ class MusicPlayer {
             this.audio.currentTime = this.audio.duration * percent;
             this.updateProgressBar(percent * 100);
         });
-        document.addEventListener('mouseup', () => {
+        document.addEventListener('pointerup', () => {
             this.isDragging = false;
         });
         
