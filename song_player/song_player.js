@@ -1,3 +1,5 @@
+// This component is where the magic happens!
+// You shouldn't need to modify this unless you are adding new features! >🐢
 class MusicPlayer {
     constructor(element, song_data) {
         this.parent_element = element;
@@ -13,6 +15,23 @@ class MusicPlayer {
     }
 
     start = () => {
+        this.initializeButtons();
+        this.initializeStatefulRenderingInterval();
+        this.initializeProgressBar();
+    }
+
+    initializeStatefulRenderingInterval = () => {
+        setInterval(() => {
+            this.scrollTrackText();
+            this.scrollArtistText();
+            this.updateProgressBar(this.getSongProgressPercent(this.audio) * 100)
+            this.updateProgressText(this.audio);
+            this.updateDurationText(this.audio);
+            this.renderPauseOrPlayButton();
+        }, 50);
+    }
+
+    initializeButtons = () => {
         let buttons = this.parent_element.querySelectorAll('.SP-button');
         buttons.forEach((button) => {
             button.addEventListener('click', (event) => {
@@ -37,16 +56,9 @@ class MusicPlayer {
                 }
             });
         });
+    }
 
-        setInterval(() => {
-            this.scrollTrackText();
-            this.scrollArtistText();
-            this.updateProgressBar(this.getSongProgressPercent(this.audio) * 100)
-            this.updateProgressText(this.audio);
-            this.updateDurationText(this.audio);
-            this.renderPauseOrPlayButton();
-        }, 50);
-
+    initializeProgressBar = () => {
         let progressKnob = this.parent_element.querySelector('.SP-progress-bar-knob');
         let progressBar = this.parent_element.querySelector('.SP-progress-bar');
         progressKnob.addEventListener('mousedown', (event) => {
@@ -73,17 +85,19 @@ class MusicPlayer {
             this.audio.currentTime = this.audio.duration * percent;
             this.updateProgressBar(percent * 100);
         });
-
     }
 
     play_song = (track_number) => {
+        // If the audio is paused and the track number is the same as the current track, just resume playing
         if (this.audio && this.audio.paused && (track_number === this.current_track_index || track_number == null)) {
             this.audio.play();
             return;
+        // If the audio is playing, but the play button is pressed, pause the audio
         } else if (this.audio && track_number == null) {
             this.audio.pause();
             return;
         }
+        // Loop the song list if the track number is out of bounds
         if (!track_number && this.current_track_index === -1) {
             track_number = 0;
         } else if (track_number >= this.song_data.length) {
@@ -91,11 +105,13 @@ class MusicPlayer {
         } else if (track_number < 0) {
             track_number = this.song_data.length - 1;
         }
-    
+
+        // Stop the current song if it is playing
         if (this.audio && !this.audio.paused) {
             this.stop_song();
         }
-    
+        
+        // Play the song
         let song_url = this.song_data[track_number].url;
         this.parent_element.querySelector(".SP-track-name").innerHTML = this.song_data[track_number].name;
         this.parent_element.querySelector(".SP-artist-name").innerHTML = this.song_data[track_number].artist;
@@ -167,13 +183,14 @@ class MusicPlayer {
         const duration = audio_object.duration;
         return currentTime / duration;
     }
-    
+
     updateProgressBar = (progressFloat) => {
         let progressTruncated = progressFloat.toFixed(2);
         let progressBar = this.parent_element.querySelector('.SP-progress-bar-fill');
         progressBar.style.width = progressTruncated + "%";
     }
     
+    // This function scrolls the track text in the player when it is too long to fit in the container
     scrollTrackText = () => {
         if (this.track_element.scrollWidth > this.track_element.clientWidth + this.track_element.scrollLeft && this.track_scrolling_left) {
             this.track_element.scrollBy(1, 0);
@@ -188,6 +205,7 @@ class MusicPlayer {
         }
     }
     
+    // This function scrolls the artist text in the player when it is too long to fit in the container
     scrollArtistText = () => {
         if (this.artist_element.scrollWidth > this.artist_element.clientWidth + this.artist_element.scrollLeft && this.artist_scrolling_left) {
             this.artist_element.scrollBy(1, 0);
@@ -202,6 +220,7 @@ class MusicPlayer {
         }
     }
     
+    // This hides the play button when the audio is playing and hides the pause button when the audio is paused
     renderPauseOrPlayButton = () => {
         let play_button = this.parent_element.querySelector('.SP-play');
         let pause_button = this.parent_element.querySelector('.SP-pause');
@@ -214,7 +233,7 @@ class MusicPlayer {
         }
     }
 }
-
+// Song files hosted on github >🐢
 let song_data_absolute = [
     {
         "name": "Guy Gets Promoted / End Title",
@@ -302,7 +321,7 @@ let song_data_absolute = [
         "url": "https://github.com/alexbatesdev/neocity-website/raw/master/Sleep%20CD/17%20Track%2017.mp3"
     }
 ];
-
+// Song files hosted on nekoweb >🐢
 let song_data_relative = [
     {
         "name": "Guy Gets Promoted / End Title",
@@ -391,10 +410,24 @@ let song_data_relative = [
     }
 ];
 
-let song_player_elements = document.querySelectorAll(".StarrPlayer");
-let audio_players = [];
 
-song_player_elements.forEach((element) => {
-    let audio_player = new MusicPlayer(element, song_data_relative);
-    audio_players.push(audio_player);
-});
+// Automatically initialize all song players on the page with the same data >🐢
+// let song_player_elements = document.querySelectorAll(".StarrPlayer");
+// let audio_players = [];
+
+// song_player_elements.forEach((element) => {
+//     let audio_player = new MusicPlayer(element, song_data_relative);
+//     audio_players.push(audio_player);
+// });
+
+// Load the song players manually >🐢
+let song_player_basic = document.querySelector(".StarrPlayer");
+let basic_player = new MusicPlayer(song_player_basic, song_data_relative);
+
+// This one loads from github via an absolute path >🐢
+let song_player_stone = document.querySelector("#SP-stone.StarrPlayer");
+let stone_player = new MusicPlayer(song_player_stone, song_data_absolute);
+
+// This one loads from nekoweb via a relative path >🐢
+let song_player_tv = document.querySelector("#SP-tv.StarrPlayer");
+let tv_player = new MusicPlayer(song_player_tv, song_data_relative);
