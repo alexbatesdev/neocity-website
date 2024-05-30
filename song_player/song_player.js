@@ -412,22 +412,22 @@ let song_data_relative = [
 
 
 // Automatically initialize all song players on the page with the same data >🐢
-// let song_player_elements = document.querySelectorAll(".StarrPlayer");
-// let audio_players = [];
+let song_player_elements = document.querySelectorAll(".StarrPlayer");
+let audio_players = [];
 
-// song_player_elements.forEach((element) => {
-//     let audio_player = new MusicPlayer(element, song_data_relative);
-//     audio_players.push(audio_player);
-// });
+song_player_elements.forEach((element) => {
+    let audio_player = new MusicPlayer(element, song_data_relative);
+    audio_players.push(audio_player);
+});
 
 // Load the song players manually >🐢
-let song_player_basic = document.querySelector(".StarrPlayer");
-let basic_player = new MusicPlayer(song_player_basic, song_data_relative);
+// let song_player_basic = document.querySelector(".StarrPlayer");
+// let basic_player = new MusicPlayer(song_player_basic, song_data_relative);
 
-// This one loads from github via an absolute path >🐢
-let song_player_stone = document.querySelector("#SP-stone.StarrPlayer");
-let stone_player = new MusicPlayer(song_player_stone, song_data_absolute);
+// // This one loads from github via an absolute path >🐢
+// let song_player_stone = document.querySelector("#SP-stone.StarrPlayer");
+// let stone_player = new MusicPlayer(song_player_stone, song_data_absolute);
 
-// This one loads from nekoweb via a relative path >🐢
-let song_player_tv = document.querySelector("#SP-tv.StarrPlayer");
-let tv_player = new MusicPlayer(song_player_tv, song_data_relative);
+// // This one loads from nekoweb via a relative path >🐢
+// let song_player_tv = document.querySelector("#SP-tv.StarrPlayer");
+// let tv_player = new MusicPlayer(song_player_tv, song_data_relative);

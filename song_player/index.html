@@ -12,28 +12,29 @@
     <link rel="stylesheet" href="../css/retro98Scrollbar.css">
 </head>
 
-<body>
-    <a href="../index.html" id="back">
-        <img src="./img/aniback.gif" alt="Back button with a pirate skull theme">
-    </a>
-    <!-- Your HTML content goes here -->
-    <div class="background">
-        <div class="text">
-            <h1>Song Player</h1>
-            <p>
-                Listen to your favorite songs with our music player. WIP
-                Style the player however you like and add your own songs.
-                Configure everything to your liking with HTML and CSS.
-                Very little JavaScript required! I'm not sure what instructional
-                text I should put here!<br />
-                Copy the HTML/CSS/JS below to get started!<br />
-                Technically you don't need to copy the CSS, but it's what makes
-                the first example! <br />
-                Use Inspect Element to see how the other examples are styled! >:D
-            </p>
+<body class="retro-scrollbar">
+    <div class="wrapper">
+        <a href="../index.html" id="back">
+            <img src="./img/aniback.gif" alt="Back button with a pirate skull theme">
+        </a>
+        <!-- Your HTML content goes here -->
+        <div id="section-1" class="background">
+            <div class="text">
+                <h1>Song Player</h1>
+                <p>
+                    Listen to your favorite songs with our music player. WIP
+                    Style the player however you like and add your own songs.
+                    Configure everything to your liking with HTML and CSS.
+                    Very little JavaScript required! I'm not sure what instructional
+                    text I should put here!<br />
+                    Copy the HTML/CSS/JS below to get started!<br />
+                    Technically you don't need to copy the CSS, but it's what makes
+                    the first example! <br />
+                    Use Inspect Element to see how the other examples are styled! >:D
+                </p>
 
-            <div class="code-box retro-scrollbar" contenteditable="false">
-                <pre>
+                <div class="code-box retro-scrollbar" contenteditable="false">
+                    <pre>
 &lt;div class=&quot;StarrPlayer&quot;&gt;
     &lt;div class=&quot;SP-track-info&quot;&gt;
         &lt;div class=&quot;SP-track&quot;&gt;&lt;span class=&quot;SP-track-name&quot;&gt;Really Cool Song&lt;/span&gt;&lt;/div&gt;
@@ -61,9 +62,9 @@
     &lt;/div&gt;
 &lt;/div&gt;
             </pre>
-            </div>
-            <div class="code-box retro-scrollbar">
-                <pre>
+                </div>
+                <div class="code-box retro-scrollbar">
+                    <pre>
 .SP-track-name,
 .SP-artist-name {
     display: inline-block;
@@ -171,9 +172,9 @@
     background-color: #a8a8a863;
 }
             </pre>
-            </div>
-            <div class="code-box retro-scrollbar">
-                <pre>
+                </div>
+                <div class="code-box retro-scrollbar">
+                    <pre>
 // This component is where the magic happens!
 // You shouldn't need to modify this unless you are adding new features! >🐢
 class MusicPlayer {
@@ -608,102 +609,154 @@ let stone_player = new MusicPlayer(song_player_stone, song_data_absolute);
 let song_player_tv = document.querySelector("#SP-tv.StarrPlayer");
 let tv_player = new MusicPlayer(song_player_tv, song_data_relative);
                 </pre>
+                </div>
+            </div>
+            <div class="music_player_holder">
+                <div class="StarrPlayer">
+                    <div class="SP-track-info">
+                        <div class="SP-track"><span class="SP-track-name">Really Cool Song</span></div>
+                        <div class="SP-artist">By: <span class="SP-artist-name">Really Cool Artist</span></div>
+                        <div class="SP-duration">
+                            <span class="SP-duration-current">
+                                0:00
+                            </span>
+                            <span class="SP-duration-total">
+                                X:XX
+                            </span>
+                        </div>
+                        <div class="SP-progress-bar">
+                            <div class="SP-progress-bar-fill">
+                                <div class="SP-progress-bar-knob"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="SP-button-row">
+                        <div class="SP-prev SP-button">&lt;&lt;</div>
+                        <div class="SP-play SP-button">Play</div>
+                        <div class="SP-pause SP-button">Pause</div>
+                        <div class="SP-stop SP-button">Stop</div>
+                        <div class="SP-next SP-button">&gt;&gt;</div>
+                    </div>
+                </div>
+
+                <div id="SP-stone" class="StarrPlayer">
+                    <div class="SP-track-info">
+                        <div class="SP-track"><span class="SP-track-name">Really Cool Song</span></div>
+                        <div class="SP-artist">By: <span class="SP-artist-name">Really Cool Artist</span></div>
+                        <div class="SP-duration">
+                            <span class="SP-duration-current">
+                                0:00
+                            </span>
+                            <span class="SP-duration-total">
+                                X:XX
+                            </span>
+                        </div>
+                        <div class="SP-progress-bar">
+                            <div class="SP-progress-bar-fill">
+                                <div class="SP-progress-bar-knob"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="SP-button-row">
+                        <div class="SP-prev SP-button">&lt;&lt;</div>
+                        <div class="SP-play SP-button">Play</div>
+                        <div class="SP-pause SP-button">Pause</div>
+                        <div class="SP-stop SP-button">Stop</div>
+                        <div class="SP-next SP-button">&gt;&gt;</div>
+                    </div>
+                </div>
+
+                <div id="SP-tv" class="StarrPlayer">
+                    <div class="SP-track-info">
+                        <div class="SP-track"><span class="SP-track-name">Really Cool Song</span></div>
+                        <div class="SP-artist">By: <span class="SP-artist-name">Really Cool Artist</span></div>
+                        <div class="SP-duration">
+                            <span class="SP-duration-current">
+                                0:00
+                            </span>
+                            <span class="SP-duration-total">
+                                X:XX
+                            </span>
+                        </div>
+                        <div class="SP-progress-bar">
+                            <div class="SP-progress-bar-fill">
+                                <div class="SP-progress-bar-knob"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="SP-button-row">
+                        <span id="power-led"></span>
+                        <div class="SP-play SP-button">
+                            <img src="./img/play-svgrepo-com.svg">
+                        </div>
+                        <div class="SP-pause SP-button">
+                            <img src="./img/pause-svgrepo-com.svg">
+                        </div>
+                        <div class="SP-prev SP-button">
+                            <img src="./img/fast-forward-2-svgrepo-com.svg">
+                        </div>
+                        <div class="SP-next SP-button">
+                            <img src="./img/fast-forward-2-svgrepo-com.svg">
+                        </div>
+                        <div class="SP-stop SP-button">
+                            <img src="./img/stop-svgrepo-com.svg">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="music_player_holder">
-            <div class="StarrPlayer">
-                <div class="SP-track-info">
-                    <div class="SP-track"><span class="SP-track-name">Really Cool Song</span></div>
-                    <div class="SP-artist">By: <span class="SP-artist-name">Really Cool Artist</span></div>
-                    <div class="SP-duration">
-                        <span class="SP-duration-current">
-                            0:00
-                        </span>
-                        <span class="SP-duration-total">
-                            X:XX
-                        </span>
-                    </div>
-                    <div class="SP-progress-bar">
-                        <div class="SP-progress-bar-fill">
-                            <div class="SP-progress-bar-knob"></div>
-                        </div>
-                    </div>
+        <div id="section-2" class="background">
+            <div class="text">
+                <h1>JavaScript Instructions</h1>
+                <p>
+                    The only part of the javascript you need to change is the song_data array. This array contains all
+                    the songs that the player will play. Each song is an object with a name, artist, and url property.
+                    The name and artist properties are strings, and the url property is a string that points to the
+                    location of the song file. You can host the song files on your own server or use a service like
+                    github to host them. The song_data array is passed to the MusicPlayer constructor along with the
+                    element that the player will be attached to. The MusicPlayer class takes care of the rest. You can
+                    create multiple players on the same page by creating new instances of the MusicPlayer class with
+                    different song_data arrays and elements.
+                </p>
+                <div class="code-box retro-scrollbar" contenteditable="false">
+                    <pre>
+let song_data_absolute = [
+    {
+        "name": "Guy Gets Promoted / End Title",
+        "artist": "Tom Hiel",
+        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/Sleep%20CD/01%20Track%2001.mp3"
+    },
+];
+                </pre>
                 </div>
-                <div class="SP-button-row">
-                    <div class="SP-prev SP-button">&lt;&lt;</div>
-                    <div class="SP-play SP-button">Play</div>
-                    <div class="SP-pause SP-button">Pause</div>
-                    <div class="SP-stop SP-button">Stop</div>
-                    <div class="SP-next SP-button">&gt;&gt;</div>
-                </div>
-            </div>
-
-            <div id="SP-stone" class="StarrPlayer">
-                <div class="SP-track-info">
-                    <div class="SP-track"><span class="SP-track-name">Really Cool Song</span></div>
-                    <div class="SP-artist">By: <span class="SP-artist-name">Really Cool Artist</span></div>
-                    <div class="SP-duration">
-                        <span class="SP-duration-current">
-                            0:00
-                        </span>
-                        <span class="SP-duration-total">
-                            X:XX
-                        </span>
-                    </div>
-                    <div class="SP-progress-bar">
-                        <div class="SP-progress-bar-fill">
-                            <div class="SP-progress-bar-knob"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="SP-button-row">
-                    <div class="SP-prev SP-button">&lt;&lt;</div>
-                    <div class="SP-play SP-button">Play</div>
-                    <div class="SP-pause SP-button">Pause</div>
-                    <div class="SP-stop SP-button">Stop</div>
-                    <div class="SP-next SP-button">&gt;&gt;</div>
-                </div>
-            </div>
-
-            <div id="SP-tv" class="StarrPlayer">
-                <div class="SP-track-info">
-                    <div class="SP-track"><span class="SP-track-name">Really Cool Song</span></div>
-                    <div class="SP-artist">By: <span class="SP-artist-name">Really Cool Artist</span></div>
-                    <div class="SP-duration">
-                        <span class="SP-duration-current">
-                            0:00
-                        </span>
-                        <span class="SP-duration-total">
-                            X:XX
-                        </span>
-                    </div>
-                    <div class="SP-progress-bar">
-                        <div class="SP-progress-bar-fill">
-                            <div class="SP-progress-bar-knob"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="SP-button-row">
-                    <span id="power-led"></span>
-                    <div class="SP-play SP-button">
-                        <img src="./img/play-svgrepo-com.svg">
-                    </div>
-                    <div class="SP-pause SP-button">
-                        <img src="./img/pause-svgrepo-com.svg">
-                    </div>
-                    <div class="SP-prev SP-button">
-                        <img src="./img/fast-forward-2-svgrepo-com.svg">
-                    </div>
-                    <div class="SP-next SP-button">
-                        <img src="./img/fast-forward-2-svgrepo-com.svg">
-                    </div>
-                    <div class="SP-stop SP-button">
-                        <img src="./img/stop-svgrepo-com.svg">
-                    </div>
+                <div class="code-box retro-scrollbar" contenteditable="false">
+                    <pre>
+let song_player_basic = document.querySelector(".StarrPlayer");
+new MusicPlayer(song_player_basic, song_data_absolute);
+                </pre>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        // Random background script
+        let backgrounds = [
+            "tetris_bg_1.png",
+            "tetris_bg_2.png",
+            "tetris_bg_3.png",
+            "tetris_bg_4.png",
+            "tetris_bg_5.png",
+            "tetris_bg_6.png",
+            "tetris_bg_7.png",
+            "tetris_bg_8.png",
+            "tetris_bg_9.png",
+            "tetris_bg_10.png",
+        ]
+
+        let body = document.querySelector(".wrapper");
+        let randIndex = Math.floor(Math.random() * backgrounds.length);
+        body.style.backgroundImage = `url(./img/${backgrounds[randIndex]})`;
+    </script>
 </body>
 
 </html>
