@@ -44,6 +44,9 @@
 
     <link rel="stylesheet" href="./css/index.css">
     <script src="./js/index.js" defer></script>
+
+    <script src="./js/library.js" defer></script>
+
     <title>Starr's Space</title>
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⭐</text></svg>">
@@ -170,12 +173,12 @@
                                 <strong>
                                     6/5/2024
                                 </strong>
-                                I've been hard at work since the last update! I've decided to try running NekkoStarr 
-                                like a AAA studio! That means I've cancelled the Daily Checkers service effective 10 
+                                I've been hard at work since the last update! I've decided to try running NekkoStarr
+                                like a AAA studio! That means I've cancelled the Daily Checkers service effective 10
                                 minutes ago. Nobody used it, and it was a too buggy, slow, and hard to maintain due to
                                 me not writing SOLID OOP code. That doesn't mean I've been twiddling my thumbs! I've
                                 been hard at work on a total rewrite of the platformer hidden at the end of the maze!
-                                I'm trying to make it so anyone can make levels for it using HMTL/CSS without knowing 
+                                I'm trying to make it so anyone can make levels for it using HMTL/CSS without knowing
                                 javascript!
                             </li>
                             <li>
@@ -192,7 +195,7 @@
                                 work and some personal projects hidden on this here site! More on that when it's ready!
                                 This update I've added a page for my <a href="./song_player/index.html">Song Player</a>
                                 component! This lets you play music from a playlist of files! I made this to be easily
-                                added to your own website!<br/>
+                                added to your own website!<br />
                                 Added a same day second update that makes the background a random image from tetris for
                                 the sega genesis, as well as the page having some more instruction on how to use it!
                             </li>
@@ -425,65 +428,269 @@
                     <div class="switch-panel-content sw-panel-b sw-panel-hidden">
                         <p>
                             Hey! Thank you for reading this line of text! <br />
-                            The next goofy feature I want to add to the site is a captcha 
+                            The next goofy feature I want to add to the site is a captcha
                             that makes the user identify images containing an amongus!
                         </p>
                     </div>
                 </div>
-            </div>
-            <div class="flex-column risen-column" id="right-column">
-                <div class="links-container card">
-                    <ul class="navigation-list">
-                        <li>
-                            <a href="AboutMe.html" tabindex="0">About Me</a>
-                        </li>
-                        <li>
-                            <a href="library.html" tabindex="0">Library</a>
-                        </li>
-                        <li>
-                            <a href="cool-places.html" tabindex="0">Cool Sites</a>
-                        </li>
-                        <li>
-                            <a href="./DarknessMaze/index.html" tabindex="0" id="the-maze-link"
-                                class="hexBackground hb-text"
-                                title="Wouldn't it be fucked up if there was a Minotaur?">The Maze</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="card flipnote-card">
-                    <a href="/flipnote.html" title="Flipnote Still Art Gallery">
-                        <div id="flipnote-frog">
-
+                <div class="bookshelf">
+                    <div class="topBar"></div>
+                    <div class="shelf">
+                        <div id="bk-1" class="book">
+                            <div class="stripe"></div>
+                            <p class="title">Currently Reading</p>
+                            <!-- Just some of my digital art and some notes on them -->
+                            <div class="stripe"></div>
+                            <div class="pages">
+                                <div class="page" id="bk-1-p1">
+                                    <div class="formatted-page">
+                                        <h2>What am I currently reading?</h2>
+                                        <p>
+                                            Chainsaw Man! <br />
+                                            I hope to read more book books after I graduate, but for now I'm just
+                                            reading CSM and working on finding a job.
+                                        </p>
+                                    </div>
+                                </div>
+                                <!-- <div class="page" id="bk-1-p2">
+                                    <div class="formatted-page">
+                                        <div class="image-container"
+                                            style="background-image: url('./img/flipnote/105651.gif'); background-color: white;"
+                                            onclick="window.location.href = '/flipnote.html';">
+                                        </div>
+                                        <div class="image-desc">
+                                            <p>
+                                                Here is a gallery of drawings made in flipnote. I don't have any other
+                                                art saved on
+                                                my laptop except art used for other parts of this site
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <!-- <div class="page" id="bk-1-p3">
+                                    <div class="formatted-page">
+                                        <b>Page 3</b>
+                                        Page template for future pages
+                                    </div>
+                                </div> -->
+                            </div>
                         </div>
-                    </a>
-                </div>
-                <div class="sleepCD" onclick="window.location.href='SleepCD.html'">
+                        <div id="bk-2" class="book">
+                            <div class="stripe"></div>
+                            <p class="title">Media Recommendations</p>
+                            <!-- Just some of my sketchbook drawings and notes on themn -->
+                            <div class="stripe"></div>
+                            <div class="pages">
+                                <div class="page" id="bk-2-p1">
+                                    <!-- <div class="formatted-page"> -->
+                                    <br />
+                                    <h2>Stuff I think is cool!</h2>
+                                    <br />
+                                    <p>
+                                        In no particular order are things I think are cool and you should check out!
+                                        Here's a
+                                        basic list/Table of Contents, the contents of the book will talk about these
+                                        further.
+                                    </p>
+                                    <ul>
+                                        <li>Bee and Puppycat</li>
+                                        <li>Chainsaw Man</li>
+                                        <li>Nimona</li>
+                                        <li>Stray</li>
+                                        <li>Ultrakill</li>
+                                        <li>Zelda: Wind Waker</li>
+                                        <li>Adventure Time</li>
+                                        <li>LocoRoco</li>
+                                        <li>Tally Hall</li>
+                                        <li>Musical Miracle</li>
+                                    </ul>
+                                    <!-- </div> -->
+                                </div>
+                                <div class="page" id="bk-2-p2">
+                                    <!-- <div class="formatted-page"> -->
+                                    <b>Sudo Table of Contents</b><br />
+                                    <ul>
+                                        <li>Hollow Knight</li>
+                                        <li>Omori</li>
+                                        <li>Hi Fi Rush</li>
+                                        <li>Transformers Devastation</li>
+                                        <li>WarioWare</li>
+                                        <li>Super Mario Sunshine</li>
+                                        <li>Cheekface</li>
+                                        <li>Louie Zong</li>
+                                        <li>Shovel Knight: Specter of Torment</li>
+                                        <li>Shovel Knight: King of Cards</li>
+                                        <li>Wandersong</li>
+                                        <li>Fionna and Cake</li>
+                                        <li>Over the Garden Wall</li>
+                                        <li>Infinity Train</li>
 
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="bk-3" class="book">
+                            <div class="stripe"></div>
+                            <p class="title">Unwanted Advice</p>
+                            <div class="stripe"></div>
+                            <div class="pages">
+                                <div class="page" id="bk-3-p1">
+                                    <div class="formatted-page">
+                                        <h2>Your verbage matters, Justin was right when he said "never say never"</h2>
+                                    </div>
+                                </div>
+                                <div class="page" id="bk-3-p2">
+                                    <div class="formatted-page">
+                                        <div class="image-container"
+                                            style="background-image: url('./img/37d.jpg'); background-size: contain; background-repeat: no-repeat;"></div>
+                                        <p style="margin: 0;">
+                                            This meme has genuinely changed my life
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="page" id="bk-3-p3">
+                                    <p>
+                                        Half-assing something is better than no-assing it.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="bk-4" class="book">
+                            <div class="stripe"></div>
+                            <p class="title">Quotes</p>
+                            <div class="stripe"></div>
+                            <div class="pages">
+                                <div class="page" id="bk-4-p1">
+                                    <b>Quote 1</b>
+                                    "To be or not to be, there is no try" - Yoda Montague
+                                </div>
+                                <div class="page" id="bk-4-p2">
+                                    <b>Quote 2</b>
+                                    "It's dangerous to go alone, take this" - Old Man
+                                </div>
+                                <div class="page" id="bk-4-p3">
+                                    <b>Quote 3</b>
+                                    "I'm Batman" - Batman
+                                </div>
+                                <div class="page" id="bk-4-p4">
+                                    <b>Quote 4</b>
+                                    "Wise man once said. Forgiveness is devine, but never pay full price for late
+                                    pizza." -
+                                    Michaelangelo
+                                </div>
+                            </div>
+                        </div>
+                        <div id="bk-6" class="book">
+                            <div class="stripe"></div>
+                            <p class="title">Book of Future Book Ideas</p>
+                            <!-- Just some of my sketchbook drawings and notes on themn -->
+                            <div class="stripe"></div>
+                            <div class="pages">
+                                <div class="page" id="bk-6-p1">
+                                    <b>Idea 1:</b>
+                                    Guest Book - A book where people can write their names and a message to me
+                                    This one is waiting on me making it (they all are, but this one is especially
+                                    difficult to
+                                    make). This yellow book was actually originally labeled as
+                                    the Guest Book!
+                                </div>
+                                <div class="page" id="bk-6-p2">
+                                    <b>Idea 2</b>
+                                    A History of my past usernames and profile pictures
+                                </div>
+                                <div class="page" id="bk-6-p3">
+                                    <b>Idea 3</b>
+                                    Infinite book of... something<br />
+                                    Could be a book of: <br />
+                                    - Cat pictures <br />
+                                    - People who do not exist <br />
+                                    - Randomly generated chat GPT text <br />
+                                    - Randomly grabbed memes <br />
+                                    - Motivational quotes <br />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="bk-7" class="book">
+                            <div class="stripe"></div>
+                            <p class="title">Guestbook (Sign me!)</p>
+                            <div class="stripe"></div>
+                            <div class="pages">
+                                <div class="page" id="bk-7-p1">
+                                    <b>Welcome to my guestbook!</b>
+                                    <p>
+                                        I don't know what to say! Maybe sign it? <br />
+                                        Here's a link so you don't have to use the iframe: <a
+                                            href="https://nekkostarr.atabook.org">Guestbook</a>
+                                    </p>
+                                </div>
+                                <div class="page" id="bk-7-p2">
+                                    <iframe src="https://nekkostarr.atabook.org" frameborder="0"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div id="guest-book" class="book-link" onclick="window.location.href='https://nekkostarr.atabook.org/'">
+                            <div class="stripe"></div>
+                            <p class="title">Guestbook (Sign me!)</p>
+                            <div class="stripe"></div>
+                        </div> -->
                 </div>
-                <img src="./img/FSA_Tingle_Balloon.png" id="link-img" width="100px" />
+                <div class="bottomBar"></div>
             </div>
         </div>
-        <img onclick="window.location.href = 'kitkat.html'" src="./img/banner_deco_crop_rotate.gif" class="kitkat">
-        <marquee class="buttons-n-blinkers">
-            <img src="./img/e7uykoN.gif" />
-            <a href="/flipnote.html">
-                <img src="./img/ZFmhYLD.gif" />
-            </a>
-            <img src="./img/G7SeGUO.gif" />
-            <img src="./img/QfOXeeC.gif" />
-            <a href="https://archive.org">
-                <img src="./img/h8wWWsC.gif" />
-            </a>
-            <img src="./img/toomuchhetero.gif" />
-            <img src="./img/vA6hriw.gif" />
-            <img src="./img/t3y8Xyh.gif" />
-            <img src="./img/KeJKiSV.gif" />
-            <img src="./img/UXlyjhT.png" />
-            <img src="./img/EdHO1Ui.gif" />
-            <a href="/flipnote.html">
-                <img src="./img/DS DSi - Flipnote Studio - HOME Menu Icon.png" />
-            </a>
-        </marquee>
+        <div class="flex-column risen-column" id="right-column">
+            <div class="links-container card">
+                <ul class="navigation-list">
+                    <li>
+                        <a href="AboutMe.html" tabindex="0">About Me</a>
+                    </li>
+                    <li>
+                        <a href="library.html" tabindex="0">Library</a>
+                    </li>
+                    <li>
+                        <a href="cool-places.html" tabindex="0">Cool Sites</a>
+                    </li>
+                    <li>
+                        <a href="./DarknessMaze/index.html" tabindex="0" id="the-maze-link"
+                            class="hexBackground hb-text" title="Wouldn't it be fucked up if there was a Minotaur?">The
+                            Maze</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card flipnote-card">
+                <a href="/flipnote.html" title="Flipnote Still Art Gallery">
+                    <div id="flipnote-frog">
+
+                    </div>
+                </a>
+            </div>
+            <div class="sleepCD" onclick="window.location.href='SleepCD.html'">
+
+            </div>
+            <img src="./img/FSA_Tingle_Balloon.png" id="link-img" width="100px" />
+        </div>
+    </div>
+    <img onclick="window.location.href = 'kitkat.html'" src="./img/banner_deco_crop_rotate.gif" class="kitkat">
+    <marquee class="buttons-n-blinkers">
+        <img src="./img/e7uykoN.gif" />
+        <a href="/flipnote.html">
+            <img src="./img/ZFmhYLD.gif" />
+        </a>
+        <img src="./img/G7SeGUO.gif" />
+        <img src="./img/QfOXeeC.gif" />
+        <a href="https://archive.org">
+            <img src="./img/h8wWWsC.gif" />
+        </a>
+        <img src="./img/toomuchhetero.gif" />
+        <img src="./img/vA6hriw.gif" />
+        <img src="./img/t3y8Xyh.gif" />
+        <img src="./img/KeJKiSV.gif" />
+        <img src="./img/UXlyjhT.png" />
+        <img src="./img/EdHO1Ui.gif" />
+        <a href="/flipnote.html">
+            <img src="./img/DS DSi - Flipnote Studio - HOME Menu Icon.png" />
+        </a>
+    </marquee>
     </div>
     <marquee scrollamount="20" id="space-path">
         <img src="./img/spaceship.gif" alt="spaceship" id="spacecraft">
