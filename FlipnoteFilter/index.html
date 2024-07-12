@@ -26,18 +26,18 @@
         <button id="scaleImageDown">Scale Down</button>
         <div class="row">
             <p>Brightness Level</p>
-            <span id="brightnessLevelValue">0</span>
+            <span id="brightnessLevelValue">1</span>
         </div>
         <input type="range" id="brightnessLevel" min="0" max="4" step=".1" value="1">
         <button id="applyColorQuantization">Apply Color Quantization</button>
         <div class="row">
             <p>Dark Threshold Level</p>
-            <span id="thresholdDitherLevelValue">0</span>
+            <span id="thresholdDitherLevelValue">-1</span>
         </div>
         <input type="range" id="thresholdDitherLevel" min="-1" max="255" step="1" value="-1">
         <div class="row">
             <p>Light Threshold Level</p>
-            <span id="thresholdHighlightLevelValue">0</span>
+            <span id="thresholdHighlightLevelValue">-1</span>
         </div>
         <input type="range" id="thresholdHighlightLevel" min="-1" max="255" step="1" value="-1">
 
@@ -60,7 +60,7 @@
         </div>
         <input type="range" id="ditherLevel" min="0" max="3" step="1" value="-1">
         <button id="clearCanvas">Reset Canvas</button>
-        <button id="downloadImage">Download Image</button>
+        <button id="downloadImage" class="green">Download Image</button>
     </div>
     <div id="canvasWrapper">
         <canvas id="canvas"></canvas>

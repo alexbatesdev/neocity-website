@@ -178,10 +178,8 @@ function applyDithering(imageData, spread, redColorCount, greenColorCount, blueC
         ditherMatrix = getBayerMatrix(level);
     } else if (pattern === 'ordered') {
         ditherMatrix = getOrderedMatrix(level);
-    } else if (pattern === 'threshold') {
-        return applyThresholdDithering(imageData, 128);
     } else {
-        throw new Error("Unsupported pattern. Choose 'bayer', 'ordered', or 'threshold'.");
+        throw new Error("Unsupported pattern. Choose 'bayer', or 'ordered'.");
     }
 
     const data = new Uint8ClampedArray(imageData.data);
@@ -364,8 +362,10 @@ colorQuantizationButton.addEventListener('click', (event) => {
     colorQuantizationState = !colorQuantizationState;
     if (colorQuantizationState) {
         event.target.innerText = 'Remove Color Quantization';
+        event.target.classList.add('active');
     } else {
         event.target.innerText = 'Apply Color Quantization';
+        event.target.classList.remove('active');
     }
     applyFilters();
 });
