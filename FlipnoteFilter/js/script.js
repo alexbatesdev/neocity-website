@@ -149,6 +149,54 @@ function getOrderedMatrix(level) {
     return matrices[level].map(row => row.map(v => v / (matrices[level].length * matrices[level].length + 1) - 0.5));
 }
 
+function getHalftoneMatrix(level) {
+    // Define a basic halftone matrix
+    const halftone2 = [
+        [0, 2],
+        [3, 1]
+    ];
+
+    const halftone4 = [
+        [0, 4, 2, 6],
+        [6, 2, 4, 0],
+        [2, 6, 0, 4],
+        [4, 0, 6, 2]
+    ];
+
+    const halftone8 = [
+        [0, 16, 4, 20, 1, 17, 5, 21],
+        [24, 8, 28, 12, 25, 9, 29, 13],
+        [6, 22, 2, 18, 7, 23, 3, 19],
+        [30, 14, 26, 10, 31, 15, 27, 11],
+        [1, 17, 5, 21, 0, 16, 4, 20],
+        [25, 9, 29, 13, 24, 8, 28, 12],
+        [7, 23, 3, 19, 6, 22, 2, 18],
+        [31, 15, 27, 11, 30, 14, 26, 10]
+    ];
+
+    const halftone16 = [
+        [0, 128, 32, 160, 8, 136, 40, 168, 2, 130, 34, 162, 10, 138, 42, 170],
+        [192, 64, 224, 96, 200, 72, 232, 104, 194, 66, 226, 98, 202, 74, 234, 106],
+        [48, 176, 16, 144, 56, 184, 24, 152, 50, 178, 18, 146, 58, 186, 26, 154],
+        [240, 112, 208, 80, 248, 120, 216, 88, 242, 114, 210, 82, 250, 122, 218, 90],
+        [12, 140, 44, 172, 4, 132, 36, 164, 14, 142, 46, 174, 6, 134, 38, 166],
+        [204, 76, 236, 108, 196, 68, 228, 100, 206, 78, 238, 110, 198, 70, 230, 102],
+        [60, 188, 28, 156, 52, 180, 20, 148, 62, 190, 30, 158, 54, 182, 22, 150],
+        [252, 124, 220, 92, 244, 116, 212, 84, 254, 126, 222, 94, 246, 118, 214, 86],
+        [3, 131, 35, 163, 11, 139, 43, 171, 1, 129, 33, 161, 9, 137, 41, 169],
+        [195, 67, 227, 99, 203, 75, 235, 107, 193, 65, 225, 97, 201, 73, 233, 105],
+        [51, 179, 19, 147, 59, 187, 27, 155, 49, 177, 17, 145, 57, 185, 25, 153],
+        [243, 115, 211, 83, 251, 123, 219, 91, 241, 113, 209, 81, 249, 121, 217, 89],
+        [15, 143, 47, 175, 7, 135, 39, 167, 13, 141, 45, 173, 5, 133, 37, 165],
+        [207, 79, 239, 111, 199, 71, 231, 103, 205, 77, 237, 109, 197, 69, 229, 101],
+        [63, 191, 31, 159, 55, 183, 23, 151, 61, 189, 29, 157, 53, 181, 21, 149],
+        [255, 127, 223, 95, 247, 119, 215, 87, 253, 125, 221, 93, 245, 117, 213, 85]
+    ];
+
+    const matrices = [halftone2, halftone4, halftone8, halftone16];
+    return matrices[level].map(row => row.map(v => v / (matrices[level].length * matrices[level].length) - 0.5));
+}
+
 function applyColorQuantization(imageData, palette) {
     const data = imageData.data.slice(); // Copy the data
     for (let i = 0; i < data.length; i += 4) {
@@ -178,8 +226,10 @@ function applyDithering(imageData, spread, redColorCount, greenColorCount, blueC
         ditherMatrix = getBayerMatrix(level);
     } else if (pattern === 'ordered') {
         ditherMatrix = getOrderedMatrix(level);
+    } else if (pattern === 'halftone') {
+        ditherMatrix = getHalftoneMatrix(level);
     } else {
-        throw new Error("Unsupported pattern. Choose 'bayer', or 'ordered'.");
+        throw new Error("Unsupported pattern. Choose 'bayer', 'halftone', or 'ordered'.");
     }
 
     const data = new Uint8ClampedArray(imageData.data);
@@ -291,6 +341,7 @@ let ditherLevelState = ditherLevelSelect.value;
 const bayerDitherRadio = document.getElementById('bayerDither');
 const orderedDitherRadio = document.getElementById('orderedDither');
 const noDitherRadio = document.getElementById('noDither');
+const halftoneDitherRadio = document.getElementById('halftoneDither');
 const clearCanvasButton = document.getElementById('clearCanvas');
 const downloadImageButton = document.getElementById('downloadImage');
 const thresholdHighlightSelect = document.getElementById('thresholdHighlightLevel');
@@ -330,11 +381,11 @@ const applyFilters = () => {
 
     if (!noDitherRadio.checked) {
         if (bayerDitherRadio.checked) {
-            console.log('bayer');
             newImageData = applyDithering(newImageData, ditherSpreadState, ditherRedLevelState, ditherGreenLevelState, ditherBlueLevelState, 'bayer', ditherLevelState);
         } else if (orderedDitherRadio.checked) {
-            console.log('ordered');
             newImageData = applyDithering(newImageData, ditherSpreadState, ditherRedLevelState, ditherGreenLevelState, ditherBlueLevelState, 'ordered', ditherLevelState);
+        } else if (halftoneDitherRadio.checked) {
+            newImageData = applyDithering(newImageData, ditherSpreadState, ditherRedLevelState, ditherGreenLevelState, ditherBlueLevelState, 'halftone', ditherLevelState);
         }
     }
 
@@ -421,6 +472,10 @@ orderedDitherRadio.addEventListener('click', (event) => {
 });
 
 noDitherRadio.addEventListener('click', (event) => {
+    applyFilters();
+});
+
+halftoneDitherRadio.addEventListener('click', (event) => {
     applyFilters();
 });
 
