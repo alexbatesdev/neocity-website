@@ -164,6 +164,7 @@ h1 {
     position: fixed;
     top: 1rem;
     left: 1rem;
+    z-index: 0;
 }
 
 #controlPanel {
@@ -178,6 +179,12 @@ h1 {
     border: #ff6300 7px solid;
     align-self: flex-end;
     margin: 3rem 1rem;
+    z-index: 1;
+
+    @media screen and (max-height: 640px) {
+        margin: 0;
+        gap: 0;
+    }
 }
 
 .row {
