@@ -168,7 +168,8 @@ h1 {
 }
 
 #controlPanel {
-    width: 200px;
+    min-width: 225px;
+    width: 225px;
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -180,6 +181,9 @@ h1 {
     align-self: flex-end;
     margin: 3rem 1rem;
     z-index: 1;
+    max-height: 555px;
+    overflow-y: auto;
+    overflow-x: none;
 
     @media screen and (max-height: 640px) {
         margin: 0;
@@ -262,4 +266,8 @@ button.active {
 
 button.active:hover {
     background-color: #ff6300;
+}
+
+#upload {
+    min-height: 22px;
 }

@@ -269,16 +269,6 @@ function applyScaling(imageData, scaleMultiplier, resampleFilter) {
     return tempContext.getImageData(0, 0, newWidth, newHeight);
 }
 
-function ditherImage(pattern, level, imageData) {
-    const spread = 0.5;
-    const redColorCount = 2;
-    const greenColorCount = 2;
-    const blueColorCount = 2;
-
-    const ditheredData = applyDithering(imageData, spread, redColorCount, greenColorCount, blueColorCount, pattern, level);
-    return ditheredData;
-}
-
 function thresholdImage(value, imageData) {
     const ditheredData = applyThresholdDithering(imageData, value);
     return ditheredData;
@@ -287,6 +277,7 @@ function thresholdImage(value, imageData) {
 const uploadInput = document.getElementById('upload');
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
+context.willReadFrequently = true;
 const scaleDownButton = document.getElementById('scaleImageDown');
 const scaleUpButton = document.getElementById('scaleImageUp');
 const resampleFilterSelect = document.getElementById('resampleFilter');
@@ -306,6 +297,16 @@ const thresholdHighlightSelect = document.getElementById('thresholdHighlightLeve
 let thresholdHighlightState = thresholdHighlightSelect.value;
 const brightnessSelect = document.getElementById('brightnessLevel');
 let brightnessState = brightnessSelect.value;
+
+const ditherRedLevelSelect = document.getElementById('ditherRedLevel');
+let ditherRedLevelState = ditherRedLevelSelect.value;
+const ditherGreenLevelSelect = document.getElementById('ditherGreenLevel');
+let ditherGreenLevelState = ditherGreenLevelSelect.value;
+const ditherBlueLevelSelect = document.getElementById('ditherBlueLevel');
+let ditherBlueLevelState = ditherBlueLevelSelect.value;
+
+const ditherSpreadLevelSelect = document.getElementById('ditherSpreadLevel');
+let ditherSpreadState = ditherSpreadLevelSelect.value;
 
 const applyFilters = () => {
     if (!imageData) return;
@@ -328,13 +329,12 @@ const applyFilters = () => {
     }
 
     if (!noDitherRadio.checked) {
-        console.log('dithering');
         if (bayerDitherRadio.checked) {
             console.log('bayer');
-            newImageData = ditherImage('bayer', ditherLevelState, newImageData);
+            newImageData = applyDithering(newImageData, ditherSpreadState, ditherRedLevelState, ditherGreenLevelState, ditherBlueLevelState, 'bayer', ditherLevelState);
         } else if (orderedDitherRadio.checked) {
             console.log('ordered');
-            newImageData = ditherImage('ordered', ditherLevelState, newImageData);
+            newImageData = applyDithering(newImageData, ditherSpreadState, ditherRedLevelState, ditherGreenLevelState, ditherBlueLevelState, 'ordered', ditherLevelState);
         }
     }
 
@@ -427,5 +427,29 @@ noDitherRadio.addEventListener('click', (event) => {
 brightnessSelect.addEventListener('change', (event) => {
     brightnessState = event.target.value;
     document.getElementById('brightnessLevelValue').innerText = brightnessState;
+    applyFilters();
+});
+
+ditherRedLevelSelect.addEventListener('change', (event) => {
+    ditherRedLevelState = event.target.value;
+    document.getElementById('ditherRedValue').innerText = ditherRedLevelState;
+    applyFilters();
+});
+
+ditherGreenLevelSelect.addEventListener('change', (event) => {
+    ditherGreenLevelState = event.target.value;
+    document.getElementById('ditherGreenValue').innerText = ditherGreenLevelState;
+    applyFilters();
+});
+
+ditherBlueLevelSelect.addEventListener('change', (event) => {
+    ditherBlueLevelState = event.target.value;
+    document.getElementById('ditherBlueValue').innerText = ditherBlueLevelState;
+    applyFilters();
+});
+
+ditherSpreadLevelSelect.addEventListener('change', (event) => {
+    ditherSpreadState = event.target.value;
+    document.getElementById('ditherSpreadValue').innerText = ditherSpreadState
     applyFilters();
 });
