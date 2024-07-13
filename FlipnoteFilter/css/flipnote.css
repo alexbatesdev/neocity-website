@@ -136,8 +136,7 @@ table {
 /* ------------------------------------------ */
 
 body {
-    width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     background-color: white;
     /* This sets the base color similar to what's seen in your image */
     background-image: linear-gradient(90deg, #e7f1fb 2px, transparent 2px),
@@ -147,81 +146,160 @@ body {
     background-position: 9px 6px;
     /* This sets the position of the grid */
     position: relative;
+    /* overflow: hidden; */
+}
 
+.flexColumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    max-height: 100vh;
+}
+
+.flexRow {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
+    gap: 5px;
+    flex-grow: 1;
+    width: 100%;
+    align-items: stretch;
 }
 
 h1 {
     font-size: 4rem;
     font-family: 'Flipnote';
     color: #ff6300;
+    text-wrap: nowrap;
+    padding-bottom: 0.5rem;
 }
 
 #title {
-    position: fixed;
-    top: 1rem;
-    left: 1rem;
     z-index: 0;
+    max-width: 100vw;
+    overflow: hidden;
+}
+
+.scrollWrapper {
+    padding: 0.75rem 0.5rem;
+    position: absolute;
+    top: 2px;
+    left: 0;
+    right: -7px;
+    bottom: 3px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 #controlPanel {
-    min-width: 225px;
-    width: 225px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    padding: 1rem;
+    /* min-width: 225px;
+    width: 225px; */
     background-color: white;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border: #ff6300 7px solid;
-    align-self: flex-end;
-    margin: 3rem 1rem;
     z-index: 1;
-    max-height: 555px;
-    overflow-y: auto;
-    overflow-x: none;
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    left: 0.5rem;
+    bottom: 0rem;
+}
 
-    @media screen and (max-height: 640px) {
-        margin: 0;
-        gap: 0;
+::-webkit-scrollbar-corner {
+    display: none;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+    position: relative;
+
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #ff6300;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(255, 231, 0);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #c72d07;
+}
+
+.scrollWrapper>* {
+    display: block;
+    width: 100%;
+    transition: 0.25s;
+}
+
+.scrollWrapper>:not(:last-child) {
+    @media screen and (min-height: 768px) {
+        margin-bottom: 10px;
     }
 }
 
-.row {
+.pillar {
+    height: 100vh;
+}
+
+.controlPanelFlexWrapper {
     display: flex;
+    flex-direction: column;
+    position: relative;
+    flex-grow: 1;
+    width: 100%;
+}
+
+.row {
+    display: flex !important;
     flex-direction: row;
     gap: 5px;
     align-items: flex-start;
+}
+
+.row>button {
+    width: 50%;
+
 }
 
 b {
     font-weight: bold;
 }
 
-#canvasWrapper {
+#canvasFlexWrapper {
     flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    position: relative;
 }
 
-#canvas {
-    background-color: white;
+#canvasOverflowWrapper {
+    border: #ff6300 7px solid;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border: #ff6300 7px solid;
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    left: 0.5rem;
+    bottom: 0.5rem;
+}
+
+#canvasScrollWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: -6px;
+    bottom: -6px;
+    overflow: auto;
 }
 
 #backLink {
-    position: absolute;
-    bottom: 1rem;
-    left: 1rem;
     font-size: 1.5rem;
+    padding: 1rem 3rem;
 }
 
 #backLink a {
@@ -237,7 +315,7 @@ b {
     color: #ff6300;
 }
 
-button {
+.btn {
     padding: 0.5rem 0;
     background-color: #ff6300;
     color: white;
@@ -248,26 +326,99 @@ button {
     font-size: 1rem;
 }
 
-button:hover {
+.btn:hover {
     background-color: #86bc3b;
 }
 
-button.green {
+.btn.green {
     background-color: #86bc3b;
 }
 
-button.green:hover {
+.btn.green:hover {
     background-color: #002fff;
 }
 
-button.active {
+.btn.active {
     background-color: #86bc3b;
 }
 
-button.active:hover {
+.btn.active:hover {
     background-color: #ff6300;
 }
 
 #upload {
     min-height: 22px;
+}
+
+.quantize {
+    position: relative;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.quantize>p {
+    width: 100%;
+    padding: 0.5rem 0;
+    cursor: pointer;
+    transition: 0.25s;
+    font-size: 1rem;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    text-shadow: black 1px 1px 1px;
+}
+
+.colorContainer {
+    background-color: purple;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.quantize:hover .colorContainer {
+    scale: 1.1;
+    filter: brightness(0.9) blur(1px);
+    transition: 0.25s;
+}
+
+span.red {
+    background-color: rgb(255, 16, 16);
+    height: 100%;
+    flex-grow: 1;
+}
+
+span.green {
+    background-color: rgb(0, 134, 49);
+    height: 100%;
+    flex-grow: 1;
+}
+
+span.blue {
+    background-color: rgb(0, 56, 205);
+    height: 100%;
+    flex-grow: 1;
+}
+
+span.yellow {
+    background-color: rgb(255, 231, 0);
+    height: 100%;
+    flex-grow: 1;
+}
+
+span.white {
+    background-color: rgb(255, 255, 255);
+    height: 100%;
+    flex-grow: 1;
+}
+
+span.black {
+    background-color: rgb(0, 0, 0);
+    height: 100%;
+    flex-grow: 1;
 }

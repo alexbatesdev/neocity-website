@@ -1,5 +1,6 @@
 // This code was written by an AI assistant
 let imageData;
+let fileName;
 let originalImageData;
 
 function loadImage(event) {
@@ -18,11 +19,12 @@ function loadImage(event) {
         img.src = e.target.result;
     }
     reader.readAsDataURL(file);
+    fileName = file.name.split('.')[0]
 }
 
 function downloadImage() {
     const link = document.createElement('a');
-    link.download = 'dithered_image.png';
+    link.download = `${fileName}_FlipFilter.png`;
     link.href = canvas.toDataURL('image/png');
     link.click();
 }
@@ -293,7 +295,7 @@ function applyMaskToImage(originalImageData, maskImageData, applyWhite) {
     return originalImageData;
 }
 
-function applyScaling(imageData, scaleMultiplier, resampleFilter) {
+function applyScaling(imageData, scaleMultiplier) {
     const width = imageData.width;
     const height = imageData.height;
     const newWidth = Math.round(width * 2 ** scaleMultiplier);
@@ -304,16 +306,9 @@ function applyScaling(imageData, scaleMultiplier, resampleFilter) {
     tempCanvas.height = newHeight;
     const tempContext = tempCanvas.getContext('2d');
 
-    if (resampleFilter === 'nearest') {
-        tempContext.imageSmoothingEnabled = false;
-    } else {
-        tempContext.imageSmoothingEnabled = true;
-        if (resampleFilter === 'bilinear') {
-            tempContext.imageSmoothingQuality = 'medium';
-        } else if (resampleFilter === 'bicubic') {
-            tempContext.imageSmoothingQuality = 'high';
-        }
-    }
+
+    tempContext.imageSmoothingEnabled = false;
+
 
     tempContext.drawImage(canvas, 0, 0, width, height, 0, 0, newWidth, newHeight);
     return tempContext.getImageData(0, 0, newWidth, newHeight);
@@ -330,8 +325,6 @@ const context = canvas.getContext('2d');
 context.willReadFrequently = true;
 const scaleDownButton = document.getElementById('scaleImageDown');
 const scaleUpButton = document.getElementById('scaleImageUp');
-const resampleFilterSelect = document.getElementById('resampleFilter');
-let resampleFilterState = resampleFilterSelect.value;
 const colorQuantizationButton = document.getElementById('applyColorQuantization');
 let colorQuantizationState = false;
 const thresholdLevelSelect = document.getElementById('thresholdDitherLevel');
@@ -382,9 +375,11 @@ const applyFilters = () => {
     if (!noDitherRadio.checked) {
         if (bayerDitherRadio.checked) {
             newImageData = applyDithering(newImageData, ditherSpreadState, ditherRedLevelState, ditherGreenLevelState, ditherBlueLevelState, 'bayer', ditherLevelState);
-        } else if (orderedDitherRadio.checked) {
+        } 
+        if (orderedDitherRadio.checked) {
             newImageData = applyDithering(newImageData, ditherSpreadState, ditherRedLevelState, ditherGreenLevelState, ditherBlueLevelState, 'ordered', ditherLevelState);
-        } else if (halftoneDitherRadio.checked) {
+        } 
+        if (halftoneDitherRadio.checked) {
             newImageData = applyDithering(newImageData, ditherSpreadState, ditherRedLevelState, ditherGreenLevelState, ditherBlueLevelState, 'halftone', ditherLevelState);
         }
     }
@@ -427,8 +422,7 @@ thresholdLevelSelect.addEventListener('change', (event) => {
     applyFilters();
 });
 scaleDownButton.addEventListener('click', (event) => {
-    const resampleFilter = resampleFilterSelect.value;
-    imageData = applyScaling(imageData, -1, resampleFilter);
+    imageData = applyScaling(imageData, -1);
     context.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
     canvas.width = imageData.width;
     canvas.height = imageData.height;
@@ -436,8 +430,7 @@ scaleDownButton.addEventListener('click', (event) => {
 });
 
 scaleUpButton.addEventListener('click', (event) => {
-    const resampleFilter = resampleFilterSelect.value;
-    imageData = applyScaling(imageData, 1, resampleFilter);
+    imageData = applyScaling(imageData, 1);
     context.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
     canvas.width = imageData.width;
     canvas.height = imageData.height;
@@ -450,11 +443,23 @@ ditherLevelSelect.addEventListener('change', (event) => {
     applyFilters();
 });
 
-clearCanvasButton.addEventListener('click', resetImage);
-
-resampleFilterSelect.addEventListener('change', (event) => {
-    resampleFilterState = event.target.value;
-    applyFilters();
+clearCanvasButton.addEventListener('click', (event) => {
+    resetImage();
+    brightnessSelect.value = 1;
+    colorQuantizationButton.innerText = 'Apply Color Quantization';
+    colorQuantizationButton.classList.remove('active');
+    colorQuantizationState = false;
+    thresholdLevelSelect.value = -1;
+    thresholdHighlightSelect.value = -1;
+    ditherLevelSelect.value = 0;
+    noDitherRadio.checked = true;
+    bayerDitherRadio.checked = false;
+    orderedDitherRadio.checked = false;
+    halftoneDitherRadio.checked = false;
+    ditherRedLevelSelect.value = 2;
+    ditherGreenLevelSelect.value = 2;
+    ditherBlueLevelSelect.value = 2;
+    ditherSpreadLevelSelect.value = 0.5;
 });
 
 thresholdHighlightSelect.addEventListener('change', (event) => {
