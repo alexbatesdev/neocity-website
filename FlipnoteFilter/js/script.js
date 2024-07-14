@@ -468,6 +468,8 @@ clearCanvasButton.addEventListener('click', (event) => {
     ditherBlueLevelState = 2;
     ditherSpreadLevelSelect.value = 0.5;
     ditherSpreadState = 0.5;
+    ditherLevelSelect.value = 0;
+    ditherLevelState = 0;
     applyFilters();
 });
 
