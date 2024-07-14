@@ -422,7 +422,7 @@ thresholdLevelSelect.addEventListener('change', (event) => {
     applyFilters();
 });
 scaleDownButton.addEventListener('click', (event) => {
-    imageData = applyScaling(originalImageData, -1);
+    imageData = applyScaling(imageData, -1);
     context.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
     canvas.width = imageData.width;
     canvas.height = imageData.height;
@@ -430,7 +430,7 @@ scaleDownButton.addEventListener('click', (event) => {
 });
 
 scaleUpButton.addEventListener('click', (event) => {
-    imageData = applyScaling(originalImageData, 1);
+    imageData = applyScaling(imageData, 1);
     context.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
     canvas.width = imageData.width;
     canvas.height = imageData.height;
