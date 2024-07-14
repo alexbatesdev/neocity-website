@@ -422,7 +422,7 @@ thresholdLevelSelect.addEventListener('change', (event) => {
     applyFilters();
 });
 scaleDownButton.addEventListener('click', (event) => {
-    imageData = applyScaling(imageData, -1);
+    imageData = applyScaling(originalImageData, -1);
     context.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
     canvas.width = imageData.width;
     canvas.height = imageData.height;
@@ -430,7 +430,7 @@ scaleDownButton.addEventListener('click', (event) => {
 });
 
 scaleUpButton.addEventListener('click', (event) => {
-    imageData = applyScaling(imageData, 1);
+    imageData = applyScaling(originalImageData, 1);
     context.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
     canvas.width = imageData.width;
     canvas.height = imageData.height;
@@ -446,20 +446,29 @@ ditherLevelSelect.addEventListener('change', (event) => {
 clearCanvasButton.addEventListener('click', (event) => {
     resetImage();
     brightnessSelect.value = 1;
+    brightnessState = 1;
     colorQuantizationButton.innerText = 'Apply Color Quantization';
     colorQuantizationButton.classList.remove('active');
     colorQuantizationState = false;
     thresholdLevelSelect.value = -1;
+    thresholdHighlightState = -1;
     thresholdHighlightSelect.value = -1;
+    thresholdHighlightState = -1;
     ditherLevelSelect.value = 0;
+    ditherLevelState = 0;
     noDitherRadio.checked = true;
     bayerDitherRadio.checked = false;
     orderedDitherRadio.checked = false;
     halftoneDitherRadio.checked = false;
     ditherRedLevelSelect.value = 2;
+    ditherRedLevelState = 2;
     ditherGreenLevelSelect.value = 2;
+    ditherGreenLevelState = 2;
     ditherBlueLevelSelect.value = 2;
+    ditherBlueLevelState = 2;
     ditherSpreadLevelSelect.value = 0.5;
+    ditherSpreadState = 0.5;
+    applyFilters();
 });
 
 thresholdHighlightSelect.addEventListener('change', (event) => {
