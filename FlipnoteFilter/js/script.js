@@ -447,7 +447,7 @@ clearCanvasButton.addEventListener('click', (event) => {
     resetImage();
     brightnessSelect.value = 1;
     brightnessState = 1;
-    colorQuantizationButton.innerText = 'Apply Color Quantization';
+    colorQuantizationButton.querySelector('p') = 'Apply Color Quantization';
     colorQuantizationButton.classList.remove('active');
     colorQuantizationState = false;
     thresholdLevelSelect.value = -1;
