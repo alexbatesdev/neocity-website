@@ -296,6 +296,10 @@ function applyMaskToImage(originalImageData, maskImageData, applyWhite) {
 }
 
 function applyScaling(imageData, scaleMultiplier) {
+    // gET ORIGINAL IMAGE DATA
+    // Scale down to current image size
+    // Do currently implemented scaling on the scaled original data, instead of the current image data which contains other applied filters
+
     const width = imageData.width;
     const height = imageData.height;
     const newWidth = Math.round(width * 2 ** scaleMultiplier);
@@ -447,7 +451,7 @@ clearCanvasButton.addEventListener('click', (event) => {
     resetImage();
     brightnessSelect.value = 1;
     brightnessState = 1;
-    colorQuantizationButton.querySelector('p') = 'Apply Color Quantization';
+    colorQuantizationButton.querySelector('p').innerText = 'Apply Color Quantization';
     colorQuantizationButton.classList.remove('active');
     colorQuantizationState = false;
     thresholdLevelSelect.value = -1;
