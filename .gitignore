@@ -1,2 +1,4 @@
 .git
 Sleep CD/*
+env/
+__pycache__/

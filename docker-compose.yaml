@@ -1,0 +1,10 @@
+version: '3'
+services:
+  fastapi-server:
+    build:
+      context: ./websocket-server
+      dockerfile: Dockerfile
+    volumes:
+      - ./websocket-server:/app
+    ports:
+      - 8000:8000
