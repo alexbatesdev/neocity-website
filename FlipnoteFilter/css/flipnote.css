@@ -146,7 +146,7 @@ body {
     background-position: 9px 6px;
     /* This sets the position of the grid */
     position: relative;
-    /* overflow: hidden; */
+    overflow: hidden;
 }
 
 .flexColumn {
@@ -172,13 +172,13 @@ h1 {
     color: #ff6300;
     text-wrap: nowrap;
     padding-bottom: 0.5rem;
-    margin-left: 0.5rem;
 }
 
 #title {
     z-index: 0;
     max-width: 100vw;
     overflow: hidden;
+    margin-left: 0.5rem;
 }
 
 .scrollWrapper {

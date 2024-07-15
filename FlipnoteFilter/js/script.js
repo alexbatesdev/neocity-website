@@ -1,4 +1,4 @@
-// This code was written by an AI assistant
+// This code was written with the help of an AI assistant
 let imageData;
 let fileName;
 let originalImageData;
