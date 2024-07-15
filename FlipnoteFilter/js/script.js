@@ -336,7 +336,7 @@ let thresholdLevelState = thresholdLevelSelect.value;
 const ditherLevelSelect = document.getElementById('ditherLevel');
 let ditherLevelState = ditherLevelSelect.value;
 const bayerDitherRadio = document.getElementById('bayerDither');
-const orderedDitherRadio = document.getElementById('orderedDither');
+// const orderedDitherRadio = document.getElementById('orderedDither');
 const noDitherRadio = document.getElementById('noDither');
 const halftoneDitherRadio = document.getElementById('halftoneDither');
 const clearCanvasButton = document.getElementById('clearCanvas');
@@ -380,9 +380,9 @@ const applyFilters = () => {
         if (bayerDitherRadio.checked) {
             newImageData = applyDithering(newImageData, ditherSpreadState, ditherRedLevelState, ditherGreenLevelState, ditherBlueLevelState, 'bayer', ditherLevelState);
         } 
-        if (orderedDitherRadio.checked) {
-            newImageData = applyDithering(newImageData, ditherSpreadState, ditherRedLevelState, ditherGreenLevelState, ditherBlueLevelState, 'ordered', ditherLevelState);
-        } 
+        // if (orderedDitherRadio.checked) {
+        //     newImageData = applyDithering(newImageData, ditherSpreadState, ditherRedLevelState, ditherGreenLevelState, ditherBlueLevelState, 'ordered', ditherLevelState);
+        // } 
         if (halftoneDitherRadio.checked) {
             newImageData = applyDithering(newImageData, ditherSpreadState, ditherRedLevelState, ditherGreenLevelState, ditherBlueLevelState, 'halftone', ditherLevelState);
         }
@@ -462,7 +462,7 @@ clearCanvasButton.addEventListener('click', (event) => {
     ditherLevelState = 0;
     noDitherRadio.checked = true;
     bayerDitherRadio.checked = false;
-    orderedDitherRadio.checked = false;
+    // orderedDitherRadio.checked = false;
     halftoneDitherRadio.checked = false;
     ditherRedLevelSelect.value = 2;
     ditherRedLevelState = 2;
@@ -487,9 +487,9 @@ bayerDitherRadio.addEventListener('click', (event) => {
     applyFilters();
 });
 
-orderedDitherRadio.addEventListener('click', (event) => {
-    applyFilters();
-});
+// orderedDitherRadio.addEventListener('click', (event) => {
+//     applyFilters();
+// });
 
 noDitherRadio.addEventListener('click', (event) => {
     applyFilters();
