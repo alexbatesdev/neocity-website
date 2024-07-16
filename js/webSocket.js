@@ -6,7 +6,8 @@ const Action = Object.freeze({
     CONNECT: "connect",
     DISCONNECT: "disconnect",
     MESSAGE: "message",
-    POSITIONS: "move"
+    POSITIONS: "positions",
+    MOVE: "move"
 });
 
 // Class for Coords
@@ -19,9 +20,9 @@ class Coords {
 
 // Class for WebSocketMessage
 class WebSocketMessage {
-    constructor(action, coordinates, message, user_id) {
+    constructor(action, coords, message, user_id) {
         this.action = action;
-        this.coordinates = coordinates;
+        this.coords = coords;
         this.message = message;
         this.user_id = user_id;
     }
@@ -35,6 +36,8 @@ const connectWS = () => {
     }
     websocket.onmessage = function (event) {
         console.log(event.data);
+        let message = JSON.parse(event.data);
+        handleMessage(message);
     }
     websocket.onclose = function () {
         console.log("Disconnected from the server");
@@ -46,10 +49,16 @@ const disconnectWS = () => {
 }
 
 const sendMessage = (message) => {
-    websocket.send(message);
+    websocket.send(JSON.stringify(new WebSocketMessage(
+        Action.MESSAGE,
+        new Coords(0, 0),
+        message,
+        my_id
+    )));
 }
 
 const handleMessage = (message) => {
+    console.log(message.action)
     switch (message.action) {
         case Action.CONNECT:
             console.log("User connected");
@@ -62,6 +71,14 @@ const handleMessage = (message) => {
             break;
         case Action.POSITIONS:
             console.log("Positions received");
+            console.log(message.message);
+            let messageParsed = JSON.parse(message.message);
+            console.log(messageParsed);
+            let keys = Object.keys(messageParsed);
+            for (let key of keys) {
+                let coords = percentToCoordinate(messageParsed[key].x, messageParsed[key].y);
+                applyCursor(key, coords.x, coords.y);
+            }
             // for cursor in cursors (and not my_id)
             // Convert percent to coordinate
             // Call applyCursor
@@ -88,7 +105,11 @@ const applyCursor = (id, x, y) => {
         element.style.top = y + "px";
         element.style.width = "10px";
         element.style.height = "10px";
-        element.style.backgroundColor = "red";
+        if (id === my_id) {
+            element.style.backgroundColor = "blue";
+        } else {
+            element.style.backgroundColor = "red";
+        }
         element.style.borderRadius = "50%";
         cursors[id] = { cursor: element, x: x, y: y };
         document.body.appendChild(element);
@@ -123,7 +144,7 @@ let lastMessageSentAt = 0;
 let messageInterval = 45;
 document.addEventListener("mousemove", (event) => {
     let coords = coordinateToPercent(event.clientX, event.clientY);
-    let message = new WebSocketMessage(Action.POSITIONS, coords, "", my_id);
+    let message = new WebSocketMessage(Action.MOVE, coords, "", my_id);
     if (Date.now() - lastMessageSentAt > messageInterval) {
         console.log("Sending message");
         lastMessageSentAt = Date.now();
@@ -131,7 +152,7 @@ document.addEventListener("mousemove", (event) => {
         const coords2 = percentToCoordinate(coords.x, coords.y);
         applyCursor(my_id, coords2.x, coords2.y);
         let json = JSON.stringify(message);
-        // sendMessage(json);
+        websocket.send(json);
     } else {
         updateCursorCoords(my_id, event.clientX, event.clientY);
     }
