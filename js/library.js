@@ -153,3 +153,30 @@ for (let book of books) {
 const goHome = (event) => {
     window.location.href = "index.html";
 }
+
+document.getElementById('rock').addEventListener('click', (event) => {
+    event.target.style.animation = "scoot-up 5s forwards linear";
+    setTimeout(() => {
+
+        let popup = document.createElement('div');
+        popup.style.position = "fixed";
+        popup.style.top = "0";
+        popup.style.left = "0";
+        popup.style.width = "100%";
+        popup.style.height = "100%";
+        popup.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+        popup.style.zIndex = "2";
+        let popupContent = document.createElement('div');
+        popupContent.classList.add('popup-content');
+        popupContent.innerHTML = document.getElementById('hole-content').innerHTML;
+        popup.appendChild(popupContent);
+        document.body.appendChild(popup);
+        popup.addEventListener('click', () => {
+            document.body.removeChild(popup);
+        });
+        // event.target.style.animation = "";
+        
+
+        document.querySelector('body')
+    }, 5000);
+});

@@ -166,25 +166,111 @@ ul {
 }
 
 .card {
-    width: 200px;
-    height: 200px;
-    background-color: rgb(84, 233, 164);
-    border: 10px double rgb(44, 172, 37);
     position: absolute;
     right: 1rem;
     bottom: 0;
     transition: all 0.2s;
-}
-
-.card-1 {
     right: 250px;
-    background-color: rgb(84, 183, 233);
-    border: 10px double rgb(37, 84, 172);
+    width: 200px;
+    height: 180px;
 }
 
+.card img {
+    object-fit: contain;
+    image-rendering: pixelated;
+    position: absolute;
+}
 
-.card:hover {
-    transform: scale(0.9);
+#rock {
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    cursor: pointer;
+}
+
+#hole {
+    width: 100%;
+    height: 50%;
+    bottom: 0;
+    z-index: 1;
+}
+
+@keyframes scoot-up {
+    0% {
+        bottom: 0;
+    }
+
+    100% {
+        bottom: 55%;
+    }
+}
+
+.popup-content {
+    background-color: #081018;
+    color: black;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+    /* width: 200px; */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.hidden {
+    display: none;
+}
+
+#hole-content {
+    position: relative;
+}
+
+.bug {
+    position: absolute;
+}
+
+#bug-1 {
+    left: 300px;
+    bottom: 150px;
+}
+
+#bug-2 {
+    right: 180px;
+    bottom: 300px;
+}
+
+#bug-3 {
+    left: 150px;
+    top: 380px;
+}
+
+#bug-4 {
+    right: 300px;
+    bottom: 200px;
+    width: 64px;
+    height: 64px;
+}
+
+#bug-5 {
+    left: 250px;
+    top: 350px;
+    width: 64px;
+    height: 64px;
+    image-rendering: pixelated;
+}
+
+#bug-6 {
+    right: 175px;
+    bottom: 150px;
+    width: 64px;
+    height: 64px;
+    image-rendering: pixelated;
+}
+
+.club_bug_bg {
+    width: calc(246px * 3);
+    height: calc(232px * 3);
 }
 
 .openBook {
