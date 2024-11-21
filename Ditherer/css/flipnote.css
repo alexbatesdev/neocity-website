@@ -137,10 +137,10 @@ table {
 
 body {
     min-height: 100vh;
-    background-color: white;
+    background-color: #0c0c29;
     /* This sets the base color similar to what's seen in your image */
-    background-image: linear-gradient(90deg, #e7f1fb 2px, transparent 2px),
-        linear-gradient(180deg, #e7f1fb 2px, transparent 2px);
+    background-image: linear-gradient(90deg, #33383e 2px, transparent 2px),
+        linear-gradient(180deg, #33383e 2px, transparent 2px);
     background-size: 30px 30px;
     /* This sets the size of each square in the grid */
     background-position: 9px 6px;
@@ -169,7 +169,7 @@ body {
 h1 {
     font-size: 4rem;
     font-family: 'Flipnote';
-    color: #ff6300;
+    color: #6f00ff;
     text-wrap: nowrap;
     padding-bottom: 0.5rem;
 }
@@ -195,9 +195,10 @@ h1 {
 #controlPanel {
     /* min-width: 225px;
     width: 225px; */
-    background-color: white;
+    background-color: #2a2928;
+    color: white;
     border-radius: 10px;
-    border: #ff6300 7px solid;
+    border: #6f00ff 7px solid;
     z-index: 1;
     position: absolute;
     top: 0.5rem;
@@ -220,7 +221,7 @@ h1 {
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #ff6300;
+    background: #6f00ff;
 }
 
 /* Handle */
@@ -279,14 +280,14 @@ b {
 }
 
 #canvasOverflowWrapper {
-    border: #ff6300 7px solid;
+    border: #6f00ff 7px solid;
     border-radius: 10px;
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
     left: 0.5rem;
     bottom: 0.5rem;
-    background-color: white;
+    background-color: #2a2928;
 }
 
 #canvasScrollWrapper {
@@ -304,7 +305,7 @@ b {
 }
 
 #backLink a {
-    color: #ff6300;
+    color: #6f00ff;
     text-decoration: none;
 }
 
@@ -313,12 +314,12 @@ b {
 }
 
 #backLink a:visited {
-    color: #ff6300;
+    color: #6f00ff;
 }
 
 .btn {
     padding: 0.5rem 0;
-    background-color: #ff6300;
+    background-color: #6f00ff;
     color: white;
     border: none;
     border-radius: 5px;
@@ -344,7 +345,7 @@ b {
 }
 
 .btn.active:hover {
-    background-color: #ff6300;
+    background-color: #6f00ff;
 }
 
 #upload {
