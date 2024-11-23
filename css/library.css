@@ -166,25 +166,199 @@ ul {
 }
 
 .card {
-    width: 200px;
-    height: 200px;
-    background-color: rgb(84, 233, 164);
-    border: 10px double rgb(44, 172, 37);
     position: absolute;
     right: 1rem;
     bottom: 0;
     transition: all 0.2s;
-}
-
-.card-1 {
     right: 250px;
-    background-color: rgb(84, 183, 233);
-    border: 10px double rgb(37, 84, 172);
+    width: 200px;
+    height: 180px;
 }
 
+.card img {
+    object-fit: contain;
+    image-rendering: pixelated;
+    position: absolute;
+}
 
-.card:hover {
-    transform: scale(0.9);
+#rock {
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    cursor: pointer;
+}
+
+#hole {
+    width: 100%;
+    height: 50%;
+    bottom: 0;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.club-light-bar {
+    position: absolute;
+    height: 30px;
+    top: 130px;
+    z-index: 1;
+    image-rendering: pixelated;
+    filter: brightness(0.7);
+}
+
+.club-light {
+    position: absolute;
+    /* background-color: white; */
+    width: 30px;
+    height: 30px;
+    z-index: 3;
+}
+
+.club-light-image {
+    image-rendering: pixelated;
+    width: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    z-index: 1;
+}
+
+.club-light-beam {
+    --light-color: #00000000;
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    /* border-bottom: 300px solid rgba(0, 0, 0, 0.151); */
+    transform: translateX(-50%);
+}
+
+.club-light-beam::before {
+
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -50px;
+    width: 100px;
+    height: 450px;
+    background: linear-gradient(to bottom, var(--light-color), rgba(0, 0, 255, 0));
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+@keyframes swing {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(30deg);
+    }
+
+    75% {
+        transform: rotate(-30deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes scoot-up {
+    0% {
+        bottom: 0;
+    }
+
+    100% {
+        bottom: 55%;
+    }
+}
+
+.popup-content {
+    background-color: #081018;
+    color: black;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+    /* width: 200px; */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+}
+
+.hidden {
+    display: none;
+}
+
+#hole-content {
+    position: relative;
+}
+
+.bug {
+    position: absolute;
+}
+
+#bug-1 {
+    left: 300px;
+    bottom: 150px;
+}
+
+#bug-2 {
+    right: 180px;
+    bottom: 300px;
+}
+
+#bug-3 {
+    left: 150px;
+    top: 380px;
+}
+
+#bug-4 {
+    right: 300px;
+    bottom: 200px;
+    width: 64px;
+    height: 64px;
+}
+
+#bug-5 {
+    left: 250px;
+    top: 350px;
+    width: 64px;
+    height: 64px;
+    image-rendering: pixelated;
+}
+
+#bug-6 {
+    right: 175px;
+    bottom: 150px;
+    width: 64px;
+    height: 64px;
+    image-rendering: pixelated;
+}
+
+#DJ {
+    width: 100px;
+    top: 300px;
+    left: 350px;
+}
+
+#club-bug-banner {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    line-height: 24px;
+    padding-bottom: 0;
+    z-index: 4;
+}
+
+#club-bug-banner p {
+    font-size: 16px;
+}
+
+.club_bug_bg {
+    width: calc(246px * 3);
+    height: calc(232px * 3);
 }
 
 .openBook {

@@ -1,4 +1,9 @@
 
+// TODO: 
+// 1. Lock controlling the logo behind a cheat code
+// 2. Make corner detection
+// 3. Move the page to it's own directory
+
 const DVDLogo = document.getElementById('dvd-logo');
 const DVDLogoImage = document.getElementById('logo-img');
 

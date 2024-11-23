@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piinro Ditherer</title>
+    <link rel="stylesheet" href="./css/custom-fonts.css">
+    <link rel="stylesheet" href="./css/flipnote.css">
+    <script src="./js/script.js" defer></script>
+    <link rel="icon" href="./img/favicon.ico">
+</head>
+
+<body>
+    <div class="flexColumn pillar">
+
+        <h1 id="title">Piinro's Ditherer! - Quantization! Dithering! Pixels! Words!</h1>
+        <div class="flexRow grow1">
+            <div class="flexColumn">
+                <div class="controlPanelFlexWrapper">
+                    <div id="controlPanel">
+                        <div class="scrollWrapper">
+                            <input type="file" id="upload" accept="image/*">
+                            <div class="row">
+                                <button class="btn" id="scaleImageDown">Scale Down</button>
+                                <button class="btn" id="scaleImageUp">Scale Up</button>
+                            </div>
+                            <div class="row">
+                                <p>Brightness Level</p>
+                                <span id="brightnessLevelValue">1</span>
+                            </div>
+                            <input type="range" id="brightnessLevel" min="0" max="4" step=".1" value="1">
+                            <div class="row">
+                                <p>Dark Threshold Level</p>
+                                <span id="thresholdDitherLevelValue">-1</span>
+                            </div>
+                            <input type="range" id="thresholdDitherLevel" min="-1" max="255" step="1" value="-1">
+                            <div class="row">
+                                <p>Light Threshold Level</p>
+                                <span id="thresholdHighlightLevelValue">-1</span>
+                            </div>
+                            <input type="range" id="thresholdHighlightLevel" min="-1" max="255" step="1" value="-1">
+
+                            <p>Dithering Type</p>
+                            <div class="row">
+                                <input type="radio" id="noDither" name="ditherType" value="noDither" checked>
+                                <label for="noDither">None</label>
+                                <input type="radio" id="halftoneDither" name="ditherType" value="halftoneDither">
+                                <label for="halftoneDither">Halftone</label>
+                            </div>
+                            <div class="row">
+                                <input type="radio" id="bayerDither" name="ditherType" value="bayerDither">
+                                <label for="bayerDither">Bayer</label>
+                                <!-- <input type="radio" id="orderedDither" name="ditherType" value="orderedDither">
+                                <label for="orderedDither">Ordered</label> -->
+                            </div>
+                            <div class="row">
+                                <p>Dithering Level</p>
+                                <span id="ditherLevelValue">0</span>
+                            </div>
+                            <input type="range" id="ditherLevel" min="0" max="3" step="1" value="-1">
+                            <div class="row">
+                                <input type="range" id="ditherRedLevel" min="1" max="25" step="1" value="2">
+                                <label>R: <span id="ditherRedValue">2</span></label>
+                            </div>
+                            <div class="row">
+                                <input type="range" id="ditherGreenLevel" min="1" max="25" step="1" value="2">
+                                <label>G: <span id="ditherGreenValue">2</span></label>
+                            </div>
+                            <div class="row">
+                                <input type="range" id="ditherBlueLevel" min="1" max="25" step="1" value="2">
+                                <label>B: <span id="ditherBlueValue">2</span></label>
+                            </div>
+                            <p>Dither Spread</p>
+                            <div class="row">
+                                <input type="range" id="ditherSpreadLevel" min="0" max="2" step="0.1" value="0.5">
+                                <label><span id="ditherSpreadValue">0.5</span></label>
+                            </div>
+                            <div class="quantize" id="applyColorQuantization">
+                                <p>Apply Color Quantization</p>
+                                <div class="colorContainer">
+                                    <span class="black"></span>
+                                    <span class="red"></span>
+                                    <span class="green"></span>
+                                    <span class="blue"></span>
+                                    <span class="yellow"></span>
+                                    <span class="white"></span>
+                                </div>
+                            </div>
+                            <button class="btn" id="clearCanvas">Reset Canvas</button>
+                            <button class="btn" id="downloadImage" class="green">Download Image</button>
+                        </div>
+                    </div>
+                </div>
+                <h1 id="backLink"><a href="../index.html">Back to Home</a></h1>
+            </div>
+            <div id="canvasFlexWrapper">
+                <div id="canvasOverflowWrapper">
+                    <div id="canvasScrollWrapper">
+                        <canvas id="canvas"></canvas>
+                    </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

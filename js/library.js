@@ -153,3 +153,141 @@ for (let book of books) {
 const goHome = (event) => {
     window.location.href = "index.html";
 }
+
+document.getElementById('rock').addEventListener('click', (event) => {
+    event.target.style.animation = "scoot-up 5s forwards linear";
+    //Playing grinding stone sound
+    setTimeout(() => {
+        showClubBug();
+        document.getElementById('hole').addEventListener('click', (event) => {
+            showClubBug();
+        });
+    }, 5000);
+});
+let audio = null;
+const showClubBug = () => {
+    let popup = document.createElement('div');
+    popup.style.position = "fixed";
+    popup.style.top = "0";
+    popup.style.left = "0";
+    popup.style.width = "100%";
+    popup.style.height = "100%";
+    popup.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+    popup.style.zIndex = "2";
+    let popupContent = document.createElement('div');
+    popupContent.classList.add('popup-content');
+    popupContent.innerHTML = document.getElementById('hole-content').innerHTML;
+
+    for (let i = 0; i < 6; i++) {
+        if (i < 4) {
+            let clubLightBar = document.createElement('img');
+            clubLightBar.src = "./img/roof-lights-bar.png";
+            clubLightBar.classList.add('club-light-bar');
+            clubLightBar.style.left = ((clubLightBar.width * i * 2) + 0) + "px";
+            popupContent.appendChild(clubLightBar);
+        }
+
+        let clubLight = document.createElement('div');
+        clubLight.classList.add('club-light');
+        clubLight.style.animation = "swing 1.33s infinite linear";
+        clubLight.style.animationDelay = `${Math.random() * 1.33}s`; // Random delay between 0 and 1.33 seconds
+        clubLight.style.top = "140px";
+        clubLight.style.left = (110 * (i + 1)) + "px";
+
+        let clubLightImage = document.createElement('img');
+        clubLightImage.src = "./img/roof-light.png";
+        clubLightImage.classList.add('club-light-image');
+        clubLight.appendChild(clubLightImage);
+
+        let cone_of_light = document.createElement('div');
+        cone_of_light.style.position = "absolute";
+        cone_of_light.style.top = "50%";
+        cone_of_light.style.left = "50%";
+        cone_of_light.classList.add('club-light-beam');
+        clubLight.appendChild(cone_of_light);
+
+        popupContent.appendChild(clubLight);
+    }
+
+    popup.appendChild(popupContent);
+    document.body.appendChild(popup);
+
+    // Pre-approved array of colors
+    const colors = ['#0000ffbf', '#7024F1bf', '#E724F1bf', '#F1EE24bf', '#FF0000bf', '#24B7F1bf', '#00FF00bf'];
+
+    // Function to get a random color from the array
+    const getRandomColor = () => {
+        return colors[Math.floor(Math.random() * colors.length)];
+    };
+
+    // Change the color of each clubLight every second
+    setInterval(() => {
+        const clubLights = document.querySelectorAll('.club-light-beam');
+        clubLights.forEach(clubLight => {
+            const randomColor = getRandomColor();
+            clubLight.style.setProperty('--light-color', randomColor);
+        });
+        const bugs = document.querySelectorAll('.bug');
+        bugs.forEach(bug => {
+            bug.style.filter = `hue-rotate(${Math.floor(Math.random() * 360)}deg)`;
+        });
+        const clubBackground = document.querySelectorAll('.club_bug_bg');
+
+        clubBackground.forEach(clubBackground => {
+            clubBackground.style.filter = `hue-rotate(${Math.floor(Math.random() * 360)}deg)`;
+        });
+    }, 500);
+
+    // Array of music file paths
+    const musicFiles = ['./music/Bug Songs/bug_club.mp3', './music/Bug Songs/party_at_club_bug.mp3'];
+    let currentTrackIndex = 0;
+
+
+    if (audio == null) {
+        // Create an audio element
+        audio = document.createElement('audio');
+        audio.src = musicFiles[currentTrackIndex];
+        audio.volume = 0.25;
+        console.log("Audio created");
+        console.log(musicFiles[currentTrackIndex]);
+        if (musicFiles[currentTrackIndex] == './music/Bug Songs/bug_club.mp3') {
+            for (let element of document.getElementsByClassName('club-bug-song')) {
+                element.innerHTML = "Bug Club - by: Louie Zong";
+            }
+        } else {
+            for (let element of document.getElementsByClassName('club-bug-song')) {
+                element.innerHTML = "Party at Club Bug! - by: spellcasting";
+            }
+        }
+    }
+    audio.play();
+
+    const nextSong = () => {
+        console.log('Song ended');
+        currentTrackIndex = (currentTrackIndex + 1) % musicFiles.length;
+        audio.src = musicFiles[currentTrackIndex];
+        console.log(musicFiles[currentTrackIndex]);
+        if (musicFiles[currentTrackIndex] == './music/Bug Songs/bug_club.mp3') {
+            for (let element of document.getElementsByClassName('club-bug-song')) {
+                element.innerHTML = "Bug Club - by: Louie Zong";
+            }
+        } else {
+            for (let element of document.getElementsByClassName('club-bug-song')) {
+                element.innerHTML = "Party at Club Bug! - by: spellcasting";
+            }
+        }
+        audio.play();
+    }
+
+    // Play the next song when the current song ends
+    audio.addEventListener('ended', nextSong);
+
+    // Pause the music when the popup is closed
+    popup.addEventListener('click', () => {
+        audio.pause();
+        audio.removeEventListener('ended', nextSong);
+        document.body.removeChild(popup);
+    });
+};
+
+// showClubBug();

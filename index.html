@@ -80,19 +80,17 @@
                 <link rel="preconnect" href="https://fonts.googleapis.com">
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
                 <link href="https://fonts.googleapis.com/css2?family=Blaka+Hollow&display=swap" rel="stylesheet">
-                <a href="https://daily-checkers.nekoweb.org" id="daily-checkers-logo"
-                    onclick="copyCodeToClipboard(event)" class="logo-outer">
-                    <img src="https://nekkostarr.nekoweb.org/daily-checkers-frontend/img/checkerBoardSpriteTileNeg45Deg.png"
-                        alt="" class="slanted-board">
-                    <div class="piece-1"></div>
-                    <p class="daily">The Daily</p>
-                    <img class="clock" src="https://nekkostarr.nekoweb.org/daily-checkers-frontend/img/clock.gif"
-                        alt="A ticking clock">
-                    <p class="checkers">Checkers</p>
-                    <div class="piece-2"></div>
-                </a>
 
+                <a id="ditherer" href="./Ditherer/index.html">
+                    <h1 class="flipnote-font" id="title">Image Ditherer!</h1>
+                    <h1 class="flipnote-font" id="subtitle">Pixelate your pics!</h1>
+                    <h1 class="flipnote-font" id="wow">Wow! </h1>
+                    <h1 class="flipnote-font" id="cool">Cool Pixels!</h1>
+                    <img src="./img/dithered_image (6).png" />
+                    <img src="./img/GSUC9JnXcAA8ti7.png" class="phase-in-out-animation" />
+                </a>
                 <img src="./img/TWW_Link_Outset_Clothes_Artwork.png" id="link-img" width="100px" />
+
             </div>
             <div class="flex-column wide-column">
                 <div class="header card flipnote-font">
@@ -108,15 +106,16 @@
                         time!<br /><br />
                         This page is never going to have a strong theme, but I want to make some pages that are
                         way more aesthetically unique and vivid! First on that list is a Frutiger Aero underwater
-                        page or a wind waker beach page. <br /><br />
+                        page or a wind waker beach page. 
+                        <!-- <br /><br /> -->
                     </p>
-                    <p class="view-counter">
+                    <!-- <p class="view-counter">
                         This page has been viewed
                         <a href="https://www.cutercounter.com/" target="_blank">
                             <img src="https://www.cutercounter.com/hits.php?id=heexpaqcf&nd=6&style=39" height="20"
                                 alt="visitor counter">
                         </a> times!
-                    </p>
+                    </p> -->
                 </div>
                 <div id='nekowebring' class="card">
                     <script type="text/javascript" src="https://webring.nekoweb.org/onionring-variables.js"></script>
@@ -176,7 +175,58 @@
                         </div>
                     </div>
                     <div class="switch-panel-content sw-panel-a retro-scrollbar">
+                        <!-- https://chatgpt.com/c/910187da-f65d-4bb9-9cf4-314847817279 -->
                         <ul>
+                            <li>
+                                <strong>
+                                    11/20/2024
+                                </strong>
+                                It's been unlisted and finished for a while, but I made an image ditherer! You can
+                                find it <a href="./Ditherer/index.html">here</a>! It's a simple tool that lets you
+                                pixelate an image! I made it because I wanted to mimmic the look of the Flipnote
+                                Studio 3D Camera pixelation! I also added a link to the page in the left column!
+                                Originally the page was orange and white, themed like flipnote, but I changed it
+                                to a dark mode theme because I don't really like the color orange, and night mode
+                                is easier to look at.
+                            </li>
+                            <li>
+                                <strong>
+                                    6/5/2024
+                                </strong>
+                                I've been hard at work since the last update! I've decided to try running NekkoStarr
+                                like a AAA studio! That means I've cancelled the Daily Checkers service effective 10
+                                minutes ago. Nobody used it, and it was a too buggy, slow, and hard to maintain due to
+                                me not writing SOLID OOP code. That doesn't mean I've been twiddling my thumbs! I've
+                                been hard at work on a total rewrite of the platformer hidden at the end of the maze!
+                                I'm trying to make it so anyone can make levels for it using HMTL/CSS without knowing
+                                javascript!
+                            </li>
+                            <li>
+                                <strong>
+                                    5/30/2024
+                                </strong>
+                                Added some reviews to the <a href="kitkat.html">Weird KitKat Reviews</a> page!
+                            </li>
+                            <li>
+                                <strong>
+                                    5/29/2024
+                                </strong>
+                                It's been a while since an official update! I've been hard at work on both my school
+                                work and some personal projects hidden on this here site! More on that when it's ready!
+                                This update I've added a page for my <a href="./song_player/index.html">Song Player</a>
+                                component! This lets you play music from a playlist of files! I made this to be easily
+                                added to your own website!<br />
+                                Added a same day second update that makes the background a random image from tetris for
+                                the sega genesis, as well as the page having some more instruction on how to use it!
+                            </li>
+                            <li>
+                                <strong>
+                                    4/12/2024
+                                </strong>
+                                Added the scarlet theme to the <a href="./Homepage/index.html">Homepage</a> I made for
+                                myself. It just links to some streaming sites I use on my TV. Bigger buttons makes it
+                                easier on the couch.
+                            </li>
                             <li>
                                 <strong>
                                     4/9/2024
@@ -398,9 +448,8 @@
                     <div class="switch-panel-content sw-panel-b sw-panel-hidden">
                         <p>
                             Hey! Thank you for reading this line of text! <br />
-                            Recently I've been hyperfixated on speedrun world record histories.
-                            It's absolutely fascinating how these records evolve. The Ultrakill
-                            speedruns and Mario Kart histories are wild! <br />
+                            The next goofy feature I want to add to the site is a captcha
+                            that makes the user identify images containing an amongus!
                         </p>
                     </div>
                 </div>
@@ -463,9 +512,7 @@
         <img src="./img/spaceship.gif" alt="spaceship" id="spacecraft">
     </marquee>
     <marquee class="ISS-orbit" direction="right" scrollamount="10">
-        <a href="/ISS.html">
-            <img src="./img/SpaceStation_small.png" id="ISS" />
-        </a>
+        <img src="./img/SpaceStation_small.png" id="ISS" />
     </marquee>
     <div class="globe" onclick="window.location.href='cool-places.html'">
     </div>

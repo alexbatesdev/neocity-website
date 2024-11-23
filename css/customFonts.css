@@ -15,3 +15,12 @@
 .kitkat-font {
     font-family: 'KitKat';
 }
+
+@font-face {
+    font-family: 'Pretendo';
+    src: url("../fonts/Pretendo.ttf");
+}
+
+.pretendo-font {
+    font-family: 'Pretendo';
+}
