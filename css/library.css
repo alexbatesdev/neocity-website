@@ -193,6 +193,74 @@ ul {
     height: 50%;
     bottom: 0;
     z-index: 1;
+    cursor: pointer;
+}
+
+.club-light-bar {
+    position: absolute;
+    height: 30px;
+    top: 130px;
+    z-index: 1;
+    image-rendering: pixelated;
+    filter: brightness(0.7);
+}
+
+.club-light {
+    position: absolute;
+    /* background-color: white; */
+    width: 30px;
+    height: 30px;
+    z-index: 3;
+}
+
+.club-light-image {
+    image-rendering: pixelated;
+    width: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    z-index: 1;
+}
+
+.club-light-beam {
+    --light-color: #00000000;
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    /* border-bottom: 300px solid rgba(0, 0, 0, 0.151); */
+    transform: translateX(-50%);
+}
+
+.club-light-beam::before {
+
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -50px;
+    width: 100px;
+    height: 450px;
+    background: linear-gradient(to bottom, var(--light-color), rgba(0, 0, 255, 0));
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+@keyframes swing {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(30deg);
+    }
+
+    75% {
+        transform: rotate(-30deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
 }
 
 @keyframes scoot-up {
@@ -216,6 +284,7 @@ ul {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    overflow: hidden;
 }
 
 .hidden {
@@ -266,6 +335,25 @@ ul {
     width: 64px;
     height: 64px;
     image-rendering: pixelated;
+}
+
+#DJ {
+    width: 100px;
+    top: 300px;
+    left: 350px;
+}
+
+#club-bug-banner {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    line-height: 24px;
+    padding-bottom: 0;
+    z-index: 4;
+}
+
+#club-bug-banner p {
+    font-size: 16px;
 }
 
 .club_bug_bg {

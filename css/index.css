@@ -398,10 +398,6 @@ li {
     transition: all 0.2s;
 }
 
-#ISS:hover {
-    cursor: pointer;
-}
-
 .ISS-orbit {
     position: absolute;
     width: 900px;
@@ -525,7 +521,7 @@ li {
 
 #ditherer:hover {
     cursor: pointer;
-    transform: rotate(-5deg) scale(1.5);
+    transform: rotate(-5deg) scale(1.3);
 }
 
 #ditherer img {
