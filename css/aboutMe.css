@@ -19,7 +19,7 @@
 }
 
 .window-body {
-    width: 500px;
+    width: 510px;
     height: 400px;
     background-color: black;
     padding: 1rem 1rem 0 1rem;
@@ -27,7 +27,7 @@
     flex-direction: column;
     justify-content: flex-start;
     position: relative;
-    border-radius: 5px;
+    border-radius: 15px;
 }
 
 .row {
@@ -63,8 +63,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-
-
 }
 
 .pronouns {
@@ -73,7 +71,7 @@
 
 .window-hole {
     background-color: white;
-    width: 500px;
+    width: 100%;
     height: 200px;
     margin-top: 1rem;
     display: flex;
@@ -111,6 +109,8 @@
     background-color: white;
     min-width: 120px;
     min-height: 120px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     filter: hue-rotate(25deg);
 }
