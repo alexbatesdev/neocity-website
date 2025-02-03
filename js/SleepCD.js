@@ -181,7 +181,7 @@ const clicked = (new_track_number) => {
     pause_button.innerHTML = 'Pause';
     if (last_track_number != new_track_number) {
         if (audio != null) audio.pause();
-        audio = new Audio(`https://github.com/Mcbuzzerr/neocity-website/raw/master/Sleep%20CD/${new_track_number}%20Track%20${new_track_number}.mp3`);
+        audio = new Audio(`https://github.com/Mcbuzzerr/neocity-website/raw/master/music/Sleep%20CD/${new_track_number}%20Track%20${new_track_number}.mp3`);
 
         updateDurationText();
         updateProgressBar();

@@ -238,87 +238,87 @@ let song_data_absolute = [
     {
         "name": "Guy Gets Promoted / End Title",
         "artist": "Tom Hiel",
-        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/Sleep%20CD/01%20Track%2001.mp3"
+        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/music/Sleep%20CD/01%20Track%2001.mp3"
     },
     {
         "name": "The Singing Sea",
         "artist": "Tulivu-Donna Cumberbatch",
-        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/Sleep%20CD/02%20Track%2002.mp3"
+        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/music/Sleep%20CD/02%20Track%2002.mp3"
     },
     {
         "name": "La Valse d'Amelie",
         "artist": "Yann Tiersen",
-        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/Sleep%20CD/03%20Track%2003.mp3"
+        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/music/Sleep%20CD/03%20Track%2003.mp3"
     },
     {
         "name": "Come Undone",
         "artist": "Duran Duran",
-        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/Sleep%20CD/04%20Track%2004.mp3"
+        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/music/Sleep%20CD/04%20Track%2004.mp3"
     },
     {
         "name": "This Is a Lie",
         "artist": "The Cure",
-        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/Sleep%20CD/05%20Track%2005.mp3"
+        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/music/Sleep%20CD/05%20Track%2005.mp3"
     },
     {
         "name": "Millennia",
         "artist": "Hotel de Ville",
-        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/Sleep%20CD/06%20Track%2006.mp3"
+        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/music/Sleep%20CD/06%20Track%2006.mp3"
     },
     {
         "name": "Trust",
         "artist": "The Cure",
-        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/Sleep%20CD/07%20Track%2007.mp3"
+        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/music/Sleep%20CD/07%20Track%2007.mp3"
     },
     {
         "name": "Perfect Disguise",
         "artist": "Modest Mouse",
-        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/Sleep%20CD/08%20Track%2008.mp3"
+        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/music/Sleep%20CD/08%20Track%2008.mp3"
     },
     {
         "name": "The Last Beat of My Heart",
         "artist": "Siouxsie and the Banshees",
-        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/Sleep%20CD/09%20Track%2009.mp3"
+        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/music/Sleep%20CD/09%20Track%2009.mp3"
     },
     {
         "name": "The World Has Turned and Left Me Here",
         "artist": "Christopher John",
-        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/Sleep%20CD/10%20Track%2010.mp3"
+        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/music/Sleep%20CD/10%20Track%2010.mp3"
     },
     {
         "name": "Moonlight Sonata",
         "artist": "Depeche Mode",
-        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/Sleep%20CD/11%20Track%2011.mp3"
+        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/music/Sleep%20CD/11%20Track%2011.mp3"
     },
     {
         "name": "Fear of the South",
         "artist": "Tin Hat Trio",
-        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/Sleep%20CD/12%20Track%2012.mp3"
+        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/music/Sleep%20CD/12%20Track%2012.mp3"
     },
     {
         "name": "One More Time",
         "artist": "The Cure",
-        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/Sleep%20CD/13%20Track%2013.mp3"
+        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/music/Sleep%20CD/13%20Track%2013.mp3"
     },
     {
         "name": "Max Payne 2 Theme",
         "artist": "Kärtsy Hatakka & Kimmo Kajasto",
-        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/Sleep%20CD/14%20Track%2014.mp3"
+        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/music/Sleep%20CD/14%20Track%2014.mp3"
     },
     {
         "name": "If Only Tonight We Could Sleep",
         "artist": "The Cure",
-        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/Sleep%20CD/15%20Track%2015.mp3"
+        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/music/Sleep%20CD/15%20Track%2015.mp3"
     },
     {
         "name": "This Side of the Blue",
         "artist": "Joanna Newsom",
-        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/Sleep%20CD/16%20Track%2016.mp3"
+        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/music/Sleep%20CD/16%20Track%2016.mp3"
     },
     {
         "name": "Playground Love",
         "artist": "Air",
-        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/Sleep%20CD/17%20Track%2017.mp3"
+        "url": "https://github.com/alexbatesdev/neocity-website/raw/master/music/Sleep%20CD/17%20Track%2017.mp3"
     }
 ];
 // Song files hosted on nekoweb >🐢

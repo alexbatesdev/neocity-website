@@ -239,7 +239,7 @@ const showClubBug = () => {
     }, 500);
 
     // Array of music file paths
-    const musicFiles = ['./music/Bug Songs/bug_club.mp3', './music/Bug Songs/party_at_club_bug.mp3'];
+    const musicFiles = ['https://github.com/alexbatesdev/neocity-website/raw/master/music/Bug%20Songs/bug_club.mp3', 'https://github.com/alexbatesdev/neocity-website/raw/master/music/Bug%20Songs/party_at_club_bug.mp3'];
     let currentTrackIndex = 0;
 
 

@@ -4,9 +4,6 @@
 [submodule "DarknessMaze"]
 	path = DarknessMaze
 	url = https://github.com/alexbatesdev/DarknessMaze.git
-[submodule "daily-checkers-frontend"]
-	path = daily-checkers-frontend
-	url = https://github.com/alexbatesdev/daily-checkers-frontend.git
 [submodule "NekkoPlat"]
 	path = NekkoPlat
 	url = https://github.com/alexbatesdev/NekkoPlat.git
