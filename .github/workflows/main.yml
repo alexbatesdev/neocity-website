@@ -35,7 +35,7 @@ jobs:
           put -O / "$file"
           bye
           EOF
-          sleep 2  # Add a 2-second delay between uploads
+          sleep 4  # Add a 4-second delay between uploads
         done
 
 # End of code written by an AI assistant.
