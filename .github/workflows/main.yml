@@ -21,6 +21,7 @@
             FTP_HOST: "ftp.nekoweb.org:30000"
             FTP_USER: ${{ secrets.FTP_USERNAME }}
             FTP_PASS: ${{ secrets.FTP_PASSWORD }}
+          shell: bash
           run: |
             # Fetch full list of remote files with sizes
             lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" -e "find -l; bye" > remote_files.txt
