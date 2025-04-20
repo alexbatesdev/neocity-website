@@ -1,36 +1,51 @@
 # --- Written by an AI assistant ---
-name: Upload to FTP
+  name: Upload to FTP
 
-on:
-  push:
-    branches:
-      - nekoweb
-
-jobs:
-  ftp-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-
-      - name: Install lftp
-        run: sudo apt-get update && sudo apt-get install -y lftp
-
-      - name: Upload via FTP with throttling
-        env:
-          FTP_HOST: "ftp.nekoweb.org:30000"
-          FTP_USER: ${{ secrets.FTP_USERNAME }}
-          FTP_PASS: ${{ secrets.FTP_PASSWORD }}
-        run: |
-          find . -type f ! -path '*/\.*' | while read file; do
-            remote_path="${file#./}"
-            # Skip if file exists with same size
-            if lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" -e "cls -l --sort=name \"$remote_path\"; bye" | grep -q "$(stat -c%s "$file")"; then
-              echo "Skipping $file (already exists)"
-              continue
-            fi
-            echo "Uploading $file"
-            lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" -e "put -O $(dirname "$remote_path") \"$file\"; bye"
-            sleep 4  # ~250 uploads per 15 minutes
-          done
-# --- End of code written by an AI assistant ---
+  on:
+    push:
+      branches:
+        - nekoweb
+  
+  jobs:
+    ftp-deploy:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout repo
+          uses: actions/checkout@v3
+  
+        - name: Install lftp
+          run: sudo apt-get update && sudo apt-get install -y lftp
+  
+        - name: Upload via FTP with throttling
+          env:
+            FTP_HOST: "ftp.nekoweb.org:30000"
+            FTP_USER: ${{ secrets.FTP_USERNAME }}
+            FTP_PASS: ${{ secrets.FTP_PASSWORD }}
+          run: |
+            # Fetch full list of remote files with sizes
+            lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" -e "find -l; bye" > remote_files.txt
+  
+            # Build associative array: path -> size
+            declare -A remote_file_sizes
+            while read -r line; do
+              size=$(echo "$line" | awk '{print $5}')
+              path=$(echo "$line" | awk '{for (i=9; i<=NF; i++) printf $i (i<NF?" ":""); print ""}')
+              [[ "$path" == .* ]] && continue  # skip hidden remote files
+              remote_file_sizes["$path"]=$size
+            done < remote_files.txt
+  
+            # Loop through local files
+            find . -type f ! -path '*/\.*' | while read -r file; do
+              remote_path="${file#./}"
+              local_size=$(stat -c%s "$file")
+              remote_size=${remote_file_sizes["$remote_path"]}
+              if [[ "$remote_size" == "$local_size" ]]; then
+                echo "Skipping $file (same size)"
+                continue
+              fi
+              echo "Uploading $file"
+              lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" -e "mkdir -p $(dirname "$remote_path"); put -O $(dirname "$remote_path") \"$file\"; bye"
+              sleep 4  # ~250 uploads per 15 minutes
+            done
+  # --- End of code written by an AI assistant ---
+  
