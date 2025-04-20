@@ -1,6 +1,10 @@
 # --- Written by an AI assistant ---
   name: Upload to FTP
 
+  concurrency:
+    group: ftp-deploy
+    cancel-in-progress: false
+
   on:
     push:
       branches:
