@@ -20,9 +20,6 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install dependencies
-        run: pip install ftplib
-
       - name: Run FTP upload script
         env:
           FTP_HOST: "ftp.nekoweb.org:30000"
