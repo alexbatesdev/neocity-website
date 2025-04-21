@@ -31,9 +31,10 @@
           run: |
             set -e
   
-            # Run dry-run and capture output to a file
+            echo "Running dry-run mirror..."
             lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" -e "
               set ftp:ssl-allow no
+              set cmd:fail-exit yes
               mirror --reverse \
                      --exclude-glob .git* \
                      --exclude-glob '*/.*' \
@@ -42,16 +43,20 @@
                      --dry-run \
                      ./ / 
               bye
-            " > mirror_plan.txt
+            " | tee mirror_plan.txt
   
-            # Extract files that need uploading
-            grep '^Transferring file' mirror_plan.txt | awk '{print $3}' > to_upload.txt || true
+            echo "----- Mirror dry-run output -----"
+            cat mirror_plan.txt
+  
+            echo "Extracting files to upload..."
+            grep -E '^Transferring file' mirror_plan.txt | awk '{print $3}' > to_upload.txt || true
   
             if [ ! -s to_upload.txt ]; then
-              echo "No files to upload."
+              echo "✅ No files to upload. Exiting."
               exit 0
             fi
   
+            echo "Starting throttled upload..."
             count=0
             while read -r file; do
               [ -z "$file" ] && continue
