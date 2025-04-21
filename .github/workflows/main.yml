@@ -1,61 +1,74 @@
 # --- Written by an AI assistant ---
-name: Upload to FTP
+  name: Upload to FTP
 
-concurrency:
-  group: ftp-deploy
-  cancel-in-progress: false
-
-on:
-  push:
-    branches:
-      - nekoweb
-
-jobs:
-  ftp-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo (with submodules)
-        uses: actions/checkout@v3
-        with:
-          submodules: recursive
-
-      - name: Install lftp
-        run: sudo apt-get update && sudo apt-get install -y lftp
-
-      - name: Upload via FTP with throttling
-        env:
-          FTP_HOST: "ftp.nekoweb.org:30000"
-          FTP_USER: ${{ secrets.FTP_USERNAME }}
-          FTP_PASS: ${{ secrets.FTP_PASSWORD }}
-        shell: bash
-        run: |
-            # Dry-run to get changed files
-            lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" <<EOF
-            set ftp:ssl-allow no
-            mirror --reverse \
-                  --exclude-glob .git* \
-                  --exclude-glob "*/.*" \
-                  --exclude .DS_Store \
-                  --only-newer \
-                  --dry-run \
-                  ./ / | tee mirror_plan.txt
-            bye
-            EOF
-
-            # Extract changed files
-            grep '^Transferring file' mirror_plan.txt | awk '{print $3}' > to_upload.txt
-
-            # Throttled upload loop
+  concurrency:
+    group: ftp-deploy
+    cancel-in-progress: false
+  
+  on:
+    push:
+      branches:
+        - nekoweb
+  
+  jobs:
+    ftp-deploy:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout repo (with submodules)
+          uses: actions/checkout@v3
+          with:
+            submodules: recursive
+  
+        - name: Install lftp
+          run: sudo apt-get update && sudo apt-get install -y lftp
+  
+        - name: Upload via FTP with throttling
+          env:
+            FTP_HOST: "ftp.nekoweb.org:30000"
+            FTP_USER: ${{ secrets.FTP_USERNAME }}
+            FTP_PASS: ${{ secrets.FTP_PASSWORD }}
+          shell: bash
+          run: |
+            set -e
+  
+            # Run dry-run and capture output to a file
+            lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" -e "
+              set ftp:ssl-allow no
+              mirror --reverse \
+                     --exclude-glob .git* \
+                     --exclude-glob '*/.*' \
+                     --exclude .DS_Store \
+                     --only-newer \
+                     --dry-run \
+                     ./ / 
+              bye
+            " > mirror_plan.txt
+  
+            # Extract files that need uploading
+            grep '^Transferring file' mirror_plan.txt | awk '{print $3}' > to_upload.txt || true
+  
+            if [ ! -s to_upload.txt ]; then
+              echo "No files to upload."
+              exit 0
+            fi
+  
             count=0
             while read -r file; do
-              dir=$(dirname "$file")
+              [ -z "$file" ] && continue
+              local_path="./$file"
+              remote_dir=$(dirname "$file")
+  
+              echo "Uploading $file"
               lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" -e "
-                mkdir -p \"$dir\"
-                put -O \"$dir\" \"$file\"
-                bye"
-              
+                set ftp:ssl-allow no
+                mkdir -f \"$remote_dir\"
+                put -O \"$remote_dir\" \"$local_path\"
+                bye
+              "
+  
               ((++count))
               echo "Uploaded $file ($count/250)"
-              sleep 4  # or adjust based on total edits
+              sleep 4  # approx 250 edits per 15 minutes
             done < to_upload.txt
-
+  # --- End of code written by an AI assistant ---
+  
