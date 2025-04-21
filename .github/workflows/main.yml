@@ -3,7 +3,7 @@ name: FTP Upload
 on:
   push:
     branches:
-      - main
+      - nekoweb
 
 jobs:
   upload:
