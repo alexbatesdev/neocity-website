@@ -6,6 +6,7 @@ from pathlib import Path
 
 # FTP server credentials
 FTP_HOST = os.environ.get("FTP_HOST")
+print(FTP_HOST)
 FTP_USER = os.environ.get("FTP_USER")
 FTP_PASS = os.environ.get("FTP_PASS")
 
