@@ -38,8 +38,6 @@
               mirror --reverse \
                      --exclude-glob .git* \
                      --exclude-glob '*/.*' \
-                     --exclude .DS_Store \
-                     --only-newer \
                      --dry-run \
                      ./ / 
               bye
@@ -50,6 +48,8 @@
   
             echo "Extracting files to upload..."
             grep -E '^Transferring file' mirror_plan.txt | awk '{print $3}' > to_upload.txt || true
+            echo "Files to upload:"
+            cat to_upload.txt
   
             if [ ! -s to_upload.txt ]; then
               echo "✅ No files to upload. Exiting."
