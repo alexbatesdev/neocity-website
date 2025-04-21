@@ -23,7 +23,7 @@
           run: sudo apt-get update && sudo apt-get install -y lftp
   
         - name: Restore previous upload cache
-          uses: actions/download-artifact@v3
+          uses: actions/download-artifact@v3.0.2
           with:
             name: uploadcache
           continue-on-error: true
