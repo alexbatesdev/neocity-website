@@ -1,78 +1,32 @@
-# --- Written by an AI assistant ---
-  name: Upload to FTP
+name: FTP Upload
 
-  concurrency:
-    group: ftp-deploy
-    cancel-in-progress: false
-  
-  on:
-    push:
-      branches:
-        - nekoweb
-  
-  jobs:
-    ftp-deploy:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout repo (with submodules)
-          uses: actions/checkout@v3
-          with:
-            submodules: recursive
-  
-        - name: Install lftp
-          run: sudo apt-get update && sudo apt-get install -y lftp
-  
-        - name: Upload via FTP with throttling
-          env:
-            FTP_HOST: "ftp.nekoweb.org:30000"
-            FTP_USER: ${{ secrets.FTP_USERNAME }}
-            FTP_PASS: ${{ secrets.FTP_PASSWORD }}
-          shell: bash
-          run: |
-            set -e
-  
-            echo "Running dry-run mirror..."
-            lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" -e "
-              set ftp:ssl-allow no
-              set cmd:fail-exit yes
-              mirror --exclude-glob .git* \
-                     --exclude-glob '*/.*' \
-                     --dry-run \
-                     ./ / 
-              bye
-            " | tee mirror_plan.txt
-  
-            echo "----- Mirror dry-run output -----"
-            cat mirror_plan.txt
-  
-            echo "Extracting files to upload..."
-            grep -E '^Transferring file' mirror_plan.txt | awk '{print $3}' > to_upload.txt || true
-            echo "Files to upload:"
-            cat to_upload.txt
-  
-            if [ ! -s to_upload.txt ]; then
-              echo "✅ No files to upload. Exiting."
-              exit 0
-            fi
-  
-            echo "Starting throttled upload..."
-            count=0
-            while read -r file; do
-              [ -z "$file" ] && continue
-              local_path="./$file"
-              remote_dir=$(dirname "$file")
-  
-              echo "Uploading $file"
-              lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" -e "
-                set ftp:ssl-allow no
-                mkdir -f \"$remote_dir\"
-                put -O \"$remote_dir\" \"$local_path\"
-                bye
-              "
-  
-              ((++count))
-              echo "Uploaded $file ($count/250)"
-              sleep 4  # approx 250 edits per 15 minutes
-            done < to_upload.txt
-  # --- End of code written by an AI assistant ---
-  
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          submodules: true  # Ensure submodules are checked out
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install ftplib
+
+      - name: Run FTP upload script
+        env:
+          FTP_HOST: "ftp.nekoweb.org:30000"
+          FTP_USER: ${{ secrets.FTP_USERNAME }}
+          FTP_PASS: ${{ secrets.FTP_PASSWORD }}
+          FORCE_UPLOAD: "false"  # Set to "true" to enable force upload
+        run: python .github/scripts/ftp_upload.py
