@@ -22,58 +22,50 @@
         - name: Install lftp
           run: sudo apt-get update && sudo apt-get install -y lftp
   
-        - name: Upload via FTP with throttling
+        - name: Restore previous upload cache
+          uses: actions/download-artifact@v3
+          with:
+            name: uploadcache
+          continue-on-error: true
+  
+        - name: Generate file hash list
+          run: |
+            find . -type f ! -path '*/.*' -exec md5sum {} \; | sort > current_uploadcache.txt
+  
+        - name: Determine changed files
+          run: |
+            touch uploadcache.txt  # fallback if cache is missing
+            comm -23 current_uploadcache.txt uploadcache.txt | awk '{$1=""; print substr($0,2)}' > changed_files.txt
+            head -n 250 changed_files.txt > to_upload.txt
+  
+        - name: Upload changed files via FTP (max 250)
           env:
             FTP_HOST: "ftp.nekoweb.org:30000"
             FTP_USER: ${{ secrets.FTP_USERNAME }}
             FTP_PASS: ${{ secrets.FTP_PASSWORD }}
           shell: bash
           run: |
-            set -e
-  
-            echo "Running dry-run mirror..."
-            lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" -e "
-              set ftp:ssl-allow no
-              set cmd:fail-exit yes
-              mirror --reverse \
-                     --exclude-glob .git* \
-                     --exclude-glob '*/.*' \
-                     --dry-run \
-                     ./ / 
-              bye
-            " | tee mirror_plan.txt
-  
-            echo "----- Mirror dry-run output -----"
-            cat mirror_plan.txt
-  
-            echo "Extracting files to upload..."
-            grep -E '^Transferring file' mirror_plan.txt | awk '{print $3}' > to_upload.txt || true
-            echo "Files to upload:"
-            cat to_upload.txt
-  
-            if [ ! -s to_upload.txt ]; then
-              echo "✅ No files to upload. Exiting."
-              exit 0
-            fi
-  
-            echo "Starting throttled upload..."
             count=0
             while read -r file; do
-              [ -z "$file" ] && continue
-              local_path="./$file"
-              remote_dir=$(dirname "$file")
-  
+              dir=$(dirname "$file")
               echo "Uploading $file"
               lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" -e "
                 set ftp:ssl-allow no
-                mkdir -f \"$remote_dir\"
-                put -O \"$remote_dir\" \"$local_path\"
-                bye
-              "
-  
+                mkdir -p \"$dir\"
+                put -O \"$dir\" \"$file\"
+                bye"
               ((++count))
               echo "Uploaded $file ($count/250)"
-              sleep 4  # approx 250 edits per 15 minutes
+              sleep 4
             done < to_upload.txt
+  
+        - name: Save updated upload cache
+          run: cp current_uploadcache.txt uploadcache.txt
+  
+        - name: Persist updated upload cache
+          uses: actions/upload-artifact@v3
+          with:
+            name: uploadcache
+            path: uploadcache.txt
   # --- End of code written by an AI assistant ---
   
