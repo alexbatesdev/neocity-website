@@ -33,7 +33,6 @@ body {
     z-index: 1;
     overflow-x: auto;
     padding: 2rem 0;
-    position: relative;
 }
 
 .header {
@@ -376,8 +375,9 @@ li {
     z-index: 2;
 }
 
-#link-img {
+#link-img, #tingle-img {
     height: 90%;
+    cursor: pointer;
 }
 
 .tv-outer {
@@ -449,27 +449,47 @@ li {
     animation: spin 2s ease-in-out infinite;
 }
 
-.globe {
+.dasun {
     position: absolute;
-    background-image: url("../img/Rotating_earth_animated_transparent_small.gif");
+    background-image: url("../img/da-sun.png");
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: center;
-    right: 0;
-    bottom: 0;
-    width: 600px;
-    transform: translate(40%, 40%) rotate(30deg);
+    left: calc(15vw - 200px);
+    top: calc(25vh - 200px);
+    width: 400px;
     aspect-ratio: 1/1;
-    transition: all 0.2s;
+}
+
+.damoon {
+    position: absolute;
+    background-image: url("../img/da-moon.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    right: calc(15vw - 200px);
+    bottom: calc(0vh - 200px);
+    width: 300px;
+    aspect-ratio: 1/1;
+}
+
+.globe {
+    position: absolute;
+    background-image: url("../img/Rotating_earth_animated_transparent_small.gif");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    right: calc(25vw - 200px);
+    top: calc(65vh - 200px);
+    width: 400px;
+    aspect-ratio: 1/1;
     border-radius: 50%;
-    z-index: 1;
-    transform: translate(40%, 40%, -1px) rotate(30deg);
 }
 
 .globe:hover {
     cursor: pointer;
     box-shadow: 0 0 40px #3157ff inset;
-    transform: translate(40%, 40%) rotate(30deg) scale(1.1);
+    transform: rotate(30deg) scale(1.1);
 }
 
 .webring-info {
@@ -579,4 +599,12 @@ li {
     top: 3rem;
     left: 2rem;
     font-size: 1.5rem;
+}
+
+.skip-clickevent {
+    pointer-events: none !important; /* disables pointer events for the container */
+}
+
+.skip-clickevent > * {
+    pointer-events: auto; /* re-enables pointer events for all direct children */
 }

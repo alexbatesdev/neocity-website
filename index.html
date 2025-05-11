@@ -53,7 +53,7 @@
 
 <body class="page-body">
     <div class="body retro-scrollbar">
-        <div class="flex-tricolumn">
+        <div class="flex-tricolumn skip-clickevent">
             <div class="flex-column risen-column" id="left-column">
                 <div class="profile-picture-container">
                     <a href="AboutMe.html">
@@ -89,7 +89,20 @@
                     <img src="./img/dithered_image (6).png" />
                     <img src="./img/GSUC9JnXcAA8ti7.png" class="phase-in-out-animation" />
                 </a>
-                <img src="./img/TWW_Link_Outset_Clothes_Artwork.png" id="link-img" width="100px" />
+                <img id="link-img" src="./img/TWW_Link_Outset_Clothes_Artwork.png" width="100px" onclick="
+                        const filepaths = [
+                            'WW_Link_Attack1.wav',
+                            'WW_Link_Attack2.wav',
+                            'WW_Link_Attack3.wav',
+                            'WW_Link_Attack4.wav',
+                            'WW_Link_PowerAttack1.wav',
+                            'WW_Link_PowerAttack2.wav',
+                            'WW_Link_PowerAttack3.wav',
+                        ]
+                        const randomIndex = Math.floor(Math.random() * filepaths.length);
+                        const randomFilepath = filepaths[randomIndex];
+                        playSoundEffect(randomFilepath);
+                    " />
 
             </div>
             <div class="flex-column wide-column">
@@ -177,6 +190,19 @@
                     <div class="switch-panel-content sw-panel-a retro-scrollbar">
                         <!-- https://chatgpt.com/c/910187da-f65d-4bb9-9cf4-314847817279 -->
                         <ul>
+                            <li>
+                                <strong>
+                                    5/11/2025
+                                </strong>
+                                New update to the homepage! I've felt like updating the more traditional website bits
+                                recently, so I decided to fix the homepage a lil! The planet in the bottom right has
+                                been kinda annoying with it in your face, so I moved it to the background! I also added
+                                the sun and moon from soul eater, and all of these celestial bodies have parallax scroll
+                                effect shenanigans! I think they make this place much livelier! I also just recently
+                                finished reading Fire Force and Soul Eater, in my head I'm kinda imagining this like
+                                unlocking an xbox 360 avatar item from a game via an achievement but my unlock is the
+                                sun and moon on my site and my achievement was reading the manga!
+                            </li>
                             <li>
                                 <strong>
                                     4/20/2025
@@ -482,7 +508,7 @@
                     </div>
                 </div>
             </div>
-            <div class="flex-column risen-column" id="right-column">
+            <div class="flex-column risen-column skip-clickevent" id="right-column">
                 <div class="links-container card">
                     <ul class="navigation-list">
                         <li>
@@ -511,7 +537,8 @@
                 <div class="sleepCD" onclick="window.location.href='SleepCD.html'">
 
                 </div>
-                <img src="./img/FSA_Tingle_Balloon.png" id="link-img" width="100px" />
+                <img id="tingle-img" width="100px" src="./img/FSA_Tingle_Balloon.png"
+                    onclick="playSoundEffect('WW_Tingle_Wow.wav')" />
             </div>
         </div>
         <img onclick="window.location.href = 'kitkat.html'" src="./img/banner_deco_crop_rotate.gif" class="kitkat">
@@ -535,15 +562,19 @@
                 <img src="./img/DS DSi - Flipnote Studio - HOME Menu Icon.png" />
             </a>
         </marquee>
+        <div class="dasun plax z-50">
+        </div>
+        <div class="damoon plax z25">
+        </div>
+        <div class="globe plax z-1" onclick="window.location.href='cool-places.html'">
+        </div>
     </div>
     <marquee scrollamount="20" id="space-path">
         <img src="./img/spaceship.gif" alt="spaceship" id="spacecraft">
     </marquee>
-    <marquee class="ISS-orbit" direction="right" scrollamount="10">
+    <!-- <marquee class="ISS-orbit" direction="right" scrollamount="10">
         <img src="./img/SpaceStation_small.png" id="ISS" />
-    </marquee>
-    <div class="globe" onclick="window.location.href='cool-places.html'">
-    </div>
+    </marquee> -->
     </div>
 </body>
 
