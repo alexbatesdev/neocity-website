@@ -38,6 +38,20 @@ def get_updated_files():
     )
     return result.stdout.strip().split("\n")
 
+def get_deleted_files():
+    """Get the list of files deleted in the latest commit."""
+    result = subprocess.run(
+        ["git", "diff", "--name-status", "HEAD~1", "HEAD"],
+        stdout=subprocess.PIPE,
+        text=True,
+    )
+    deleted_files = []
+    for line in result.stdout.strip().split("\n"):
+        if line.startswith("D"):
+            _, file = line.split("\t", 1)
+            deleted_files.append(file)
+    return deleted_files
+
 def upload_files(files):
     """Upload files to the FTP server."""
     if dry_run:
@@ -80,6 +94,30 @@ def upload_files(files):
 
     ftp.quit()
 
+def delete_files_from_ftp(files):
+    """Delete files from the FTP server."""
+    if dry_run:
+        print("Dry run enabled. The following files would be deleted from FTP:")
+        for file in files:
+            print(f" - {file}")
+        return
+
+    ftp = FTP()
+    FTP_HOST = FTP_URL.split(":")[0]
+    FTP_PORT = int(FTP_URL.split(":")[1]) if ":" in FTP_URL else 21
+    ftp.connect(FTP_HOST, FTP_PORT)
+    ftp.login(FTP_USER, FTP_PASS)
+
+    for file in files:
+        remote_path = os.path.join("/", file).replace("\\", "/")
+        try:
+            ftp.delete(remote_path)
+            print(f"Deleted from FTP: {file}")
+        except Exception as e:
+            print(f"Failed to delete {file} from FTP: {e}")
+
+    ftp.quit()
+
 def select_ignored_files(files):
     # Ignore files that are in the .gitignore
     ignored_files = []
@@ -104,12 +142,18 @@ if __name__ == "__main__":
         ignored_files = select_ignored_files(all_files)
         print(f"Ignored files: {ignored_files}")
         files_to_upload = [file for file in all_files if file not in ignored_files]
+        files_to_delete = []  # No deletions in force upload
     else:
         print("Uploading only updated files...")
         files_to_upload = get_updated_files()
+        files_to_delete = get_deleted_files()
 
     if files_to_upload:
-        # print(f"Files to upload: {files_to_upload}")
         upload_files(files_to_upload)
     else:
         print("No files to upload.")
+
+    if files_to_delete:
+        delete_files_from_ftp(files_to_delete)
+    elif not files_to_upload:
+        print("No files to delete.")
