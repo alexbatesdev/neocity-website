@@ -414,7 +414,7 @@ li {
     height: 295px;
     width: 100px;
     top: 25%;
-    left: 0;
+    right: 16px;
     transition: all 0.2s;
     transform: translateY(-50%);
     z-index: 1;
@@ -422,7 +422,7 @@ li {
 
 .kitkat:hover {
     cursor: pointer;
-    transform: translate(6px, -50%) scale(1.1);
+    transform: translate(-5px, -50%) scale(1.1);
 }
 
 @keyframes spin {

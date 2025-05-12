@@ -194,12 +194,27 @@ br {
   pointer-events: none;
 }
 
+.dakitkat {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-image: url("/home/img/banner_deco_crop_rotate.png");
+  height: 295px;
+  width: 100px;
+  transform: scale(0.8) translate(100%, -20%) rotate(180deg);
+  z-index: -1;
+}
+
 @media screen and (max-width: 768px) {
   body {
     padding: 10px;
   }
 
-  .dasun, .damoon, .profile-picture-container, textarea {
+  .dasun,
+  .damoon,
+  .profile-picture-container,
+  .dakitkat,
+  textarea {
     display: none;
   }
 

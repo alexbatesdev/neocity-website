@@ -101,6 +101,12 @@ def upload_files(files):
                 break  # Success, exit retry loop
             except Exception as e:
                 error_str = str(e)
+                # If directory does not exist, create it and retry immediately
+                if ("550" in error_str and "No such file or directory" in error_str):
+                    print(f"Directory missing for {file}, creating directories and retrying...")
+                    ensure_ftp_dirs(ftp, remote_path)
+                    retries += 1
+                    continue
                 if ("550" in error_str or "Broken pipe" in error_str) and retries < MAX_RETRIES:
                     wait_time = RETRY_WAIT * (retries + 1)
                     print(f"Error uploading {file}: {e}. Retrying in {wait_time} seconds... (Attempt {retries+1}/{MAX_RETRIES})")
@@ -226,7 +232,7 @@ if __name__ == "__main__":
         ignored_files = select_ignored_files(all_files)
         print(f"Ignored files: {ignored_files}")
         files_to_upload = [file for file in all_files if file not in ignored_files]
-        files_to_delete = []  # No deletions in force upload
+        files_to_delete = get_deleted_files()
     else:
         print("Uploading only updated files...")
         files_to_upload = get_updated_files()
