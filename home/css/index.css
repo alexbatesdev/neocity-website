@@ -472,6 +472,7 @@ h1.header {
     top: calc(25vh - 200px);
     width: 400px;
     aspect-ratio: 1/1;
+    pointer-events: none;
 }
 
 .damoon {
@@ -484,6 +485,7 @@ h1.header {
     bottom: calc(0vh - 200px);
     width: 300px;
     aspect-ratio: 1/1;
+    pointer-events: none;
 }
 
 .globe {
