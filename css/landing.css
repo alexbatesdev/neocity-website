@@ -1,0 +1,206 @@
+body {
+  background-color: #baf;
+  background-image: url("../img/space-bg-2.gif");
+  max-width: 100vw;
+  max-height: 100vh;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  perspective: 1px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20vw;
+}
+
+.card {
+  background-color: #d5e3ff;
+  border: double 5px #000;
+  outline-offset: -5px;
+  margin-bottom: 10px;
+}
+
+.header {
+  /* background-color: #0f0; */
+  text-align: center;
+  font-size: 3rem;
+  display: block;
+  position: relative;
+}
+
+h2 {
+  font-size: 2rem;
+  text-align: center;
+  margin: 0;
+}
+
+.outer-primary {
+  position: relative;
+  max-height: 82vh;
+}
+
+b {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+br {
+  line-height: 0.5rem;
+}
+
+.red {
+  color: rgb(189, 10, 10);
+}
+
+.primary {
+  height: 100%;
+  padding: 0 10px;
+  position: relative;
+  overflow-y: auto;
+}
+
+.card p {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 1.5rem;
+  padding: 5px 15px;
+  text-align: center;
+}
+
+.enter-link {
+  font-size: 1.5rem;
+  text-align: center;
+  display: block;
+}
+
+.enter-link:visited {
+  color: #19a529;
+}
+
+.flex-row {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.webrings-flex {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px;
+}
+
+.buttons-section {
+  max-width: 33%;
+}
+
+.buttons-flex {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
+  image-rendering: pixelated;
+  padding: 5px;
+}
+
+.my-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  padding: 5px;
+}
+
+.profile-picture-container {
+  min-width: 175px;
+  min-height: 175px;
+  background-color: #bcbcff;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  outline: double 5px #000;
+  outline-offset: -5px;
+  background-image: url("../img/hexabump.png");
+  margin-bottom: 10px;
+  position: absolute;
+  transform: translate(-100%, -60%) rotate(-10deg);
+  z-index: -1;
+}
+
+.profile-picture {
+  width: 120px;
+  margin-top: 5px;
+  outline: 3px black solid;
+  outline-offset: -3px;
+  filter: hue-rotate(25deg);
+}
+
+.profile-label {
+  margin-top: -2px;
+  width: 150px;
+  background-color: #d5e3ff;
+  font-size: 1.5rem;
+  border: double 5px #000;
+}
+
+.hexBackground {
+  background-image: url("../img/tiledIllusion.png");
+  background-size: 75%;
+}
+
+.dasun {
+  background-image: url("../img/da-sun.png");
+  background-size: contain;
+  width: 200px;
+  aspect-ratio: 1/1;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: absolute;
+  top: 0px;
+  right: -50px;
+  transform: translate(50%, -50%) rotate(40deg);
+  z-index: -1;
+}
+
+.damoon {
+  background-image: url("../img/da-moon-flipped.png");
+  background-size: contain;
+  width: 200px;
+  aspect-ratio: 1/1;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  transform: translate(-50%, 50%) rotate(10deg);
+  pointer-events: none;
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  .dasun, .damoon, .profile-picture-container, textarea {
+    display: none;
+  }
+
+  .header {
+    font-size: 2rem;
+  }
+
+  .enter-link {
+    padding: 0.5rem;
+  }
+}
