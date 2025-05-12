@@ -425,10 +425,13 @@ li {
     transform: translate(-5px, -50%) scale(1.1);
 }
 
+h1.header {
+    margin: 1rem 0;
+}
+
 .guest-book {
     width: 120%;
     height: 400px;
-    margin: 2rem 0;
 }
 
 @keyframes spin {
