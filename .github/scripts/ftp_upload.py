@@ -65,7 +65,7 @@ def ensure_ftp_dirs(ftp, remote_path):
             pass
 
 def upload_files(files):
-    """Upload files to the FTP server."""
+    """Upload files to the FTP server with retry on 550 errors and broken pipe."""
     if dry_run:
         print("Dry run enabled. The following files would be uploaded:")
         for file in files:
@@ -81,6 +81,8 @@ def upload_files(files):
 
     edits = 0
     start_time = time.time()
+    MAX_RETRIES = 5
+    RETRY_WAIT = 30  # seconds
 
     for file in files:
         if not os.path.isfile(file):
@@ -88,13 +90,34 @@ def upload_files(files):
 
         remote_path = os.path.join("/", file).replace("\\", "/")
         ensure_ftp_dirs(ftp, remote_path)
-        with open(file, "rb") as f:
+
+        retries = 0
+        while retries <= MAX_RETRIES:
             try:
-                ftp.storbinary(f"STOR {remote_path}", f)
+                with open(file, "rb") as f:
+                    ftp.storbinary(f"STOR {remote_path}", f)
                 print(f"Uploaded: {file}")
                 edits += 1
+                break  # Success, exit retry loop
             except Exception as e:
-                print(f"Failed to upload {file}: {e}")
+                error_str = str(e)
+                if ("550" in error_str or "Broken pipe" in error_str) and retries < MAX_RETRIES:
+                    wait_time = RETRY_WAIT * (retries + 1)
+                    print(f"Error uploading {file}: {e}. Retrying in {wait_time} seconds... (Attempt {retries+1}/{MAX_RETRIES})")
+                    time.sleep(wait_time)
+                    # Reconnect FTP in case of broken pipe
+                    try:
+                        ftp.quit()
+                    except Exception:
+                        pass
+                    ftp = FTP()
+                    ftp.connect(FTP_HOST, FTP_PORT)
+                    ftp.login(FTP_USER, FTP_PASS)
+                    ftp.voidcmd('TYPE I')
+                    retries += 1
+                else:
+                    print(f"Failed to upload {file}: {e}")
+                    break  # Give up after max retries or non-retryable error
 
         # Enforce rate limit
         if edits >= RATE_LIMIT:
@@ -149,6 +172,53 @@ def select_ignored_files(files):
                 break
     return ignored_files
 
+def list_ftp_files(ftp, base_dir="/"):
+    """Recursively list all files on the FTP server starting from base_dir."""
+    files = []
+    try:
+        items = []
+        ftp.retrlines(f'LIST {base_dir}', items.append)
+        for item in items:
+            parts = item.split()
+            name = parts[-1]
+            path = os.path.join(base_dir, name).replace("\\", "/")
+            if item.startswith('d'):  # Directory
+                if name not in ('.', '..'):
+                    files.extend(list_ftp_files(ftp, path))
+            else:
+                files.append(path.lstrip("/"))
+    except Exception as e:
+        print(f"Error listing FTP directory {base_dir}: {e}")
+    return files
+
+def delete_extra_ftp_files():
+    """Delete files from FTP that are not present locally."""
+    print("Checking for extra files on FTP server to delete...")
+    ftp = FTP()
+    FTP_HOST = FTP_URL.split(":")[0]
+    FTP_PORT = int(FTP_URL.split(":")[1]) if ":" in FTP_URL else 21
+    ftp.connect(FTP_HOST, FTP_PORT)
+    ftp.login(FTP_USER, FTP_PASS)
+
+    remote_files = list_ftp_files(ftp)
+    local_files = get_all_files()
+    ignored_files = select_ignored_files(local_files)
+    local_files_set = set([file.replace("\\", "/") for file in local_files if file not in ignored_files])
+
+    extra_files = [f for f in remote_files if f not in local_files_set]
+    if extra_files:
+        print("Deleting files from FTP not present locally:")
+        for file in extra_files:
+            try:
+                ftp.delete("/" + file)
+                print(f"Deleted from FTP: {file}")
+            except Exception as e:
+                print(f"Failed to delete {file} from FTP: {e}")
+    else:
+        print("No extra files to delete from FTP.")
+
+    ftp.quit()
+
 if __name__ == "__main__":
     if force_upload:
         print("Force upload enabled. Uploading all files...")
@@ -171,3 +241,6 @@ if __name__ == "__main__":
         delete_files_from_ftp(files_to_delete)
     elif not files_to_upload:
         print("No files to delete.")
+
+    # Remove extra files from FTP server that are not present locally
+    delete_extra_ftp_files()
