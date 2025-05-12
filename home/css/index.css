@@ -425,6 +425,12 @@ li {
     transform: translate(-5px, -50%) scale(1.1);
 }
 
+.guest-book {
+    width: 120%;
+    height: 400px;
+    margin: 2rem 0;
+}
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);
