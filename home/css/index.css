@@ -184,6 +184,10 @@ body {
     max-height: 350px;
 }
 
+.switch-panel-label {
+    font-weight: bold;
+}
+
 .welcome-container {
     width: calc(400px - 2rem);
     /* height: 300px; */
