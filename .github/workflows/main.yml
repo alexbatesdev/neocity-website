@@ -22,4 +22,4 @@ jobs:
           python-version: '3.x'
 
       - name: Run FTP upload script
-        run: python .github/scripts/ftp_upload.py ftp.nekoweb.org:30000 ${{ secrets.FTP_USERNAME }} ${{ secrets.FTP_PASSWORD }} true
+        run: python .github/scripts/ftp_upload.py ftp.nekoweb.org:30000 ${{ secrets.FTP_USERNAME }} ${{ secrets.FTP_PASSWORD }} false
