@@ -77,7 +77,6 @@ window.addEventListener('load', () => {
 });
 
 function calculateParallax(element) {
-    console.log('-----------------');
     const scrollContainer = document.querySelector('.retro-scrollbar');
     const PARALLAX_SENSITIVITY = 25;
     
@@ -94,9 +93,9 @@ function calculateParallax(element) {
     const depth = 100 + zIndex; // ensure no division by zero and avoid negatives
     const parallaxSpeed = depth / PARALLAX_SENSITIVITY; // Adjust the sensitivity as needed
 
-    console.log(`zIndex: ${zIndex}`);
-    console.log(`depth: ${depth}`);
-    console.log(`parallaxSpeed: ${parallaxSpeed}`);
+    // console.log(`zIndex: ${zIndex}`);
+    // console.log(`depth: ${depth}`);
+    // console.log(`parallaxSpeed: ${parallaxSpeed}`);
     // // log scrollContainer scrollHeight
     // console.log(`scrollContainer scrollHeight: ${scrollContainer.scrollHeight}`);
     // // log scrollContainer scrollTop
@@ -108,17 +107,14 @@ function calculateParallax(element) {
     // log normalized scroll position
     const normalizedScrollPosition = 1 - (scrollContainer.scrollTop / (scrollContainer.scrollHeight - scrollContainer.clientHeight));
 
-    console.log(`normalizedScrollPosition: ${normalizedScrollPosition}`);
+    // console.log(`normalizedScrollPosition: ${normalizedScrollPosition}`);
 
     // Calculate the new position of the element based on the scroll position and parallax speed
     const newPosition = (normalizedScrollPosition - 0.5) * parallaxSpeed * 100;
     // console.log(`newPosition: ${newPosition}`);
     // Apply the new position to the element
-    const computedStyle = window.getComputedStyle(element);
     element.style.transform = `translateY(${newPosition}px)`;
-    // console.log(computedStyle.transform);
-// matrix(1, 0, 0, 1, 0, 42.6357)
-// matrix(0.866025, 0.5, -0.5, 0.866025, 0, 0)
+
 
     
 }

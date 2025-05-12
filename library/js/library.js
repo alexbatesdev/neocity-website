@@ -151,7 +151,7 @@ for (let book of books) {
 }
 
 const goHome = (event) => {
-    window.location.href = "index.html";
+    window.location.href = "/home";
 }
 
 document.getElementById('rock').addEventListener('click', (event) => {

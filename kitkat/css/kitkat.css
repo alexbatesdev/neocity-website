@@ -5,7 +5,11 @@ body {
     position: relative;
     padding-top: 50px;
     box-shadow: inset 0px 85px 40px -20px #000;
+    background-image: linear-gradient(90deg, #b51214 25%, #9c1618 25%, #9c1618 50%, #b51214 50%, #b51214 75%, #9c1618 75%, #9c1618 100%);
+    background-size: 43.00px 10.00px;
 }
+
+
 
 h1 {
     font-size: 5em;

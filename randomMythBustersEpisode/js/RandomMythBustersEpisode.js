@@ -89,7 +89,7 @@ const generateRandomMythBustersEpisode = () => {
         document.getElementById("episode-plot").innerHTML = data.Plot == undefined ? "The database is missing some episodes, it may still exist idk check for yourself" : data.Plot;
 
         if (data.Poster == undefined) {
-            document.getElementsByClassName("tv-fullscreen")[0].href = "/dvd.html";
+            document.getElementsByClassName("tv-fullscreen")[0].href = "/dvd";
         } else {
             document.getElementsByClassName("tv-fullscreen")[0].href = "https://sflix.to/tv/free-mythbusters-hd-38891";
         }
