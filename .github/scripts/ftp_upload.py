@@ -52,6 +52,18 @@ def get_deleted_files():
             deleted_files.append(file)
     return deleted_files
 
+def ensure_ftp_dirs(ftp, remote_path):
+    """Ensure all directories in remote_path exist on the FTP server."""
+    dirs = remote_path.strip("/").split("/")[:-1]
+    path = ""
+    for d in dirs:
+        path += "/" + d
+        try:
+            ftp.mkd(path)
+        except Exception as e:
+            # Directory may already exist, ignore error
+            pass
+
 def upload_files(files):
     """Upload files to the FTP server."""
     if dry_run:
@@ -65,6 +77,7 @@ def upload_files(files):
     FTP_PORT = int(FTP_URL.split(":")[1]) if ":" in FTP_URL else 21
     ftp.connect(FTP_HOST, FTP_PORT)
     ftp.login(FTP_USER, FTP_PASS)
+    ftp.voidcmd('TYPE I')  # Set binary mode
 
     edits = 0
     start_time = time.time()
@@ -73,8 +86,9 @@ def upload_files(files):
         if not os.path.isfile(file):
             continue  # Skip directories or non-existent files
 
+        remote_path = os.path.join("/", file).replace("\\", "/")
+        ensure_ftp_dirs(ftp, remote_path)
         with open(file, "rb") as f:
-            remote_path = os.path.join("/", file).replace("\\", "/")
             try:
                 ftp.storbinary(f"STOR {remote_path}", f)
                 print(f"Uploaded: {file}")
