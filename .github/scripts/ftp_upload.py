@@ -21,13 +21,37 @@ def get_all_files():
     # Update submodules
     subprocess.run(["git", "submodule", "update", "--init", "--recursive"], check=True)
 
-    # Get all tracked files
+    # Get all tracked files in the main repo
     result = subprocess.run(
         ["git", "ls-files"],
         stdout=subprocess.PIPE,
         text=True,
     )
-    return result.stdout.strip().split("\n")
+    files = result.stdout.strip().split("\n")
+
+    # Get all submodule paths
+    submodules = subprocess.run(
+        ["git", "config", "--file", ".gitmodules", "--get-regexp", "path"],
+        stdout=subprocess.PIPE,
+        text=True,
+    )
+    submodule_paths = [line.split(" ")[1] for line in submodules.stdout.strip().split("\n") if line]
+
+    # Get tracked files in each submodule
+    for submodule in submodule_paths:
+        if not os.path.isdir(submodule):
+            continue
+        sub_result = subprocess.run(
+            ["git", "ls-files"],
+            cwd=submodule,
+            stdout=subprocess.PIPE,
+            text=True,
+        )
+        sub_files = sub_result.stdout.strip().split("\n")
+        # Prepend submodule path to each file
+        files.extend([os.path.join(submodule, f).replace("\\", "/") for f in sub_files if f])
+
+    return [f for f in files if f]
 
 def get_updated_files():
     """Get the list of files updated in the latest commit."""
