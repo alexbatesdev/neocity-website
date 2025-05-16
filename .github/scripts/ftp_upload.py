@@ -235,7 +235,7 @@ def sync_file_trees():
     print(f"Files to ignore: {len(ignored_files)}")
     print(f"Total local files: {len(local_files)}")
     print(f"Total remote files: {len(remote_files)}")
-    input("Press Enter to continue...")
+    # input("Press Enter to continue...")
 
     if files_to_upload:
         upload_files(files_to_upload)
