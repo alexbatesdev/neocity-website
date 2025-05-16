@@ -3,7 +3,7 @@
 /* Must start with ".site-box". Change how your website will appear on main nekoweb site: https://lune.dimden.dev/405a44b7e5.png */
 .site-box {
     text-align: right;
-    background-image: url("https://nekkostarr.nekoweb.org/img/pattern%20239.gif");
+    background-image: url("https://piinro.nekoweb.org/img/pattern%20239.gif");
     /* Only nekoweb URLs allowed, use full url to your site like https://example.nekoweb.org/images/coolbg.png */
     background-repeat: no-repeat;
     background-position: center;
@@ -16,7 +16,7 @@
 }
 
 .site-box::after {
-    content: url("https://nekkostarr.nekoweb.org/img/Frog-removebg.png");
+    content: url("https://piinro.nekoweb.org/img/Frog-removebg.png");
     position: absolute;
     left: 0;
     bottom: 0;

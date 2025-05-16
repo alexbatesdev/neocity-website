@@ -16,53 +16,65 @@ dry_run = sys.argv[5] == "true" if len(sys.argv) > 5 else False  # Dry run flag
 RATE_LIMIT = 250
 TIME_WINDOW = 15 * 60  # 15 minutes in seconds
 
+def get_all_files():
+    """Get a list of all tracked files in the repository, including submodules."""
+    # Update submodules
+    subprocess.run(["git", "submodule", "update", "--init", "--recursive"], check=True)
 
-def build_local_file_tree():
-    """Return a set of all local files (relative paths, including submodules)."""
-    local_files = set()
-    # Main repo
-    for root, dirs, files in os.walk("."):
-        for file in files:
-            path = os.path.relpath(os.path.join(root, file), ".").replace("\\", "/")
-            local_files.add(path)
-    # Submodules
+    # Get all tracked files in the main repo
+    result = subprocess.run(
+        ["git", "ls-files"],
+        stdout=subprocess.PIPE,
+        text=True,
+    )
+    files = result.stdout.strip().split("\n")
+
+    # Get all submodule paths
     submodules = subprocess.run(
         ["git", "config", "--file", ".gitmodules", "--get-regexp", "path"],
         stdout=subprocess.PIPE,
         text=True,
     )
     submodule_paths = [line.split(" ")[1] for line in submodules.stdout.strip().split("\n") if line]
-    for submodule in submodule_paths:
-        for root, dirs, files in os.walk(submodule):
-            for file in files:
-                path = os.path.relpath(os.path.join(root, file), ".").replace("\\", "/")
-                local_files.add(path)
-    return local_files
 
-def build_remote_file_tree(ftp, base_dir="/"):
-    """Return a set of all remote files (relative paths from FTP root)."""
-    files = set()
-    try:
-        items = []
-        ftp.retrlines(f'LIST {base_dir}', items.append)
-        # for item in items:
-        #     print(item)
-        for item in items:
-            # print("---------------")
-            # print(item)
-            parts = item.split()
-            name = parts[-1]
-            # print(name)
-            path = os.path.join(base_dir, name).replace("\\", "/")
-            print(path)
-            if item.startswith('d'):
-                if name not in ('.', '..'):
-                    files |= build_remote_file_tree(ftp, path)
-            else:
-                files.add(path.lstrip("/"))
-    except Exception as e:
-        print(f"Error listing FTP directory {base_dir}: {e}")
-    return files
+    # Get tracked files in each submodule
+    for submodule in submodule_paths:
+        if not os.path.isdir(submodule):
+            continue
+        sub_result = subprocess.run(
+            ["git", "ls-files"],
+            cwd=submodule,
+            stdout=subprocess.PIPE,
+            text=True,
+        )
+        sub_files = sub_result.stdout.strip().split("\n")
+        # Prepend submodule path to each file
+        files.extend([os.path.join(submodule, f).replace("\\", "/") for f in sub_files if f])
+
+    return [f for f in files if f]
+
+def get_updated_files():
+    """Get the list of files updated in the latest commit."""
+    result = subprocess.run(
+        ["git", "diff", "--name-only", "HEAD~1", "HEAD"],
+        stdout=subprocess.PIPE,
+        text=True,
+    )
+    return result.stdout.strip().split("\n")
+
+def get_deleted_files():
+    """Get the list of files deleted in the latest commit."""
+    result = subprocess.run(
+        ["git", "diff", "--name-status", "HEAD~1", "HEAD"],
+        stdout=subprocess.PIPE,
+        text=True,
+    )
+    deleted_files = []
+    for line in result.stdout.strip().split("\n"):
+        if line.startswith("D"):
+            _, file = line.split("\t", 1)
+            deleted_files.append(file)
+    return deleted_files
 
 def ensure_ftp_dirs(ftp, remote_path):
     """Ensure all directories in remote_path exist on the FTP server."""
@@ -177,77 +189,87 @@ def select_ignored_files(files):
     # Ignore files that are in the .gitignore
     ignored_files = []
     custom_patterns = [
-        "/music/",
-        ".github",
-        ".git",
+        ".*",
+        "music/*/*",
+        ".github/*/*",
     ]
     with open(".gitignore", "r") as f:
         ignored_patterns = f.read().splitlines() + custom_patterns
     for file in files:
         for pattern in ignored_patterns:
-            if any(part == pattern for part in Path(file).parts):
+            if Path(file).match(pattern):
                 ignored_files.append(file)
                 break
-            if any(part.startswith(".") for part in Path(file).parts):
-                ignored_files.append(file)
-                break
-            
     return ignored_files
 
-def sync_file_trees():
-    """Sync local and remote file trees: upload new/changed, delete missing."""
-    # Build local file tree
-    print("Building local file tree...")
-    local_files = build_local_file_tree()
-    print(f"Local files: {len(local_files)}")
-    ignored_files = set(select_ignored_files(local_files))
-    local_files = local_files - ignored_files
+def list_ftp_files(ftp, base_dir="/"):
+    """Recursively list all files on the FTP server starting from base_dir."""
+    files = []
+    try:
+        items = []
+        ftp.retrlines(f'LIST {base_dir}', items.append)
+        for item in items:
+            parts = item.split()
+            name = parts[-1]
+            path = os.path.join(base_dir, name).replace("\\", "/")
+            if item.startswith('d'):  # Directory
+                if name not in ('.', '..'):
+                    files.extend(list_ftp_files(ftp, path))
+            else:
+                files.append(path.lstrip("/"))
+    except Exception as e:
+        print(f"Error listing FTP directory {base_dir}: {e}")
+    return files
 
-    # Build remote file tree
+def delete_extra_ftp_files():
+    """Delete files from FTP that are not present locally."""
+    print("Checking for extra files on FTP server to delete...")
     ftp = FTP()
     FTP_HOST = FTP_URL.split(":")[0]
     FTP_PORT = int(FTP_URL.split(":")[1]) if ":" in FTP_URL else 21
     ftp.connect(FTP_HOST, FTP_PORT)
     ftp.login(FTP_USER, FTP_PASS)
-    print("Building remote file tree...")
-    remote_files = build_remote_file_tree(ftp)
 
-    # Files to upload: in local but not remote, or changed (you may want to add a hash/mtime check for changed)
-    files_to_upload = list(local_files - remote_files)
-    # Files to delete: in remote but not local
-    files_to_delete = list(remote_files - local_files)
+    remote_files = list_ftp_files(ftp)
+    local_files = get_all_files()
+    ignored_files = select_ignored_files(local_files)
+    local_files_set = set([file.replace("\\", "/") for file in local_files if file not in ignored_files])
 
-  #print upload file tree
-    print("Files to upload:")
-    for file in files_to_upload:
-        print(f" - {file}")
+    extra_files = [f for f in remote_files if f not in local_files_set]
+    if extra_files:
+        print("Deleting files from FTP not present locally:")
+        for file in extra_files:
+            try:
+                ftp.delete("/" + file)
+                print(f"Deleted from FTP: {file}")
+            except Exception as e:
+                print(f"Failed to delete {file} from FTP: {e}")
+    else:
+        print("No extra files to delete from FTP.")
 
-    print("Files to delete:")
-    for file in files_to_delete:
-        print(f" - {file}")
-      
-    # print("Ignored files:")
-    # for file in ignored_files:
-    #     print(f" - {file}")
+    ftp.quit()
 
-    print(f"Files to upload: {len(files_to_upload)}")
-    print(f"Files to delete: {len(files_to_delete)}")
-    print(f"Files to ignore: {len(ignored_files)}")
-    print(f"Total local files: {len(local_files)}")
-    print(f"Total remote files: {len(remote_files)}")
-    input("Press Enter to continue...")
+if __name__ == "__main__":
+    if force_upload:
+        print("Force upload enabled. Uploading all files...")
+        all_files = get_all_files()
+        ignored_files = select_ignored_files(all_files)
+        print(f"Ignored files: {ignored_files}")
+        files_to_upload = [file for file in all_files if file not in ignored_files]
+        files_to_delete = get_deleted_files()
+    else:
+        print("Uploading only updated files...")
+        files_to_upload = get_updated_files()
+        files_to_delete = get_deleted_files()
+
+    if files_to_delete:
+        delete_files_from_ftp(files_to_delete)
+    elif not files_to_upload:
+        print("No files to delete.")
+    # Remove extra files from FTP server that are not present locally
+    delete_extra_ftp_files()
 
     if files_to_upload:
         upload_files(files_to_upload)
     else:
         print("No files to upload.")
-
-    if files_to_delete:
-        delete_files_from_ftp(files_to_delete)
-    else:
-        print("No files to delete.")
-
-    ftp.quit()
-
-if __name__ == "__main__":
-    sync_file_trees()
