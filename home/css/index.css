@@ -1,3 +1,7 @@
+html {
+    cursor: url("/cursor.png"), auto;
+}
+
 a {
     text-decoration: none;
     color: #155bff;
