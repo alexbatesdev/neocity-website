@@ -48,20 +48,20 @@ def build_remote_file_tree(ftp, base_dir="/"):
         # for item in items:
         #     print(item)
         for item in items:
-            # print("---------------")
+            # print("---------------", flush=True)
             # print(item)
             parts = item.split()
             name = parts[-1]
             # print(name)
             path = os.path.join(base_dir, name).replace("\\", "/")
-            print(path)
+            # print(path)
             if item.startswith('d'):
                 if name not in ('.', '..'):
                     files |= build_remote_file_tree(ftp, path)
             else:
                 files.add(path.lstrip("/"))
     except Exception as e:
-        print(f"Error listing FTP directory {base_dir}: {e}")
+        print(f"Error listing FTP directory {base_dir}: {e}", flush=True)
     return files
 
 def ensure_ftp_dirs(ftp, remote_path):
@@ -79,9 +79,9 @@ def ensure_ftp_dirs(ftp, remote_path):
 def upload_files(files):
     """Upload files to the FTP server with retry on 550 errors and broken pipe."""
     if dry_run:
-        print("Dry run enabled. The following files would be uploaded:")
+        print("Dry run enabled. The following files would be uploaded:", flush=True)
         for file in files:
-            print(f" - {file}")
+            print(f" - {file}", flush=True)
         return
 
     ftp = FTP()
@@ -108,20 +108,20 @@ def upload_files(files):
             try:
                 with open(file, "rb") as f:
                     ftp.storbinary(f"STOR {remote_path}", f)
-                print(f"Uploaded: {file}")
+                print(f"Uploaded: {file}", flush=True)
                 edits += 1
                 break  # Success, exit retry loop
             except Exception as e:
                 error_str = str(e)
                 # If directory does not exist, create it and retry immediately
                 if ("550" in error_str and "No such file or directory" in error_str):
-                    print(f"Directory missing for {file}, creating directories and retrying...")
+                    print(f"Directory missing for {file}, creating directories and retrying...", flush=True)
                     ensure_ftp_dirs(ftp, remote_path)
                     retries += 1
                     continue
                 if ("550" in error_str or "Broken pipe" in error_str) and retries < MAX_RETRIES:
                     wait_time = RETRY_WAIT * (retries + 1)
-                    print(f"Error uploading {file}: {e}. Retrying in {wait_time} seconds... (Attempt {retries+1}/{MAX_RETRIES})")
+                    print(f"Error uploading {file}: {e}. Retrying in {wait_time} seconds... (Attempt {retries+1}/{MAX_RETRIES})", flush=True)
                     time.sleep(wait_time)
                     # Reconnect FTP in case of broken pipe
                     try:
@@ -134,7 +134,7 @@ def upload_files(files):
                     ftp.voidcmd('TYPE I')
                     retries += 1
                 else:
-                    print(f"Failed to upload {file}: {e}")
+                    print(f"Failed to upload {file}: {e}", flush=True)
                     break  # Give up after max retries or non-retryable error
 
         # Enforce rate limit
@@ -142,7 +142,7 @@ def upload_files(files):
             elapsed_time = time.time() - start_time
             if elapsed_time < TIME_WINDOW:
                 sleep_time = TIME_WINDOW - elapsed_time
-                print(f"Rate limit reached. Sleeping for {sleep_time} seconds.")
+                print(f"Rate limit reached. Sleeping for {sleep_time} seconds.", flush=True)
                 time.sleep(sleep_time)
                 start_time = time.time()
                 edits = 0
@@ -152,9 +152,9 @@ def upload_files(files):
 def delete_files_from_ftp(files):
     """Delete files from the FTP server."""
     if dry_run:
-        print("Dry run enabled. The following files would be deleted from FTP:")
+        print("Dry run enabled. The following files would be deleted from FTP:", flush=True)
         for file in files:
-            print(f" - {file}")
+            print(f" - {file}", flush=True)
         return
 
     ftp = FTP()
@@ -167,9 +167,9 @@ def delete_files_from_ftp(files):
         remote_path = os.path.join("/", file).replace("\\", "/")
         try:
             ftp.delete(remote_path)
-            print(f"Deleted from FTP: {file}")
+            print(f"Deleted from FTP: {file}", flush=True)
         except Exception as e:
-            print(f"Failed to delete {file} from FTP: {e}")
+            print(f"Failed to delete {file} from FTP: {e}", flush=True)
 
     ftp.quit()
 
@@ -217,9 +217,9 @@ def get_remote_file_mtimes(ftp, files):
 
 def sync_file_trees():
     """Sync local and remote file trees: upload new/changed, delete missing."""
-    print("Building local file tree...")
+    print("Building local file tree...", flush=True)
     local_files = build_local_file_tree()
-    print(f"Local files: {len(local_files)}")
+    print(f"Local files: {len(local_files)}", flush=True)
     ignored_files = set(select_ignored_files(local_files))
     local_files = local_files - ignored_files
 
@@ -229,7 +229,7 @@ def sync_file_trees():
     FTP_PORT = int(FTP_URL.split(":")[1]) if ":" in FTP_URL else 21
     ftp.connect(FTP_HOST, FTP_PORT)
     ftp.login(FTP_USER, FTP_PASS)
-    print("Building remote file tree...")
+    print("Building remote file tree...", flush=True)
     remote_files = build_remote_file_tree(ftp)
 
     # Get mtimes
@@ -242,39 +242,41 @@ def sync_file_trees():
         if f not in remote_files:
             files_to_upload.append(f)
         elif f in remote_mtimes and local_mtimes.get(f, 0) > remote_mtimes.get(f, 0):
+            print(f"File {f} is newer locally, will be uploaded.", flush=True)
+            print(f"Local mtime: {local_mtimes[f]}, Remote mtime: {remote_mtimes[f]}", flush=True)
             files_to_upload.append(f)
 
     # Files to delete: in remote but not local
     files_to_delete = list(remote_files - local_files)
 
-    print("Files to upload:")
+    print("Files to upload:", flush=True)
     for file in files_to_upload:
-        print(f" - {file}")
+        print(f" - {file}", flush=True)
 
-    print("Files to delete:")
+    print("Files to delete:", flush=True)
     for file in files_to_delete:
-        print(f" - {file}")
+        print(f" - {file}", flush=True)
       
-    # print("Ignored files:")
+    # print("Ignored files:", flush=True)
     # for file in ignored_files:
-    #     print(f" - {file}")
+    #     print(f" - {file}", flush=True)
 
-    print(f"Files to upload: {len(files_to_upload)}")
-    print(f"Files to delete: {len(files_to_delete)}")
-    print(f"Files to ignore: {len(ignored_files)}")
-    print(f"Total local files: {len(local_files)}")
-    print(f"Total remote files: {len(remote_files)}")
+    print(f"Files to upload: {len(files_to_upload)}", flush=True)
+    print(f"Files to delete: {len(files_to_delete)}", flush=True)
+    print(f"Files to ignore: {len(ignored_files)}", flush=True)
+    print(f"Total local files: {len(local_files)}", flush=True)
+    print(f"Total remote files: {len(remote_files)}", flush=True)
     # input("Press Enter to continue...")
 
     if files_to_upload:
         upload_files(files_to_upload)
     else:
-        print("No files to upload.")
+        print("No files to upload.", flush=True)
 
     if files_to_delete:
         delete_files_from_ftp(files_to_delete)
     else:
-        print("No files to delete.")
+        print("No files to delete.", flush=True)
 
     ftp.quit()
 
