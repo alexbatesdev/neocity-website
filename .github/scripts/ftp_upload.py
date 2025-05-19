@@ -194,9 +194,29 @@ def select_ignored_files(files):
             
     return ignored_files
 
+def get_local_file_mtimes(files):
+    """Return a dict of {relative_path: mtime} for local files."""
+    return {f: int(os.path.getmtime(f)) for f in files if os.path.isfile(f)}
+
+def get_remote_file_mtimes(ftp, files):
+    """Return a dict of {relative_path: mtime} for remote files using MDTM."""
+    mtimes = {}
+    for f in files:
+        remote_path = "/" + f
+        try:
+            resp = ftp.sendcmd(f"MDTM {remote_path}")
+            # Response: '213 20240518123456'
+            if resp.startswith("213 "):
+                # Convert to epoch time
+                timestr = resp[4:].strip()
+                mtime = time.mktime(time.strptime(timestr, "%Y%m%d%H%M%S"))
+                mtimes[f] = int(mtime)
+        except Exception:
+            pass  # File may not exist or MDTM not supported
+    return mtimes
+
 def sync_file_trees():
     """Sync local and remote file trees: upload new/changed, delete missing."""
-    # Build local file tree
     print("Building local file tree...")
     local_files = build_local_file_tree()
     print(f"Local files: {len(local_files)}")
@@ -212,12 +232,21 @@ def sync_file_trees():
     print("Building remote file tree...")
     remote_files = build_remote_file_tree(ftp)
 
-    # Files to upload: in local but not remote, or changed (you may want to add a hash/mtime check for changed)
-    files_to_upload = list(local_files - remote_files)
+    # Get mtimes
+    local_mtimes = get_local_file_mtimes(local_files)
+    remote_mtimes = get_remote_file_mtimes(ftp, remote_files)
+
+    # Files to upload: new or updated
+    files_to_upload = []
+    for f in local_files:
+        if f not in remote_files:
+            files_to_upload.append(f)
+        elif f in remote_mtimes and local_mtimes.get(f, 0) > remote_mtimes.get(f, 0):
+            files_to_upload.append(f)
+
     # Files to delete: in remote but not local
     files_to_delete = list(remote_files - local_files)
 
-  #print upload file tree
     print("Files to upload:")
     for file in files_to_upload:
         print(f" - {file}")
