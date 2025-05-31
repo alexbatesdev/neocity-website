@@ -1,10 +1,14 @@
+// Me after a long time: God damn this code is organized horribly
+// welp, time to make it worse
+
+let moveDVDLogoActivated = false;
 
 // TODO: 
 // 1. Lock controlling the logo behind a cheat code
 // 2. Make corner detection
-// 3. Move the page to it's own directory
 
 const DVDLogo = document.getElementById('dvd-logo');
+const DVDLogoStyle = getComputedStyle(DVDLogo);
 const DVDLogoImage = document.getElementById('logo-img');
 
 let velocityX = 3;
@@ -13,8 +17,22 @@ let velocityY = 3;
 let positionX = window.innerWidth / 2;
 let positionY = window.innerHeight / 2;
 
-const DVDLogoWidth = DVDLogo.offsetWidth;
-const DVDLogoHeight = DVDLogo.offsetHeight;
+let DVDLogoWidth = DVDLogoStyle.getPropertyValue('--width').replace('px', '');
+let DVDLogoHeight = DVDLogoStyle.getPropertyValue('--height').replace('px', '');
+let scaleFactor = 0.3;
+let scaleQueryParam = new URLSearchParams(window.location.search).get('scale');
+if (scaleQueryParam) {
+    scaleFactor = parseFloat(scaleQueryParam);
+}
+if (isNaN(scaleFactor) || scaleFactor <= 0) {
+    scaleFactor = 0.3; // Default scale factor
+}
+DVDLogoWidth *= scaleFactor;
+DVDLogoHeight *= scaleFactor;
+DVDLogo.style.width = DVDLogoWidth + 'px';
+DVDLogo.style.height = DVDLogoHeight + 'px';
+
+console.log(DVDLogoWidth, DVDLogoHeight);
 
 DVDLogo.style.left = positionX + 'px';
 DVDLogo.style.top = positionY + 'px';
@@ -69,16 +87,25 @@ document.addEventListener('keydown', (event) => {
     keyLog.push(key);
     console.log(keyLog.join(''));
     //Pong Mode vvv
-    if (keyLog.join('') === 'arrowuparrowuparrowdownarrowdownarrowleftarrowrightarrowleftarrowrightbaenter') {
+    if (keyLog.join('').endsWith('arrowuparrowuparrowdownarrowdownarrowleftarrowrightarrowleftarrowrightbaenter')) {
         togglePongMode();
     }
     //Pong Mode ^^^
 
     //Breakout Mode vvv
-    if (keyLog.join('') === 'arrowuparrowdownarrowleftarrowrightaarrowuparrowdownarrowleftarrowrightbenter') {
+    if (keyLog.join('').endsWith('arrowuparrowdownarrowleftarrowrightaarrowuparrowdownarrowleftarrowrightbenter')) {
         toggleBreakoutMode();
     }
     //Breakout Mode ^^^
+
+    if (keyLog.join('').endsWith('arrowuparrowrightarrowdownarrowleftarrowupa')) {
+        moveDVDLogoActivated = !moveDVDLogoActivated;
+        if (moveDVDLogoActivated) {
+            alert('Move DVD Logo Activated');
+        } else {
+            alert('Move DVD Logo Deactivated');
+        }
+    }
 })
 
 document.addEventListener('keyup', (event) => {
@@ -240,20 +267,23 @@ const animate = () => {
             velocityY *= 0.99;
         }
 
-        if (keyState['arrowup']) {
-            velocityY -= 0.2;
-        }
+        if (moveDVDLogoActivated) {
 
-        if (keyState['arrowdown']) {
-            velocityY += 0.2;
-        }
+            if (keyState['arrowup']) {
+                velocityY -= 0.2;
+            }
 
-        if (keyState['arrowleft']) {
-            velocityX -= 0.2;
-        }
+            if (keyState['arrowdown']) {
+                velocityY += 0.2;
+            }
 
-        if (keyState['arrowright']) {
-            velocityX += 0.2;
+            if (keyState['arrowleft']) {
+                velocityX -= 0.2;
+            }
+
+            if (keyState['arrowright']) {
+                velocityX += 0.2;
+            }
         }
     }
 
@@ -304,8 +334,8 @@ const animate = () => {
 
     //Breakout Mode ^^^W
 
-    positionX += velocityX;
-    positionY += velocityY;
+    positionX += velocityX * (scaleFactor + 0.25);
+    positionY += velocityY * (scaleFactor + 0.25);
 
     DVDLogo.style.left = positionX + 'px';
     DVDLogo.style.top = positionY + 'px';
@@ -326,3 +356,12 @@ const animate = () => {
 }
 
 requestAnimationFrame(animate);
+
+if (window.self !== window.top) {
+    console.log("DVD Logo is in an iframe, redirecting to the top window.");
+    document.addEventListener('click', () => {
+        window.top.location.href = window.self.location.href.split('?')[0];
+    });
+} else {
+    console.log("DVD Logo is not in an iframe, no redirection needed.");
+}

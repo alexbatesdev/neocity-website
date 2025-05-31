@@ -395,10 +395,12 @@ li {
     bottom: -40px;
 }
 
-.tv-screen-outer {
-    background-image: url("../img/giphy.gif");
-    background-size: cover;
-    background-repeat: no-repeat;
+.tv-screen-content {
+    width: calc(100% - 10px);
+    height: calc(100% + 10px);
+    margin-top: -5px;
+    margin-left: 5px;
+    cursor: pointer;
 }
 
 #ISS {
@@ -626,4 +628,16 @@ h1.header {
 
 .skip-clickevent > * {
     pointer-events: auto; /* re-enables pointer events for all direct children */
+}
+
+.z-90 {
+    z-index: -90;
+}
+
+.z15 {
+    z-index: 15;
+}
+
+.z-30 {
+    z-index: -30;
 }

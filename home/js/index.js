@@ -74,6 +74,14 @@ window.addEventListener('load', () => {
             calculateParallax(element);
         });
     });
+
+    //check the url if it's on nekoweb.org or neocities.org
+    const currentUrl = window.location.href;
+    if (!currentUrl.includes('nekoweb.org')) {
+        document.getElementById('nekowebring').innerHTML = `
+<table><tbody><tr><td class="webring-prev"><a href="https://raze3344.nekoweb.org/"><img src="https://webring.nekoweb.org/images/prev.png" alt="Previous Site"></a></td><td style="text-align: center;" class="webring-info"><a href="https://webring.nekoweb.org/members"><img src="https://webring.nekoweb.org/images/nekowebring.png" alt="NekoWebRing Index"></a><br><span class="webring-links"><a href="javascript:void(0)" onclick="randomSite()"><img src="https://webring.nekoweb.org/images/cat.png" alt="Random Site"></a></span></td><td class="webring-next"><a href="https://angelnetcast.nekoweb.org/"><img src="https://webring.nekoweb.org/images/next.png" alt="Next Site"></a></td></tr></tbody></table>
+`
+    }
 });
 
 function calculateParallax(element) {

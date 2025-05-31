@@ -6,9 +6,11 @@ body {
 }
 
 #dvd-logo {
+    --width: 732px;
+    --height: 328px;
     position: absolute;
-    width: calc(732px / 3);
-    height: calc(328px / 3);
+    width: var(--width);
+    height: var(--height);
     transform: translate(-50%, -50%);
 }
 
