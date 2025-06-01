@@ -16,7 +16,7 @@
 }
 
 .site-box::after {
-    content: url("https://piinro.nekoweb.org/img/Frog-removebg.png");
+    content: url("https://piinro.nekoweb.org/img/Frog_transparent.png");
     position: absolute;
     left: 0;
     bottom: 0;
