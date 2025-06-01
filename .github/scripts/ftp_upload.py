@@ -46,6 +46,16 @@ def download_remote_manifest(ftp):
 
 def upload_manifest(ftp, manifest):
     """Upload manifest JSON to server."""
+    # Close the old connection if needed, and open a new one
+    try:
+        ftp.quit()
+    except Exception:
+        pass
+    ftp = FTP()
+    FTP_HOST = FTP_URL.split(":")[0]
+    FTP_PORT = int(FTP_URL.split(":")[1]) if ":" in FTP_URL else 21
+    ftp.connect(FTP_HOST, FTP_PORT)
+    ftp.login(FTP_USER, FTP_PASS)
     with tempfile.NamedTemporaryFile("w+", delete=False) as tmp:
         json.dump(manifest, tmp, indent=2)
         tmp.flush()
@@ -53,6 +63,7 @@ def upload_manifest(ftp, manifest):
         with open(tmp.name, "rb") as f:
             ftp.storbinary(f"STOR /" + MANIFEST_FILE, f)
     os.unlink(tmp.name)
+    ftp.quit()
 
 def build_local_file_tree():
     """Return a set of all local files (relative paths, including submodules)."""
