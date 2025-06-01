@@ -4,6 +4,9 @@ import sys
 from ftplib import FTP
 import subprocess
 from pathlib import Path
+import hashlib
+import json
+import tempfile
 
 # FTP server credentials
 FTP_URL = sys.argv[1]
@@ -16,6 +19,40 @@ dry_run = sys.argv[5] == "true" if len(sys.argv) > 5 else False  # Dry run flag
 RATE_LIMIT = 250
 TIME_WINDOW = 15 * 60  # 15 minutes in seconds
 
+MANIFEST_FILE = ".ftp_manifest.json"
+
+def hash_file(path):
+    """Return SHA256 hash of a file."""
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        for chunk in iter(lambda: f.read(8192), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+def build_local_manifest(files):
+    """Return dict {relative_path: sha256} for local files."""
+    return {f: hash_file(f) for f in files if os.path.isfile(f)}
+
+def download_remote_manifest(ftp):
+    """Download and parse manifest from server, or return empty dict."""
+    try:
+        with tempfile.NamedTemporaryFile(delete=True) as tmp:
+            ftp.retrbinary(f"RETR /{MANIFEST_FILE}", tmp.write)
+            tmp.flush()
+            tmp.seek(0)
+            return json.load(tmp)
+    except Exception:
+        return {}
+
+def upload_manifest(ftp, manifest):
+    """Upload manifest JSON to server."""
+    with tempfile.NamedTemporaryFile("w+", delete=False) as tmp:
+        json.dump(manifest, tmp, indent=2)
+        tmp.flush()
+        tmp.seek(0)
+        with open(tmp.name, "rb") as f:
+            ftp.storbinary(f"STOR /" + MANIFEST_FILE, f)
+    os.unlink(tmp.name)
 
 def build_local_file_tree():
     """Return a set of all local files (relative paths, including submodules)."""
@@ -45,16 +82,10 @@ def build_remote_file_tree(ftp, base_dir="/"):
     try:
         items = []
         ftp.retrlines(f'LIST {base_dir}', items.append)
-        # for item in items:
-        #     print(item)
         for item in items:
-            # print("---------------", flush=True)
-            # print(item)
             parts = item.split()
             name = parts[-1]
-            # print(name)
             path = os.path.join(base_dir, name).replace("\\", "/")
-            # print(path)
             if item.startswith('d'):
                 if name not in ('.', '..'):
                     files |= build_remote_file_tree(ftp, path)
@@ -72,8 +103,7 @@ def ensure_ftp_dirs(ftp, remote_path):
         path += "/" + d
         try:
             ftp.mkd(path)
-        except Exception as e:
-            # Directory may already exist, ignore error
+        except Exception:
             pass
 
 def upload_files(files):
@@ -113,7 +143,6 @@ def upload_files(files):
                 break  # Success, exit retry loop
             except Exception as e:
                 error_str = str(e)
-                # If directory does not exist, create it and retry immediately
                 if ("550" in error_str and "No such file or directory" in error_str):
                     print(f"Directory missing for {file}, creating directories and retrying...", flush=True)
                     ensure_ftp_dirs(ftp, remote_path)
@@ -123,7 +152,6 @@ def upload_files(files):
                     wait_time = RETRY_WAIT * (retries + 1)
                     print(f"Error uploading {file}: {e}. Retrying in {wait_time} seconds... (Attempt {retries+1}/{MAX_RETRIES})", flush=True)
                     time.sleep(wait_time)
-                    # Reconnect FTP in case of broken pipe
                     try:
                         ftp.quit()
                     except Exception:
@@ -135,9 +163,8 @@ def upload_files(files):
                     retries += 1
                 else:
                     print(f"Failed to upload {file}: {e}", flush=True)
-                    break  # Give up after max retries or non-retryable error
+                    break
 
-        # Enforce rate limit
         if edits >= RATE_LIMIT:
             elapsed_time = time.time() - start_time
             if elapsed_time < TIME_WINDOW:
@@ -180,6 +207,7 @@ def select_ignored_files(files):
         "/music/",
         ".github",
         ".git",
+        MANIFEST_FILE,
     ]
     with open(".gitignore", "r") as f:
         ignored_patterns = f.read().splitlines() + custom_patterns
@@ -191,29 +219,7 @@ def select_ignored_files(files):
             if any(part.startswith(".") for part in Path(file).parts):
                 ignored_files.append(file)
                 break
-            
     return ignored_files
-
-def get_local_file_mtimes(files):
-    """Return a dict of {relative_path: mtime} for local files."""
-    return {f: int(os.path.getmtime(f)) for f in files if os.path.isfile(f)}
-
-def get_remote_file_mtimes(ftp, files):
-    """Return a dict of {relative_path: mtime} for remote files using MDTM."""
-    mtimes = {}
-    for f in files:
-        remote_path = "/" + f
-        try:
-            resp = ftp.sendcmd(f"MDTM {remote_path}")
-            # Response: '213 20240518123456'
-            if resp.startswith("213 "):
-                # Convert to epoch time
-                timestr = resp[4:].strip()
-                mtime = time.mktime(time.strptime(timestr, "%Y%m%d%H%M%S"))
-                mtimes[f] = int(mtime)
-        except Exception:
-            pass  # File may not exist or MDTM not supported
-    return mtimes
 
 def sync_file_trees():
     """Sync local and remote file trees: upload new/changed, delete missing."""
@@ -223,50 +229,34 @@ def sync_file_trees():
     ignored_files = set(select_ignored_files(local_files))
     local_files = local_files - ignored_files
 
-    # Build remote file tree
+    print("Hashing local files...", flush=True)
+    local_manifest = build_local_manifest(local_files)
+
     ftp = FTP()
     FTP_HOST = FTP_URL.split(":")[0]
     FTP_PORT = int(FTP_URL.split(":")[1]) if ":" in FTP_URL else 21
     ftp.connect(FTP_HOST, FTP_PORT)
     ftp.login(FTP_USER, FTP_PASS)
-    print("Building remote file tree...", flush=True)
-    remote_files = build_remote_file_tree(ftp)
+    print("Downloading remote manifest...", flush=True)
+    remote_manifest = download_remote_manifest(ftp)
 
-    # Get mtimes
-    local_mtimes = get_local_file_mtimes(local_files)
-    remote_mtimes = get_remote_file_mtimes(ftp, remote_files)
+    files_to_upload = [f for f in local_manifest
+                       if f not in remote_manifest or local_manifest[f] != remote_manifest[f]]
 
-    # Files to upload: new or updated
-    files_to_upload = []
-    for f in local_files:
-        if f not in remote_files:
-            files_to_upload.append(f)
-        elif f in remote_mtimes and local_mtimes.get(f, 0) > remote_mtimes.get(f, 0):
-            print(f"File {f} is newer locally, will be uploaded.", flush=True)
-            print(f"Local mtime: {local_mtimes[f]}, Remote mtime: {remote_mtimes[f]}", flush=True)
-            files_to_upload.append(f)
-
-    # Files to delete: in remote but not local
-    files_to_delete = list(remote_files - local_files)
+    files_to_delete = [f for f in remote_manifest if f not in local_manifest]
 
     print("Files to upload:", flush=True)
     for file in files_to_upload:
         print(f" - {file}", flush=True)
-
     print("Files to delete:", flush=True)
     for file in files_to_delete:
         print(f" - {file}", flush=True)
-      
-    # print("Ignored files:", flush=True)
-    # for file in ignored_files:
-    #     print(f" - {file}", flush=True)
 
     print(f"Files to upload: {len(files_to_upload)}", flush=True)
     print(f"Files to delete: {len(files_to_delete)}", flush=True)
     print(f"Files to ignore: {len(ignored_files)}", flush=True)
     print(f"Total local files: {len(local_files)}", flush=True)
-    print(f"Total remote files: {len(remote_files)}", flush=True)
-    # input("Press Enter to continue...")
+    print(f"Total remote files (from manifest): {len(remote_manifest)}", flush=True)
 
     if files_to_upload:
         upload_files(files_to_upload)
@@ -277,6 +267,9 @@ def sync_file_trees():
         delete_files_from_ftp(files_to_delete)
     else:
         print("No files to delete.", flush=True)
+
+    print("Uploading new manifest...", flush=True)
+    upload_manifest(ftp, local_manifest)
 
     ftp.quit()
 
