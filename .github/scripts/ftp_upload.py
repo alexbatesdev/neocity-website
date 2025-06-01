@@ -19,7 +19,7 @@ dry_run = sys.argv[5] == "true" if len(sys.argv) > 5 else False  # Dry run flag
 RATE_LIMIT = 250
 TIME_WINDOW = 15 * 60  # 15 minutes in seconds
 
-MANIFEST_FILE = ".ftp_manifest.json"
+MANIFEST_FILE = "ftp_manifest.json"
 
 def hash_file(path):
     """Return SHA256 hash of a file."""
