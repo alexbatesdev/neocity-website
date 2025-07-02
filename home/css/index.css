@@ -115,6 +115,10 @@ body {
     display: none;
 }
 
+.relative {
+    position: relative;
+}
+
 .body {
     width: 100vw;
     height: 100vh;
@@ -757,4 +761,21 @@ h1.header {
 
 .strikethrough {
     text-decoration: line-through;
+}
+
+.webrings-title {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+}
+
+.webrings-card {
+    position: relative;
+    padding-top: 30px;
+}
+
+#nekowebring {
+    display: grid;
 }
