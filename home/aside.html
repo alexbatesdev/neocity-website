@@ -1,0 +1,123 @@
+<div class="links-container card">
+  <ul class="navigation-list">
+    <!-- <li>
+      <a href="/aboutme/" tabindex="0">About Me</a>
+    </li> -->
+    <li>
+      <a href="/library/" tabindex="0">Library</a>
+    </li>
+    <li>
+      <a href="/bogo/" tabindex="0">Bogo Sort Viz.</a>
+    </li>
+    <li>
+      <a href="/links_links/" tabindex="0">Link's links</a>
+    </li>
+    <li>
+      <a href="/DarknessMaze/" tabindex="0" id="the-maze-link" class="hexBackground hb-text"
+        title="Wouldn't it be fucked up if there was a Minotaur?">The Maze</a>
+    </li>
+  </ul>
+</div>
+
+<!-- ^^^^^^^^^^ NON FLOATING STANDARD WEBSITEY BITS ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
+<!-- ======================================================================================================== -->
+<!-- vvvvvvvvvvvvvvv FLOATING LINKS TO ELSEWHERE vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv -->
+
+<div class="flipnote-card">
+  <a href="/flipnoteStillGallery" title="Flipnote Still Art Gallery">
+    <div id="flipnote-frog">
+
+    </div>
+  </a>
+</div>
+
+<!-- I should make this one smaller than before but also spinning perpendicular to the hole (tumbling) -->
+<div class="sleepCD" onclick="window.location.href='/sleepCD'">
+
+</div>
+
+<!-- Add more sound effects to tingle -->
+<img id="tingle-img" width="100px" src="./img/FSA_Tingle_Balloon.png" onclick="
+    const filepaths = [
+        'WW_Tingle_Wow.wav',
+    ]
+    const randomIndex = Math.floor(Math.random() * filepaths.length);
+    const randomFilepath = filepaths[randomIndex];
+    playSoundEffect(randomFilepath);
+" />
+
+<!-- Bring back the ISS tracker but a little different, remove the yt livestream or pick a different thing to stream, maybe just an unofficial livestream so we can leave the problem of finding nasa's new stream link to them (assumes unofficial stream is more reliable) -->
+<marquee class="ISS-orbit" direction="right" scrollamount="10">
+  <img src="./img/SpaceStation_small.png" id="ISS" />
+</marquee>
+
+
+<div class="tv-outer">
+  <div class="tv-antenna-base">
+    <div class="tv-antenna tv-ant-a">
+      <div class="tv-antenna-ball"></div>
+    </div>
+    <div class="tv-antenna tv-ant-b">
+      <div class="tv-antenna-ball"></div>
+    </div>
+    <div class="tv-antenna-base-cover"></div>
+  </div>
+  <div class="tv-screen-outer" id="tv-screen">
+    <div class="tv-screen-inner">
+      <a class="tv-fullscreen" href="/dvd">
+        <!-- Content is right here, everything else is just the design -->
+        <iframe src="/dvd/index.html?scale=0.05" class="tv-screen-content" title="Bouncing DVD Logo"></iframe>
+      </a>
+    </div>
+  </div>
+  <div class="tv-control-bar">
+    <div class="tv-button"></div>
+    <div class="tv-button"></div>
+    <div class="tv-button"></div>
+    <div class="tv-button"></div>
+    <div class="tv-button"></div>
+  </div>
+  <div class="tv-legs"></div>
+</div>
+
+<!-- We want to turn this into a link to the guestbook instead of an iframe -->
+<!-- I think make it a book spinning kinda like the sleep cd, but it's got a little arrow with text that says "My Guestbook ->" -->
+<h1 class="card flipnote-font header">Guest Book</h1>
+<iframe src="https://piinro.atabook.org" frameborder="0" class="card guest-book"></iframe>
+
+
+<div class="profile-picture-container">
+  <a href="/aboutme/">
+    <!-- We gotta change this PFP I think -->
+    <img src="./img/BuzzoOutline1.png" alt="Buzzo!" class="profile-picture hexBackground">
+  </a>
+  <div class="profile-label">
+    <div>I'm Piinro!</div>
+    <a href="https://www.imood.com/users/Mcbuzzerr"><img
+        src="https://moods.imood.com/display/uname-Mcbuzzerr/fg-000000/trans-1/imood.gif"
+        alt="The current mood of Mcbuzzerr at www.imood.com"></a>
+  </div>
+</div>
+
+
+<div class="card" id="last-fm-tracker">
+  <p class="card" id="listening-label">Recently Listened to:</p>
+  <img src="https://lastfm.freetls.fastly.net/i/u/174s/2a96cbd8b46e442fc41c2b86b821562f.png" alt="Album art"
+    id="album-art">
+  <div id="title-wrapper">
+    -
+    <a id="title">A Good Song</a>
+    -
+  </div>
+  <p id="artist">Made By Someone</p>
+</div>
+
+
+<a id="ditherer" href="/Ditherer/index.html">
+  <h1 class="flipnote-font" id="title">Image Ditherer!</h1>
+  <h1 class="flipnote-font" id="subtitle">Pixelate your pics!</h1>
+  <h1 class="flipnote-font" id="wow">Wow! </h1>
+  <h1 class="flipnote-font" id="cool">Cool Pixels!</h1>
+  <img src="./img/dithered_image (6).png" />
+  <img src="./img/GSUC9JnXcAA8ti7.png" class="phase-in-out-animation" />
+</a>

@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap');
 html {
     cursor: url("/cursor.png"), auto;
 }
@@ -25,6 +26,93 @@ body {
     align-items: center;
     overflow: hidden;
     perspective: 1px;
+}
+
+
+:root {
+    --switch-button-height: 40px;
+}
+
+.switch-panel {
+    background-color: #bcbcf2;
+    border: double 10px #7c7ce6;
+    position: relative;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.switch-panel-button {
+    --units-wide: 2;
+    background-color: #bcbcf2;
+    border: double 10px #7c7ce6;
+    position: absolute;
+    right: 1rem;
+    top: -30px;
+    width: calc(var(--units-wide)* var(--switch-button-height));
+    height: var(--switch-button-height);
+    display: flex;
+    justify-content: space-between;
+    transition: all 0.1s;
+}
+
+.switch-panel-button:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+
+.switch-panel-button:hover .switch-panel-button-indicator {
+    background-color: #8181e8;
+}
+
+.switch-panel-button:active .switch-panel-button-indicator {
+    background-color: #4c4ce6;
+}
+
+.switch-panel-slot {
+    display: inline-block;
+    height: var(--switch-button-height);
+    width: var(--switch-button-height);
+    background-color: #646fe1;
+    text-align: center;
+    line-height: var(--switch-button-height);
+    font-size: 1.5rem;
+    color: #000000;
+    font-weight: bold;
+    font-family: 'Dancing Script', cursive;
+    transition: all 0.3s;
+    user-select: none;
+}
+
+.switch-panel-button-hidden {
+    /* background-color: #6d73ec; */
+    background-color: #00000000;
+    background-image: none;
+}
+
+.sw-panel-hidden {
+    display: none;
+}
+
+.switch-panel-content {
+    padding: 1rem;
+    padding-top: 2rem;
+    overflow-y: auto;
+}
+
+.switch-panel-label-box {
+    background-color: #bcbcf2;
+    border: double 10px #7c7ce6;
+    position: absolute;
+    padding: 5px;
+    left: 1rem;
+    top: calc(-1*(1rem + 10px));
+    height: 1rem;
+    width: 100px;
+}
+
+.switch-panel-label-hidden {
+    display: none;
 }
 
 .body {
@@ -184,9 +272,19 @@ body {
     /* background-color: #66f; */
 }
 
+.switch-panel {
+    height: 200px;
+    /* overflow: hidden; */
+}
+
 .switch-panel-content {
     overflow-y: auto;
-    max-height: 350px;
+}
+
+.switch-panel-content-wrapper {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
 }
 
 .switch-panel-label {
@@ -655,4 +753,8 @@ h1.header {
 
 .z-30 {
     z-index: -30;
+}
+
+.strikethrough {
+    text-decoration: line-through;
 }
