@@ -17,7 +17,7 @@ jobs:
       - name: Deploy to Nekoweb
         uses: alexbatesdev/deploy2nekoweb@main # Replace YOUR_USERNAME with your GitHub username
         with:
-          nekoweb-api-key: ${{ secrets.FTP_PASSWORD }}
+          nekoweb-api-key: ${{ secrets.KITTY_KEY }}
           nekoweb-domain: piinro.nekoweb.org # Replace with your Nekoweb domain
           nekoweb-username: piinro
           directory: . # Replace with your build output directory
