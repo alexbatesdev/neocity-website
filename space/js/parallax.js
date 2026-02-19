@@ -1,9 +1,20 @@
 export class ParallaxScene {
   constructor(container) {
     this.elements = Array.from(container.querySelectorAll('.plax'));
+    this.initZIndex();
     this.sensitivity = parseFloat(container.dataset.parallaxSensitivity ?? '10');
     window.addEventListener('scroll', () => this.update(), { passive: true });
     this.update();
+  }
+
+  initZIndex() {
+    this.elements.forEach(element => {
+      const classes = Array.from(element.classList);
+      const zClass = classes.find(cls => cls.startsWith('z'));
+        if (zClass) {
+            element.style.zIndex = zClass.substring(1);
+        }
+    });
   }
 
   update() {
@@ -23,9 +34,9 @@ export class ParallaxScene {
     if (element.classList.contains('noplax-y')) yOffset = 0;
     if (element.classList.contains('noplax-x')) xOffset = 0;
 
-    const scale = element.classList.contains('noplax-scale')
-      ? 1
-      : (1 + speed);
+    const scale = element.classList.contains('plax-scale')
+      ? (1 + speed)
+      : 1;
     element.style.transform = `translate(${xOffset}px, ${yOffset}px) scale(${scale})`;
   }
 }

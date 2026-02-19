@@ -1,7 +1,8 @@
 /* ========== ELEMENT SELECTORS ====== */
 
 :root {
-  --baseTransformation: ;
+  --baseTransformation: translate(-50%, -50%);
+  --scaleFactor: 1.5;
 }
 
 html {
@@ -10,8 +11,6 @@ html {
 
 body {
   margin: 0;
-  height: 250vmax;
-  width: 250vmax;
 }
 
 /* ========== ANIMATIONS ============= */
@@ -29,17 +28,9 @@ body {
 
 .the-great-beyond {
   position: absolute;
-  width: 250vmax;
-  height: 250vmax;
+  width: 5000px;
+  height: 5000px;
   overflow: hidden;
-}
-
-.plax-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  pointer-events: none;
 }
 
 .space-bg {
@@ -47,6 +38,8 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
+  image-rendering: pixelated;
+  filter: brightness(0.55);
 }
 
 .plax {
@@ -57,21 +50,35 @@ body {
   height: 100%;
 }
 
-.deep-field {
-  --baseTransformation: translate(-50%, -50%);
-  position: absolute;
-  top: 125vmax;
-  left: 125vmax;
-  animation: SPIN 2400s linear infinite;
-  /* width: calc(2048px * 1.25);
-  height: auto; */
+.floater {
+  width: calc(var(--img-width, 50px) * var(--scaleFactor, 1));
 }
 
-.deep-field-remix {
+.stuster-a {
+  --img-width: 3048px;
+  height: auto;
   position: absolute;
-  top: 3vmax;
-  left: 3vmax;
+  top: 50%;
+  left: 50%;
   animation: SPIN 2400s linear infinite;
-  /* width: calc(2048px * 1.25);
-  height: auto; */
+}
+
+.stuster-b {
+  --img-width: 1340px;
+  width: calc(var(--img-width) * var(--scaleFactor, 1));
+  height: auto;
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  animation: SPIN 2400s linear infinite;
+}
+
+.stuster-c {
+  --img-width: 512px;
+  width: calc(var(--img-width) * var(--scaleFactor, 1));
+  height: auto;
+  position: absolute;
+  top: 80%;
+  left: 20%;
+  animation: SPIN 2400s linear infinite;
 }
