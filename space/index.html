@@ -5,20 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="./css/space.css">
-  <script src="./js/space.js" defer></script>
+  <script type="module" src="./js/space.js"></script>
 
   <title>Space!</title>
 </head>
 <body>
-  <div class="the-great-beyond">
-    <img 
-      class="deep-field"
-      src="./img/hdf_pixelized_transparent_extended_rounded.png" 
-    >
-    <img 
-      class="deep-field-remix"
-      src="./img/deep_field_remix.png" 
-    >
+  <div class="the-great-beyond" data-parallax-sensitivity="10">
+    <div class="plax" style="z-index: 5">
+      <img
+        class="deep-field"
+        src="./img/hdf_pixelized_transparent_extended_rounded.png"
+      >
+    </div>
+    <div class="plax" style="z-index: 3">
+      <img
+        class="deep-field-remix"
+        src="./img/deep_field_remix.png"
+      >
+    </div>
   </div>
 </body>
 </html>
