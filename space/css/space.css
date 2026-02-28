@@ -63,9 +63,6 @@ body {
   width: 40px;
   height: 50px;
   overflow: visible;
-  position: fixed;
-  left: 50%;
-  top: 50%;
 }
 
 .spacecraft polygon {
@@ -75,6 +72,11 @@ body {
   stroke-linejoin: round;
 }
 
+.player-ship {
+    position: fixed;
+  left: 50%;
+  top: 50%;
+}
 
 
 .stuster-a {
