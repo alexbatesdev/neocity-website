@@ -59,6 +59,24 @@ body {
   width: calc(var(--img-width, 50px) * var(--scaleFactor, 1));
 }
 
+.spacecraft {
+  width: 40px;
+  height: 50px;
+  overflow: visible;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+}
+
+.spacecraft polygon {
+  fill: black;
+  stroke: white; /* #5616d5 alt color */
+  stroke-width: 6;
+  stroke-linejoin: round;
+}
+
+
+
 .stuster-a {
   --img-width: 3048px;
   height: auto;
