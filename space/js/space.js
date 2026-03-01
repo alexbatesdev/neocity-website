@@ -20,21 +20,6 @@ class Camera {
     const maxScrollX = this.element.scrollWidth - viewportWidth;
     const maxScrollY = this.element.scrollHeight - viewportHeight;
 
-    console.log(
-      `Camera focus on (${worldX.toFixed(2)}, ${worldY.toFixed(2)}) -> scroll to (${scrollX.toFixed(2)}, ${scrollY.toFixed(2)})`,
-    );
-    console.log(`Player is at (${worldX.toFixed(2)}, ${worldY.toFixed(2)})`);
-    console.log(
-      `element scroll position before: (${this.element.scrollLeft.toFixed(2)}, ${this.element.scrollTop.toFixed(2)})`,
-    );
-
-    console.log(
-      this.element.scrollWidth,
-      this.element.scrollHeight,
-      viewportWidth,
-      viewportHeight,
-    );
-
     this.element.scrollLeft = Math.max(0, Math.min(scrollX, maxScrollX));
     this.element.scrollTop = Math.max(0, Math.min(scrollY, maxScrollY));
   }
@@ -66,8 +51,10 @@ class Player {
     // rotation in radians
     this.angle = 0;
     // acceleration (thrust) magnitude
-    this.thrustMagnitude = 200; // pixels per second squared
+    this.thrustMagnitude = 0; // will be set dynamically by pointer manager
     this.isThrustingForward = false;
+    // braking damping factor when mouse is over ship
+    this.brakingDamping = 0.95; // 5% speed reduction per frame when braking
 
     this.updateRender();
   }
@@ -88,6 +75,12 @@ class Player {
     const accelY = -Math.cos(this.angle) * this.thrustMagnitude;
     this.vx += accelX * deltaTime;
     this.vy += accelY * deltaTime;
+  }
+
+  // Apply braking damping to reduce velocity
+  applyBraking(deltaTime) {
+    this.vx *= Math.pow(this.brakingDamping, deltaTime * 60);
+    this.vy *= Math.pow(this.brakingDamping, deltaTime * 60);
   }
 
   // Update position based on velocity
@@ -118,6 +111,10 @@ class PointerState {
     this.player = player;
     this.isDragging = false;
     this.lastPos = { x: 0, y: 0 };
+    // distance-based thrust config
+    this.maxThrustDistance = 400; // distance at which thrust reaches max
+    this.maxThrustMagnitude = 200; // max acceleration in pixels/sec²
+    this.brakingDistance = 50; // distance threshold for braking
   }
 
   onMouseDown(x, y) {
@@ -139,10 +136,42 @@ class PointerState {
     this.player.isThrustingForward = false;
   }
 
+  // Calculate thrust magnitude based on distance from ship to mouse
+  calculateThrustFromDistance() {
+    const elementRect = this.player.element.getBoundingClientRect();
+    const shipCenterX = elementRect.left + elementRect.width / 2;
+    const shipCenterY = elementRect.top + elementRect.height / 2;
+
+    const dx = this.lastPos.x - shipCenterX;
+    const dy = this.lastPos.y - shipCenterY;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    // If mouse is very close to ship, apply braking instead
+    if (distance < this.brakingDistance) {
+      return -1; // sentinel value indicating braking mode
+    }
+
+    // Scale thrust by distance, capped at maxThrustMagnitude
+    const thrust =
+      (distance / this.maxThrustDistance) * this.maxThrustMagnitude;
+    return Math.min(thrust, this.maxThrustMagnitude);
+  }
+
   update() {
     if (this.isDragging) {
       // Update ship pointing each tick toward current mouse position
       this.player.pointToward(this.lastPos.x, this.lastPos.y);
+
+      // Calculate and set thrust magnitude based on distance
+      const thrustMagnitude = this.calculateThrustFromDistance();
+      if (thrustMagnitude === -1) {
+        // Braking mode
+        this.player.isThrustingForward = false;
+        this.player.applyBraking(1 / 60);
+      } else {
+        this.player.isThrustingForward = true;
+        this.player.thrustMagnitude = thrustMagnitude;
+      }
     }
   }
 }
