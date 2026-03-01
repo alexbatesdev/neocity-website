@@ -86,8 +86,24 @@ class Player {
   // Update position based on velocity
   update(deltaTime) {
     this.applyThrust(deltaTime);
-    this.x += this.vx * deltaTime;
-    this.y += this.vy * deltaTime;
+    console.log(this.x, this.y);
+    if (
+      this.x + this.vx * deltaTime > 0 &&
+      this.x + this.vx * deltaTime < 5000
+    ) {
+      this.x += this.vx * deltaTime;
+    } else {
+      this.vx = 0; // stop horizontal movement if out of bounds
+    }
+
+    if (
+      this.y + this.vy * deltaTime > 0 &&
+      this.y + this.vy * deltaTime < 5000
+    ) {
+      this.y += this.vy * deltaTime;
+    } else {
+      this.vy = 0; // stop vertical movement if out of bounds
+    }
     this.updateRender();
   }
 
