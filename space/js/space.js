@@ -42,6 +42,9 @@ const viewportMiddle = {
 class Player {
   constructor(shipElement) {
     this.element = shipElement;
+    this.width = this.element.getBoundingClientRect().width;
+    this.height = this.element.getBoundingClientRect().height;
+
     // position in world space (start at center of 5000x5000 world)
     this.x = 2500;
     this.y = 2500;
@@ -86,10 +89,11 @@ class Player {
   // Update position based on velocity
   update(deltaTime) {
     this.applyThrust(deltaTime);
-    console.log(this.x, this.y);
+    // console.log(this.x, this.y);
+    // console.log((this.x + this.element.offsetWidth / 2) + this.vx, (this.y + this.element.offsetHeight / 2) + this.vy);
     if (
-      this.x + this.vx * deltaTime > 0 &&
-      this.x + this.vx * deltaTime < 5000
+      (this.x + this.width / 2) + this.vx * deltaTime > 0 &&
+      (this.x + this.width / 2) + this.vx * deltaTime < 5000
     ) {
       this.x += this.vx * deltaTime;
     } else {
@@ -97,8 +101,8 @@ class Player {
     }
 
     if (
-      this.y + this.vy * deltaTime > 0 &&
-      this.y + this.vy * deltaTime < 5000
+      (this.y + this.height / 2) + this.vy * deltaTime > 0 &&
+      (this.y + this.height / 2) + this.vy * deltaTime < 5000
     ) {
       this.y += this.vy * deltaTime;
     } else {
