@@ -1,5 +1,46 @@
-import { ParallaxScene } from './parallax.js';
-new ParallaxScene(document.querySelector('.the-great-beyond'));
+import { ParallaxScene } from "./parallax.js";
+new ParallaxScene(document.querySelector(".the-great-beyond"));
+
+// --- camera system -------------------------------------------------------
+class Camera {
+  constructor(scrollableElement) {
+    this.element = scrollableElement;
+  }
+
+  // Center viewport on a world position
+  focusOn(worldX, worldY) {
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+
+    // Calculate scroll position to center the target
+    const scrollX = worldX - viewportWidth / 2;
+    const scrollY = worldY - viewportHeight / 2;
+
+    // Clamp to valid scroll range
+    const maxScrollX = this.element.scrollWidth - viewportWidth;
+    const maxScrollY = this.element.scrollHeight - viewportHeight;
+
+    console.log(
+      `Camera focus on (${worldX.toFixed(2)}, ${worldY.toFixed(2)}) -> scroll to (${scrollX.toFixed(2)}, ${scrollY.toFixed(2)})`,
+    );
+    console.log(`Player is at (${worldX.toFixed(2)}, ${worldY.toFixed(2)})`);
+    console.log(
+      `element scroll position before: (${this.element.scrollLeft.toFixed(2)}, ${this.element.scrollTop.toFixed(2)})`,
+    );
+
+    console.log(
+      this.element.scrollWidth,
+      this.element.scrollHeight,
+      viewportWidth,
+      viewportHeight,
+    );
+
+    this.element.scrollLeft = Math.max(0, Math.min(scrollX, maxScrollX));
+    this.element.scrollTop = Math.max(0, Math.min(scrollY, maxScrollY));
+  }
+}
+
+const camera = new Camera(document.documentElement);
 
 // fixed‑timestep accumulator variables (borrowed from game.js)
 let lastTime = performance.now();
@@ -9,16 +50,16 @@ const fixedDelta = 1 / 60; // 60 FPS simulation step (seconds)
 // Get the viewport middle point
 const viewportMiddle = {
   x: window.innerWidth / 2,
-  y: window.innerHeight / 2
+  y: window.innerHeight / 2,
 };
 
 // --- player class --------------------------------------------------------
 class Player {
   constructor(shipElement) {
     this.element = shipElement;
-    // position in world space
-    this.x = viewportMiddle.x;
-    this.y = viewportMiddle.y;
+    // position in world space (start at center of 5000x5000 world)
+    this.x = 2500;
+    this.y = 2500;
     // velocity in pixels per second
     this.vx = 0;
     this.vy = 0;
@@ -36,7 +77,8 @@ class Player {
     const elementRect = this.element.getBoundingClientRect();
     const shipCenterX = elementRect.left + elementRect.width / 2;
     const shipCenterY = elementRect.top + elementRect.height / 2;
-    this.angle = Math.atan2(worldY - shipCenterY, worldX - shipCenterX) + Math.PI / 2;
+    this.angle =
+      Math.atan2(worldY - shipCenterY, worldX - shipCenterX) + Math.PI / 2;
   }
 
   // Apply thrust in the direction the ship is pointing
@@ -62,10 +104,10 @@ class Player {
   }
 }
 
-const player = new Player(document.querySelector('.player-ship'));
+const player = new Player(document.querySelector(".player-ship"));
 
 // Update the viewport middle point on resize
-window.addEventListener('resize', () => {
+window.addEventListener("resize", () => {
   viewportMiddle.x = window.innerWidth / 2;
   viewportMiddle.y = window.innerHeight / 2;
 });
@@ -108,31 +150,38 @@ class PointerState {
 const pointer = new PointerState(player);
 
 // wire DOM events to pointer manager
-document.addEventListener('mousedown', (e) => pointer.onMouseDown(e.clientX, e.clientY));
-document.addEventListener('mousemove', (e) => pointer.onMouseMove(e.clientX, e.clientY));
-document.addEventListener('mouseup', () => pointer.onMouseUp());
+document.addEventListener("mousedown", (e) =>
+  pointer.onMouseDown(e.clientX, e.clientY),
+);
+document.addEventListener("mousemove", (e) =>
+  pointer.onMouseMove(e.clientX, e.clientY),
+);
+document.addEventListener("mouseup", () => pointer.onMouseUp());
 
 function updateSimulation(delta) {
-    // process pointer input once per tick
-    pointer.update();
-    
-    // update game entities
-    player.update(delta);
+  // process pointer input once per tick
+  pointer.update();
+
+  // update game entities
+  player.update(delta);
+
+  // update camera to follow player
+  camera.focusOn(player.x, player.y);
 }
 
 function animate(timestamp) {
-    const now = timestamp || performance.now();
-    let frameTime = (now - lastTime) / 1000; // convert to seconds
-    if (frameTime > 0.25) frameTime = 0.25; // avoid spiral of death
-    lastTime = now;
-    accumulator += frameTime;
+  const now = timestamp || performance.now();
+  let frameTime = (now - lastTime) / 1000; // convert to seconds
+  if (frameTime > 0.25) frameTime = 0.25; // avoid spiral of death
+  lastTime = now;
+  accumulator += frameTime;
 
-    while (accumulator >= fixedDelta) {
-        updateSimulation(fixedDelta);
-        accumulator -= fixedDelta;
-    }
+  while (accumulator >= fixedDelta) {
+    updateSimulation(fixedDelta);
+    accumulator -= fixedDelta;
+  }
 
-    requestAnimationFrame(animate);
+  requestAnimationFrame(animate);
 }
 
 requestAnimationFrame(animate);
