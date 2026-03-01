@@ -73,9 +73,9 @@ body {
 }
 
 .player-ship {
-    position: fixed;
-  left: 50%;
-  top: 50%;
+  position: absolute;
+  left: 50vw;
+  top: 50vh;
 }
 
 
