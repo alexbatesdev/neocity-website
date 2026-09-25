@@ -89,8 +89,6 @@ class Player {
   // Update position based on velocity
   update(deltaTime) {
     this.applyThrust(deltaTime);
-    // console.log(this.x, this.y);
-    // console.log((this.x + this.element.offsetWidth / 2) + this.vx, (this.y + this.element.offsetHeight / 2) + this.vy);
     if (
       (this.x + this.width / 2) + this.vx * deltaTime > 0 &&
       (this.x + this.width / 2) + this.vx * deltaTime < 5000
