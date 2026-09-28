@@ -1,0 +1,46 @@
+body {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.floor {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  width: 900px;
+  height: 150px;
+  background-color: #350d90;
+}
+
+/* Sleeping animation */
+
+@keyframes sleeping {
+  0% {
+    transform: scaleY(1);
+  }
+
+  50% {
+    transform: scaleY(0.9);
+  }
+
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+.cat {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+}
+
+.cat img {
+  width: calc(165px * 2);
+  height: auto;
+  image-rendering: pixelated;
+  animation: sleeping 8s infinite;
+  transform-origin: bottom center;
+}
