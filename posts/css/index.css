@@ -4,16 +4,41 @@ body {
   top: 0;
   right: 0;
   bottom: 0;
+  image-rendering: pixelated;
+  display: grid;
+  place-items: center;
+}
+
+.room-bounds {
+  position: relative;
+  height: 900px;
+  width: 1000px;
 }
 
 .floor {
   position: absolute;
   left: 1rem;
   bottom: 1rem;
-  width: 900px;
+  right: 1rem;
+  /* width: 900px; */
   height: 150px;
   background-color: #350d90;
+  z-index: -1;
 }
+
+.bub-interface {
+  --scale: 1.5;
+  position: absolute;
+  right: 1rem;
+  bottom: 125px;
+  background-image: url('../img/bub-panel.png');
+  background-size: calc(393px * var(--scale)) calc(447px * var(--scale));
+  width: calc(393px * var(--scale));
+  height: calc(447px * var(--scale));
+  image-rendering: pixelated;
+  z-index: 10;
+}
+
 
 /* Sleeping animation */
 
@@ -31,16 +56,119 @@ body {
   }
 }
 
+@keyframes drifting-rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .cat {
   position: absolute;
   left: 1rem;
   bottom: 1rem;
 }
 
-.cat img {
+.cat>img {
   width: calc(165px * 2);
   height: auto;
   image-rendering: pixelated;
   animation: sleeping 8s infinite;
   transform-origin: bottom center;
+}
+
+.z-sm>img {
+  position: absolute;
+  width: calc(32px * 1.5);
+  height: auto;
+  image-rendering: pixelated;
+  left: 22%;
+  bottom: 90%;
+  animation: sleeping 5s infinite;
+  transform-origin: bottom center;
+}
+
+.z-md>img {
+  position: absolute;
+  width: calc(32px * 2);
+  height: auto;
+  image-rendering: pixelated;
+  left: 6%;
+  bottom: 135%;
+  animation: sleeping 3.5s infinite;
+  transform-origin: bottom center;
+}
+
+.z-lg>img {
+  position: absolute;
+  width: calc(32px * 3.5);
+  height: auto;
+  image-rendering: pixelated;
+  left: 20%;
+  bottom: 190%;
+  animation: sleeping 4s infinite;
+  transform-origin: bottom center;
+}
+
+.bub-sm>img {
+  position: absolute;
+  width: calc(32px * 1.7);
+  height: auto;
+  image-rendering: pixelated;
+  right: 20%;
+  bottom: 80%;
+  animation: drifting-rotation 60s linear infinite;
+}
+
+.bub-md>img {
+  position: absolute;
+  width: calc(32px * 3);
+  height: auto;
+  image-rendering: pixelated;
+  right: 0%;
+  bottom: 130%;
+  animation: drifting-rotation 60s linear infinite;
+}
+
+.bub-lg>img {
+  position: absolute;
+  width: calc(81px * 2);
+  height: auto;
+  image-rendering: pixelated;
+  right: -45%;
+  bottom: 203%;
+  animation: drifting-rotation 60s linear infinite;
+}
+
+.window {
+  position: absolute;
+  bottom: 300px;
+  left: 100px;
+  width: 250px;
+  height: auto;
+  image-rendering: pixelated;
+  z-index: 0;
+}
+
+.lava-lamp {
+  position: absolute;
+  bottom: 60px;
+  right: 50px;
+  width: 75px;
+  height: auto;
+  image-rendering: pixelated;
+  z-index: 1;
+}
+
+.rug {
+  position: absolute;
+  bottom: 7px;
+  left: 7px;
+  width: 290px;
+  height: auto;
+  image-rendering: pixelated;
+  z-index: 0;
 }
