@@ -37,6 +37,8 @@ export class ParallaxScene {
     const scale = element.classList.contains('plax-scale')
       ? (1 + speed)
       : 1;
-    element.style.transform = `translate(${xOffset}px, ${yOffset}px) scale(${scale})`;
+    // Individual properties avoid clashing with CSS animations that use `transform`.
+    element.style.translate = `${xOffset}px ${yOffset}px`;
+    element.style.scale = `${scale}`;
   }
 }

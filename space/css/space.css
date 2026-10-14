@@ -3,6 +3,8 @@
 :root {
   --baseTransformation: translate(-50%, -50%);
   --scaleFactor: 1.5;
+  /* Cluster tint opacity: 1 = on, 0 = off */
+  --clusterAlpha: 0;
 }
 
 html {
@@ -71,6 +73,7 @@ body {
   top: 50%;
   left: 50%;
   animation: SPIN 2400s linear infinite;
+  filter: brightness(0.75);
 }
 
 .stuster-b {
@@ -81,14 +84,64 @@ body {
   top: 10%;
   left: 10%;
   animation: SPIN 2400s linear infinite;
+  background-color: rgb(50 50 187 / var(--clusterAlpha));
 }
 
-.stuster-c {
-  --img-width: 512px;
+.stuster-b-2 {
+  --img-width: 1340px;
+  --scaleFactor: 1.5;
   width: calc(var(--img-width) * var(--scaleFactor, 1));
   height: auto;
   position: absolute;
   top: 80%;
   left: 20%;
   animation: SPIN 2400s linear infinite;
+  background-color: rgb(14 17 155 / var(--clusterAlpha));
+}
+.stuster-b-3 {
+  --img-width: 1340px;
+  --scaleFactor: 1.8;
+  width: calc(var(--img-width) * var(--scaleFactor, 1));
+  height: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  animation: SPIN 2400s linear infinite;
+  background-color: rgb(47 0 128 / var(--clusterAlpha));
+}
+
+.stuster-b-4 {
+  --img-width: 1340px;
+  --scaleFactor: 1.5;
+  width: calc(var(--img-width) * var(--scaleFactor, 1));
+  height: auto;
+  position: absolute;
+  top: 80%;
+  left: 80%;
+  animation: SPIN 2400s linear infinite;
+  background-color: rgb(87 39 169 / var(--clusterAlpha));
+}
+
+.stuster-b-5 {
+  --img-width: 1340px;
+  --scaleFactor: 1.5;
+  width: calc(var(--img-width) * var(--scaleFactor, 1));
+  height: auto;
+  position: absolute;
+  top: 120%;
+  left: 90%;
+  animation: SPIN 2400s linear infinite;
+  background-color: rgb(128 0 128 / var(--clusterAlpha));
+}
+
+.stuster-b-6 {
+  --img-width: 1340px;
+  --scaleFactor: 1.5;
+  width: calc(var(--img-width) * var(--scaleFactor, 1));
+  height: auto;
+  position: absolute;
+  top: 30%;
+  left: 80%;
+  animation: SPIN 2400s linear infinite;
+  background-color: rgb(128 0 0 / var(--clusterAlpha));
 }
