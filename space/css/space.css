@@ -50,6 +50,16 @@ body {
   height: 100%;
 }
 
+/* Reusable: viewport-fixed layer; JS scrolls its background-position. */
+.tiled-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  background-repeat: repeat;
+  image-rendering: pixelated;
+}
+
 .floater {
   width: calc(var(--img-width, 50px) * var(--scaleFactor, 1));
 }
