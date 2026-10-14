@@ -14,6 +14,14 @@ a:hover {
     color: #00aeff;
 }
 
+i {
+    font-style: italic;
+}
+
+b {
+    font-weight: bold;
+}
+
 body {
     background-color: #baf;
     background-image: url("../img/space-bg-2.gif");
