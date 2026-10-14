@@ -145,3 +145,15 @@ body {
   animation: SPIN 2400s linear infinite;
   background-color: rgb(128 0 0 / var(--clusterAlpha));
 }
+
+.black-hole {
+  position: absolute;
+  bottom: 50vh;
+  left: 50vw;
+  transform: translate(-50%, 50%);
+  width: 100px;
+  height: 100px;
+  background-color: black;
+  border-radius: 50%;
+  color: white;
+}
