@@ -70,6 +70,7 @@ body {
 
 .floater {
   width: calc(var(--img-width, 50px) * var(--scaleFactor, 1));
+  user-select: none;
 }
 
 .spacecraft {

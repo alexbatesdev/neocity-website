@@ -239,7 +239,8 @@ body {
     justify-content: space-evenly;
     align-items: center;
     width: 400px;
-    height: 250px;
+    padding: 5px;
+    /* height: 250px; */
     /* background-color: rgb(173, 34, 238); */
 }
 
@@ -413,7 +414,8 @@ li {
     width: 150px;
     height: 100px;
     position: relative;
-    bottom: -40px;
+    bottom: -100px;
+    margin-left: 10px;
 }
 
 .tv-screen-content {
