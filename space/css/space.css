@@ -8,11 +8,12 @@
 }
 
 html {
-    background-color: black;
+  background-color: black;
 }
 
 body {
   margin: 0;
+  overflow: hidden;
 }
 
 /* ========== ANIMATIONS ============= */
@@ -21,6 +22,7 @@ body {
   from {
     transform: var(--baseTransformation) rotate(0deg);
   }
+
   to {
     transform: var(--baseTransformation) rotate(360deg);
   }
@@ -62,9 +64,31 @@ body {
   image-rendering: pixelated;
 }
 
+.plax-loop {
+  background-repeat: repeat;
+}
+
 .floater {
   width: calc(var(--img-width, 50px) * var(--scaleFactor, 1));
 }
+
+.spacecraft {
+  width: 40px;
+  height: 50px;
+  overflow: visible;
+}
+
+.spacecraft polygon {
+  fill: black;
+  stroke: white; /* #5616d5 alt color */
+  stroke-width: 6;
+  stroke-linejoin: round;
+}
+
+.player-ship {
+  position: absolute;
+}
+
 
 .stuster-a {
   --img-width: 3048px;
@@ -156,4 +180,9 @@ body {
   background-color: black;
   border-radius: 50%;
   color: white;
+}
+
+.foreground-stars {
+  background-image: url("../img/stars.gif");
+  background-size: 1024px;
 }

@@ -34,6 +34,11 @@ export class ParallaxScene {
     if (element.classList.contains('noplax-y')) yOffset = 0;
     if (element.classList.contains('noplax-x')) xOffset = 0;
 
+    if (element.classList.contains('plax-loop')) {
+      element.style.backgroundPosition = `${xOffset}px ${yOffset}px`;
+      return;
+    }
+
     const scale = element.classList.contains('plax-scale')
       ? (1 + speed)
       : 1;
