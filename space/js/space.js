@@ -212,13 +212,28 @@ class PointerState {
 const pointer = new PointerState(player);
 
 // wire DOM events to pointer manager
-document.addEventListener("mousedown", (e) =>
-  pointer.onMouseDown(e.clientX, e.clientY),
-);
-document.addEventListener("mousemove", (e) =>
-  pointer.onMouseMove(e.clientX, e.clientY),
-);
-document.addEventListener("mouseup", () => pointer.onMouseUp());
+// Pointer events unify mouse, touch and pen; track a single active pointer.
+let activePointerId = null;
+document.addEventListener("pointerdown", (e) => {
+  if (activePointerId !== null) return;
+  activePointerId = e.pointerId;
+  pointer.onMouseDown(e.clientX, e.clientY);
+});
+document.addEventListener("pointermove", (e) => {
+  if (e.pointerId !== activePointerId) return;
+  pointer.onMouseMove(e.clientX, e.clientY);
+});
+const endPointer = (e) => {
+  if (e.pointerId !== activePointerId) return;
+  activePointerId = null;
+  pointer.onMouseUp();
+};
+document.addEventListener("pointerup", endPointer);
+document.addEventListener("pointercancel", endPointer);
+// Prevent the long-press context menu on touch devices
+document.addEventListener("contextmenu", (e) => {
+  if (activePointerId !== null) e.preventDefault();
+});
 
 function updateSimulation(delta) {
   // process pointer input once per tick
