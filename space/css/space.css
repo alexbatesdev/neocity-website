@@ -9,12 +9,16 @@
 
 html {
   background-color: black;
+  overflow: hidden;
 }
 
 body {
   margin: 0;
   overflow: hidden;
   user-select: none;
+}
+
+img {
   -webkit-user-drag: none;
 }
 
@@ -33,10 +37,13 @@ body {
 /* ========== CLASSES ================ */
 
 .the-great-beyond {
-  position: absolute;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 5000px;
   height: 5000px;
   overflow: hidden;
+  will-change: translate;
 }
 
 .space-bg {

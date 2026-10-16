@@ -1,11 +1,11 @@
 export class ParallaxScene {
   constructor(container) {
+    this.container = container;
     this.elements = Array.from(container.querySelectorAll('.plax'));
     this.initZIndex();
     this.sensitivity = parseFloat(container.dataset.parallaxSensitivity ?? '10');
-    this.ticking = false;
     this.measure();
-    // Cache per-element data so the scroll path does no style/layout reads
+    // Cache per-element data so updates do no style/layout reads
     this.items = this.elements.map(el => {
       const speed = (parseInt(el.style.zIndex || getComputedStyle(el).zIndex) / 100) * this.sensitivity;
       return {
@@ -16,22 +16,12 @@ export class ParallaxScene {
         scale: el.classList.contains('plax-scale') ? 1 + speed : 1,
       };
     });
-    window.addEventListener('resize', () => { this.measure(); this.requestUpdate(); });
-    window.addEventListener('scroll', () => this.requestUpdate(), { passive: true });
-    this.update();
+    window.addEventListener('resize', () => this.measure());
   }
 
+  // Layout read happens only at init/resize. Offsets are relative to the world's center.
   measure() {
-    this.centerOffset = (document.documentElement.scrollWidth - window.innerWidth) / 2;
-  }
-
-  requestUpdate() {
-    if (this.ticking) return;
-    this.ticking = true;
-    requestAnimationFrame(() => {
-      this.ticking = false;
-      this.update();
-    });
+    this.centerOffset = (this.container.offsetWidth - window.innerWidth) / 2;
   }
 
   initZIndex() {
@@ -44,10 +34,10 @@ export class ParallaxScene {
     });
   }
 
-  update() {
-    const scrollY = window.scrollY;
-    const scrollX = window.scrollX - this.centerOffset;
-    for (const item of this.items) this.applyParallax(item, scrollY, scrollX);
+  // Driven by the camera position (top-left of the viewport in world space)
+  update(cameraX, cameraY) {
+    const scrollX = cameraX - this.centerOffset;
+    for (const item of this.items) this.applyParallax(item, cameraY, scrollX);
   }
 
   applyParallax(item, scrollY, scrollX) {

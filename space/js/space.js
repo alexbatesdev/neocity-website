@@ -1,37 +1,43 @@
 import { ParallaxScene } from './parallax.js';
 import { TiledParallaxLayer } from './tiledParallaxLayer.js';
-new ParallaxScene(document.querySelector('.the-great-beyond'));
-TiledParallaxLayer.initAll();
+const scene = new ParallaxScene(document.querySelector('.the-great-beyond'));
+const tiledLayers = TiledParallaxLayer.initAll();
 
 // --- camera system -------------------------------------------------------
+// Native scrolling is not used: the camera is plain numbers and the world is moved with one translate.
 class Camera {
-  constructor(scrollableElement) {
-    this.element = scrollableElement;
+  constructor(worldElement, worldWidth, worldHeight) {
+    this.element = worldElement;
+    this.worldWidth = worldWidth;
+    this.worldHeight = worldHeight;
     this.x = 0;
     this.y = 0;
     this.measure();
     window.addEventListener("resize", () => this.measure());
   }
 
-  // Layout reads happen only here (init/resize), never per frame
   measure() {
     this.viewportWidth = window.innerWidth;
     this.viewportHeight = window.innerHeight;
-    this.maxScrollX = this.element.scrollWidth - this.viewportWidth;
-    this.maxScrollY = this.element.scrollHeight - this.viewportHeight;
+    this.maxX = Math.max(0, this.worldWidth - this.viewportWidth);
+    this.maxY = Math.max(0, this.worldHeight - this.viewportHeight);
   }
 
   // Center viewport on a world position
   focusOn(worldX, worldY) {
-    this.x = Math.max(0, Math.min(worldX - this.viewportWidth / 2, this.maxScrollX));
-    this.y = Math.max(0, Math.min(worldY - this.viewportHeight / 2, this.maxScrollY));
+    this.x = Math.max(0, Math.min(worldX - this.viewportWidth / 2, this.maxX));
+    this.y = Math.max(0, Math.min(worldY - this.viewportHeight / 2, this.maxY));
+  }
 
-    this.element.scrollLeft = this.x;
-    this.element.scrollTop = this.y;
+  // Write all camera-dependent styles once per frame
+  render() {
+    this.element.style.translate = `${-this.x}px ${-this.y}px`;
+    scene.update(this.x, this.y);
+    for (const layer of tiledLayers) layer.update(this.x, this.y);
   }
 }
 
-const camera = new Camera(document.documentElement);
+const camera = new Camera(document.querySelector(".the-great-beyond"), 5000, 5000);
 
 // fixed‑timestep accumulator variables (borrowed from game.js)
 let lastTime = performance.now();
@@ -237,7 +243,10 @@ function animate(timestamp) {
     accumulator -= fixedDelta;
   }
 
+  camera.render();
   requestAnimationFrame(animate);
 }
 
+camera.focusOn(player.x, player.y);
+camera.render();
 requestAnimationFrame(animate);
