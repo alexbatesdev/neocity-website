@@ -64,10 +64,6 @@ body {
   image-rendering: pixelated;
 }
 
-.plax-loop {
-  background-repeat: repeat;
-}
-
 .floater {
   width: calc(var(--img-width, 50px) * var(--scaleFactor, 1));
   user-select: none;
@@ -181,9 +177,4 @@ body {
   background-color: black;
   border-radius: 50%;
   color: white;
-}
-
-.foreground-stars {
-  background-image: url("../img/stars.gif");
-  background-size: 1024px;
 }

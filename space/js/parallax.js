@@ -13,7 +13,6 @@ export class ParallaxScene {
         speed,
         noX: el.classList.contains('noplax-x'),
         noY: el.classList.contains('noplax-y'),
-        loop: el.classList.contains('plax-loop'),
         scale: el.classList.contains('plax-scale') ? 1 + speed : 1,
       };
     });
@@ -54,11 +53,6 @@ export class ParallaxScene {
   applyParallax(item, scrollY, scrollX) {
     const xOffset = item.noX ? 0 : -(scrollX * item.speed);
     const yOffset = item.noY ? 0 : -(scrollY * item.speed);
-
-    if (item.loop) {
-      item.el.style.backgroundPosition = `${xOffset}px ${yOffset}px`;
-      return;
-    }
 
     // Individual properties avoid clashing with CSS animations that use `transform`.
     item.el.style.translate = `${xOffset}px ${yOffset}px`;
