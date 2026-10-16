@@ -3,8 +3,36 @@ export class ParallaxScene {
     this.elements = Array.from(container.querySelectorAll('.plax'));
     this.initZIndex();
     this.sensitivity = parseFloat(container.dataset.parallaxSensitivity ?? '10');
-    window.addEventListener('scroll', () => this.update(), { passive: true });
+    this.ticking = false;
+    this.measure();
+    // Cache per-element data so the scroll path does no style/layout reads
+    this.items = this.elements.map(el => {
+      const speed = (parseInt(el.style.zIndex || getComputedStyle(el).zIndex) / 100) * this.sensitivity;
+      return {
+        el,
+        speed,
+        noX: el.classList.contains('noplax-x'),
+        noY: el.classList.contains('noplax-y'),
+        loop: el.classList.contains('plax-loop'),
+        scale: el.classList.contains('plax-scale') ? 1 + speed : 1,
+      };
+    });
+    window.addEventListener('resize', () => { this.measure(); this.requestUpdate(); });
+    window.addEventListener('scroll', () => this.requestUpdate(), { passive: true });
     this.update();
+  }
+
+  measure() {
+    this.centerOffset = (document.documentElement.scrollWidth - window.innerWidth) / 2;
+  }
+
+  requestUpdate() {
+    if (this.ticking) return;
+    this.ticking = true;
+    requestAnimationFrame(() => {
+      this.ticking = false;
+      this.update();
+    });
   }
 
   initZIndex() {
@@ -19,31 +47,21 @@ export class ParallaxScene {
 
   update() {
     const scrollY = window.scrollY;
-    const scrollX = window.scrollX - (document.documentElement.scrollWidth - window.innerWidth) / 2;
-    this.elements.forEach(el => this.applyParallax(el, scrollY, scrollX));
+    const scrollX = window.scrollX - this.centerOffset;
+    for (const item of this.items) this.applyParallax(item, scrollY, scrollX);
   }
 
-  applyParallax(element, scrollY, scrollX) {
-    let zIndex = element.style.zIndex
-      || element.computedStyleMap().get('z-index').value;
-    const speed = (parseInt(zIndex) / 100) * this.sensitivity;
+  applyParallax(item, scrollY, scrollX) {
+    const xOffset = item.noX ? 0 : -(scrollX * item.speed);
+    const yOffset = item.noY ? 0 : -(scrollY * item.speed);
 
-    let xOffset = -(scrollX * speed);
-    let yOffset = -(scrollY * speed);
-
-    if (element.classList.contains('noplax-y')) yOffset = 0;
-    if (element.classList.contains('noplax-x')) xOffset = 0;
-
-    if (element.classList.contains('plax-loop')) {
-      element.style.backgroundPosition = `${xOffset}px ${yOffset}px`;
+    if (item.loop) {
+      item.el.style.backgroundPosition = `${xOffset}px ${yOffset}px`;
       return;
     }
 
-    const scale = element.classList.contains('plax-scale')
-      ? (1 + speed)
-      : 1;
     // Individual properties avoid clashing with CSS animations that use `transform`.
-    element.style.translate = `${xOffset}px ${yOffset}px`;
-    element.style.scale = `${scale}`;
+    item.el.style.translate = `${xOffset}px ${yOffset}px`;
+    item.el.style.scale = `${item.scale}`;
   }
 }

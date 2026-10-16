@@ -7,23 +7,27 @@ TiledParallaxLayer.initAll();
 class Camera {
   constructor(scrollableElement) {
     this.element = scrollableElement;
+    this.x = 0;
+    this.y = 0;
+    this.measure();
+    window.addEventListener("resize", () => this.measure());
+  }
+
+  // Layout reads happen only here (init/resize), never per frame
+  measure() {
+    this.viewportWidth = window.innerWidth;
+    this.viewportHeight = window.innerHeight;
+    this.maxScrollX = this.element.scrollWidth - this.viewportWidth;
+    this.maxScrollY = this.element.scrollHeight - this.viewportHeight;
   }
 
   // Center viewport on a world position
   focusOn(worldX, worldY) {
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
+    this.x = Math.max(0, Math.min(worldX - this.viewportWidth / 2, this.maxScrollX));
+    this.y = Math.max(0, Math.min(worldY - this.viewportHeight / 2, this.maxScrollY));
 
-    // Calculate scroll position to center the target
-    const scrollX = worldX - viewportWidth / 2;
-    const scrollY = worldY - viewportHeight / 2;
-
-    // Clamp to valid scroll range
-    const maxScrollX = this.element.scrollWidth - viewportWidth;
-    const maxScrollY = this.element.scrollHeight - viewportHeight;
-
-    this.element.scrollLeft = Math.max(0, Math.min(scrollX, maxScrollX));
-    this.element.scrollTop = Math.max(0, Math.min(scrollY, maxScrollY));
+    this.element.scrollLeft = this.x;
+    this.element.scrollTop = this.y;
   }
 }
 
@@ -65,12 +69,17 @@ class Player {
   }
 
   // Point the ship toward a world position
-  pointToward(worldX, worldY) {
-    const elementRect = this.element.getBoundingClientRect();
-    const shipCenterX = elementRect.left + elementRect.width / 2;
-    const shipCenterY = elementRect.top + elementRect.height / 2;
-    this.angle =
-      Math.atan2(worldY - shipCenterY, worldX - shipCenterX) + Math.PI / 2;
+  // Ship center in viewport coordinates, computed without touching layout
+  getScreenCenter() {
+    return {
+      x: this.x + this.width / 2 - camera.x,
+      y: this.y + this.height / 2 - camera.y,
+    };
+  }
+
+  pointToward(screenX, screenY) {
+    const c = this.getScreenCenter();
+    this.angle = Math.atan2(screenY - c.y, screenX - c.x) + Math.PI / 2;
   }
 
   // Apply thrust in the direction the ship is pointing
@@ -158,12 +167,10 @@ class PointerState {
 
   // Calculate thrust magnitude based on distance from ship to mouse
   calculateThrustFromDistance() {
-    const elementRect = this.player.element.getBoundingClientRect();
-    const shipCenterX = elementRect.left + elementRect.width / 2;
-    const shipCenterY = elementRect.top + elementRect.height / 2;
+    const c = this.player.getScreenCenter();
 
-    const dx = this.lastPos.x - shipCenterX;
-    const dy = this.lastPos.y - shipCenterY;
+    const dx = this.lastPos.x - c.x;
+    const dy = this.lastPos.y - c.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
 
     // If mouse is very close to ship, apply braking instead
