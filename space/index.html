@@ -22,6 +22,16 @@
         data-speed="0.1"
         data-scale="3"
       ></div>
+      <!-- Very sparse, very distant stars (drawn procedurally) -->
+      <div
+        class="tiled-layer"
+        data-generate-stars="45"
+        data-tile="1024"
+        data-seed="5"
+        style="z-index: -5"
+        data-speed="0.1"
+        data-scale="2"
+      ></div>
 
       <!-- Endless filler: factor <1 is distant, >1 is foreground. Content is generated per cell from a seed. -->
       <div
@@ -77,30 +87,31 @@
 
       <!-- Landmarks: fixed world coordinates, the ship starts at (0, 0) -->
       <!-- Original hand-placed clusters, now fixed landmarks (old 5000px world coords minus 2500). Size = old width * scale. -->
-      <div class="landmark cluster" style="z-index: -1; --size: 4572px; filter: brightness(0.75)" data-x="0" data-y="0">
+      <div class="landmark cluster" style="z-index: -1; --size: 4572px; --tint: 50 50 187; filter: brightness(0.75)" data-x="0" data-y="0">
         <img src="./img/hdf_pixelized_transparent_extended_rounded.png" />
       </div>
-      <div class="landmark cluster" style="z-index: 1; --size: 2010px" data-x="-2000" data-y="-2000">
+      <div class="landmark cluster" style="z-index: 1; --size: 2010px; --tint: 14 17 155" data-x="-2000" data-y="-2000">
         <img src="./img/deep_field_remix.png" />
       </div>
-      <div class="landmark cluster" style="z-index: 4; --size: 2010px" data-x="-1500" data-y="1500">
+      <div class="landmark cluster" style="z-index: 4; --size: 2010px; --tint: 47 0 128" data-x="-1500" data-y="1500">
         <img src="./img/deep_field_remix.png" />
       </div>
-      <div class="landmark cluster" style="z-index: 5; --size: 2412px" data-x="0" data-y="0">
+      <div class="landmark cluster" style="z-index: 5; --size: 2412px; --tint: 87 39 169" data-x="0" data-y="0">
         <img src="./img/deep_field_remix.png" />
       </div>
-      <div class="landmark cluster" style="z-index: 3; --size: 2010px" data-x="1500" data-y="1500">
+      <div class="landmark cluster" style="z-index: 3; --size: 2010px; --tint: 128 0 128" data-x="1500" data-y="1500">
         <img src="./img/deep_field_remix.png" />
       </div>
-      <div class="landmark cluster" style="z-index: 4; --size: 2010px" data-x="2000" data-y="3500">
+      <div class="landmark cluster" style="z-index: 4; --size: 2010px; --tint: 128 0 0" data-x="2000" data-y="3500">
         <img src="./img/deep_field_remix.png" />
       </div>
-      <div class="landmark cluster" style="z-index: 6; --size: 2010px" data-x="1500" data-y="-1000">
+      <div class="landmark cluster" style="z-index: 6; --size: 2010px; --tint: 50 50 187" data-x="1500" data-y="-1000">
         <img src="./img/deep_field_remix.png" />
       </div>
 
-      <!-- Debug: the old 5000x5000 finite world, centered on the origin. Delete this element to remove it. -->
+      <!-- Debug (toggle with the ` key or ?debug): the old 5000x5000 finite world, centered on the origin. -->
       <div class="landmark debug-bounds" style="z-index: 0" data-x="0" data-y="0"></div>
+      <div class="debug-hud"></div>
 
       <div class="landmark black-hole" style="z-index: 0" data-x="-1500" data-y="-800">
         Put a black hole gif here Connect it to a white hole Make clicking it

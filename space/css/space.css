@@ -3,7 +3,7 @@
 :root {
   --baseTransformation: translate(-50%, -50%);
   --scaleFactor: 1.5;
-  /* Cluster tint opacity: 1 = on, 0 = off */
+  /* Cluster tint opacity: 0 = off; body.debug turns it on */
   --clusterAlpha: 0;
 }
 
@@ -111,6 +111,7 @@ img {
 .cluster {
   width: var(--size);
   height: var(--size);
+  background-color: rgb(var(--tint, 0 0 0) / var(--clusterAlpha));
 }
 
 .cluster img {
@@ -124,16 +125,45 @@ img {
   animation: SPIN 2400s linear infinite;
 }
 
+/* Debug visuals: hidden by default, shown when body.debug is set (` key or ?debug). */
 .debug-bounds {
   width: 5000px;
   height: 5000px;
   box-sizing: border-box;
   border: 6px dashed lime;
   pointer-events: none;
+  opacity: 0;
+}
+
+.debug-hud {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 1000;
+  display: none;
+  white-space: pre;
+  font: 12px/1.4 monospace;
+  color: lime;
+  pointer-events: none;
+}
+
+body.debug {
+  --clusterAlpha: 0.4;
+}
+
+body.debug .debug-bounds {
+  opacity: 1;
+}
+
+body.debug .debug-hud {
+  display: block;
+}
+
+body.debug .black-hole {
+  outline: 3px solid red;
 }
 
 .black-hole {
-  outline: 3px solid red;
   width: 100px;
   height: 100px;
   background-color: black;
