@@ -42,40 +42,29 @@ img {
 
 .the-great-beyond {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 5000px;
+  height: 5000px;
   overflow: hidden;
+  will-change: translate;
 }
 
 .space-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  image-rendering: pixelated;
   filter: brightness(0.55);
 }
 
-/* Endless procedural layer; items are positioned by JS (translate = item center). */
-.proc-layer {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.proc-item {
+.plax {
   position: absolute;
   top: 0;
   left: 0;
-  will-change: transform;
-}
-
-.proc-img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: auto;
-  animation: SPIN 2400s linear infinite;
-}
-
-.landmark {
-  position: absolute;
-  top: 0;
-  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 /* Reusable: viewport-fixed layer; JS scrolls its background-position. */
@@ -86,6 +75,10 @@ img {
   pointer-events: none;
   background-repeat: repeat;
   image-rendering: pixelated;
+}
+
+.floater {
+  width: calc(var(--img-width, 50px) * var(--scaleFactor, 1));
 }
 
 .spacecraft {
@@ -108,32 +101,92 @@ img {
 }
 
 
-.cluster {
-  width: var(--size);
-  height: var(--size);
-}
-
-.cluster img {
+.stuster-a {
+  --img-width: 3048px;
+  height: auto;
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 100%;
-  height: auto;
-  --baseTransformation: translate(-50%, -50%);
-  transform: var(--baseTransformation);
   animation: SPIN 2400s linear infinite;
+  filter: brightness(0.75);
 }
 
-.debug-bounds {
-  width: 5000px;
-  height: 5000px;
-  box-sizing: border-box;
-  border: 6px dashed lime;
-  pointer-events: none;
+.stuster-b {
+  --img-width: 1340px;
+  width: calc(var(--img-width) * var(--scaleFactor, 1));
+  height: auto;
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  animation: SPIN 2400s linear infinite;
+  background-color: rgb(50 50 187 / var(--clusterAlpha));
+}
+
+.stuster-b-2 {
+  --img-width: 1340px;
+  --scaleFactor: 1.5;
+  width: calc(var(--img-width) * var(--scaleFactor, 1));
+  height: auto;
+  position: absolute;
+  top: 80%;
+  left: 20%;
+  animation: SPIN 2400s linear infinite;
+  background-color: rgb(14 17 155 / var(--clusterAlpha));
+}
+
+.stuster-b-3 {
+  --img-width: 1340px;
+  --scaleFactor: 1.8;
+  width: calc(var(--img-width) * var(--scaleFactor, 1));
+  height: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  animation: SPIN 2400s linear infinite;
+  background-color: rgb(47 0 128 / var(--clusterAlpha));
+}
+
+.stuster-b-4 {
+  --img-width: 1340px;
+  --scaleFactor: 1.5;
+  width: calc(var(--img-width) * var(--scaleFactor, 1));
+  height: auto;
+  position: absolute;
+  top: 80%;
+  left: 80%;
+  animation: SPIN 2400s linear infinite;
+  background-color: rgb(87 39 169 / var(--clusterAlpha));
+}
+
+.stuster-b-5 {
+  --img-width: 1340px;
+  --scaleFactor: 1.5;
+  width: calc(var(--img-width) * var(--scaleFactor, 1));
+  height: auto;
+  position: absolute;
+  top: 120%;
+  left: 90%;
+  animation: SPIN 2400s linear infinite;
+  background-color: rgb(128 0 128 / var(--clusterAlpha));
+}
+
+.stuster-b-6 {
+  --img-width: 1340px;
+  --scaleFactor: 1.5;
+  width: calc(var(--img-width) * var(--scaleFactor, 1));
+  height: auto;
+  position: absolute;
+  top: 30%;
+  left: 80%;
+  animation: SPIN 2400s linear infinite;
+  background-color: rgb(128 0 0 / var(--clusterAlpha));
 }
 
 .black-hole {
-  outline: 3px solid red;
+  position: absolute;
+  bottom: 50vh;
+  left: 50vw;
+  transform: translate(-50%, 50%);
   width: 100px;
   height: 100px;
   background-color: black;
