@@ -1,15 +1,15 @@
-import { ParallaxScene } from './parallax.js';
+import { ProceduralLayer } from './proceduralLayer.js';
+import { Landmarks } from './landmarks.js';
 import { TiledParallaxLayer } from './tiledParallaxLayer.js';
-const scene = new ParallaxScene(document.querySelector('.the-great-beyond'));
+const proceduralLayers = ProceduralLayer.initAll();
+const landmarks = new Landmarks();
 const tiledLayers = TiledParallaxLayer.initAll();
 
 // --- camera system -------------------------------------------------------
-// Native scrolling is not used: the camera is plain numbers and the world is moved with one translate.
+// The world is unbounded and the camera is just numbers: x/y is the world position at the
+// viewport's top-left. Everything on screen is positioned relative to it each frame.
 class Camera {
-  constructor(worldElement, worldWidth, worldHeight) {
-    this.element = worldElement;
-    this.worldWidth = worldWidth;
-    this.worldHeight = worldHeight;
+  constructor() {
     this.x = 0;
     this.y = 0;
     this.measure();
@@ -19,25 +19,25 @@ class Camera {
   measure() {
     this.viewportWidth = window.innerWidth;
     this.viewportHeight = window.innerHeight;
-    this.maxX = Math.max(0, this.worldWidth - this.viewportWidth);
-    this.maxY = Math.max(0, this.worldHeight - this.viewportHeight);
   }
 
   // Center viewport on a world position
   focusOn(worldX, worldY) {
-    this.x = Math.max(0, Math.min(worldX - this.viewportWidth / 2, this.maxX));
-    this.y = Math.max(0, Math.min(worldY - this.viewportHeight / 2, this.maxY));
+    this.x = worldX - this.viewportWidth / 2;
+    this.y = worldY - this.viewportHeight / 2;
   }
 
   // Write all camera-dependent styles once per frame
   render() {
-    this.element.style.translate = `${-this.x}px ${-this.y}px`;
-    scene.update(this.x, this.y);
+    const cx = this.x + this.viewportWidth / 2;
+    const cy = this.y + this.viewportHeight / 2;
+    for (const layer of proceduralLayers) layer.update(cx, cy);
+    landmarks.update(cx, cy);
     for (const layer of tiledLayers) layer.update(this.x, this.y);
   }
 }
 
-const camera = new Camera(document.querySelector(".the-great-beyond"), 5000, 5000);
+const camera = new Camera();
 
 // fixed‑timestep accumulator variables (borrowed from game.js)
 let lastTime = performance.now();
@@ -57,9 +57,9 @@ class Player {
     this.width = this.element.getBoundingClientRect().width;
     this.height = this.element.getBoundingClientRect().height;
 
-    // position in world space (start at center of 5000x5000 world)
-    this.x = 2500;
-    this.y = 2500;
+    // position in world space: the ship's center; the world starts at (0, 0)
+    this.x = 0;
+    this.y = 0;
     // velocity in pixels per second
     this.vx = 0;
     this.vy = 0;
@@ -74,12 +74,11 @@ class Player {
     this.updateRender();
   }
 
-  // Point the ship toward a world position
-  // Ship center in viewport coordinates, computed without touching layout
+  // Ship center in viewport coordinates: the camera always follows, so it is the viewport center
   getScreenCenter() {
     return {
-      x: this.x + this.width / 2 - camera.x,
-      y: this.y + this.height / 2 - camera.y,
+      x: camera.viewportWidth / 2,
+      y: camera.viewportHeight / 2,
     };
   }
 
@@ -106,29 +105,16 @@ class Player {
   // Update position based on velocity
   update(deltaTime) {
     this.applyThrust(deltaTime);
-    if (
-      (this.x + this.width / 2) + this.vx * deltaTime > 0 &&
-      (this.x + this.width / 2) + this.vx * deltaTime < 5000
-    ) {
-      this.x += this.vx * deltaTime;
-    } else {
-      this.vx = 0; // stop horizontal movement if out of bounds
-    }
-
-    if (
-      (this.y + this.height / 2) + this.vy * deltaTime > 0 &&
-      (this.y + this.height / 2) + this.vy * deltaTime < 5000
-    ) {
-      this.y += this.vy * deltaTime;
-    } else {
-      this.vy = 0; // stop vertical movement if out of bounds
-    }
+    this.x += this.vx * deltaTime;
+    this.y += this.vy * deltaTime;
     this.updateRender();
   }
 
-  // Sync visual representation with world state
+  // The world is infinite and the camera always follows, so the ship is drawn at the frame center.
   updateRender() {
-    this.element.style.transform = `translate(${this.x}px, ${this.y}px) rotate(${this.angle}rad)`;
+    const x = camera.viewportWidth / 2 - this.width / 2;
+    const y = camera.viewportHeight / 2 - this.height / 2;
+    this.element.style.transform = `translate(${x}px, ${y}px) rotate(${this.angle}rad)`;
   }
 }
 
