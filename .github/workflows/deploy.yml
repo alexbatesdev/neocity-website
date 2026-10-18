@@ -14,6 +14,9 @@ jobs:
         with:
           submodules: recursive # Set to 'recursive' if you want checkout to handle submodules instead
 
+      - name: Write version stamp
+        run: echo "{\"version\":\"${GITHUB_SHA}\"}" > version.json
+
       - name: Deploy to Nekoweb
         uses: alexbatesdev/deploy2nekoweb@main # Replace YOUR_USERNAME with your GitHub username
         with:
