@@ -10,65 +10,110 @@
     <title>Space!</title>
   </head>
   <body>
-    <div class="the-great-beyond" data-parallax-sensitivity="10">
+    <div class="the-great-beyond">
       <svg class="spacecraft player-ship" viewBox="0 0 100 100">
         <polygon points="50,0 100,100 0,100" />
       </svg>
 
-      <div class="plax plax-bg noplax-scale" style="z-index: -5">
-        <img class="space-bg" src="./img/dblue003_FlipFilter (5).png" />
+      <div
+        class="tiled-layer space-bg"
+        data-src="./img/dblue003_FlipFilter (5).png"
+        style="z-index: -5"
+        data-speed="0.1"
+        data-scale="3"
+      ></div>
+      <!-- Very sparse, very distant stars (drawn procedurally) -->
+      <div
+        class="tiled-layer"
+        data-generate-stars="45"
+        data-tile="1024"
+        data-seed="5"
+        style="z-index: -5"
+        data-speed="0.2"
+        data-scale="2"
+      ></div>
+
+      <!-- Endless filler: factor <1 is distant, >1 is foreground. Content is generated per cell from a seed. -->
+      <div
+        class="proc-layer"
+        style="z-index: -1"
+        data-factor="0.9"
+        data-cell="3500"
+        data-chance="0.7"
+        data-seed="11"
+        data-scale="0.9,1.2"
+        data-images="./img/hdf_pixelized_transparent_extended_rounded.png|3048"
+      ></div>
+      <div
+        class="proc-layer"
+        style="z-index: 1"
+        data-factor="1.1"
+        data-cell="3000"
+        data-chance="0.65"
+        data-seed="23"
+        data-scale="1,1.5"
+        data-images="./img/deep_field_remix.png|1340"
+      ></div>
+      <div
+        class="proc-layer"
+        style="z-index: 3"
+        data-factor="1.3"
+        data-cell="3200"
+        data-chance="0.6"
+        data-seed="37"
+        data-scale="1,1.5"
+        data-images="./img/deep_field_remix.png|1340"
+      ></div>
+      <div
+        class="proc-layer"
+        style="z-index: 4"
+        data-factor="1.4"
+        data-cell="3500"
+        data-chance="0.6"
+        data-seed="41"
+        data-scale="1,1.8"
+        data-images="./img/deep_field_remix.png|1340"
+      ></div>
+      <div
+        class="proc-layer"
+        style="z-index: 6"
+        data-factor="1.6"
+        data-cell="4000"
+        data-chance="0.55"
+        data-seed="59"
+        data-scale="1,1.5"
+        data-images="./img/deep_field_remix.png|1340"
+      ></div>
+
+      <!-- Landmarks: fixed world coordinates, the ship starts at (0, 0) -->
+      <!-- Original hand-placed clusters, now fixed landmarks (old 5000px world coords minus 2500). Size = old width * scale. -->
+      <div class="landmark cluster" style="z-index: -1; --size: 4572px; --tint: 50 50 187; filter: brightness(0.75)" data-x="0" data-y="0">
+        <img src="./img/hdf_pixelized_transparent_extended_rounded.png" />
       </div>
-      <div class="plax z-1">
-        <img
-          class="floater stuster-a"
-          src="./img/hdf_pixelized_transparent_extended_rounded.png"
-        />
+      <div class="landmark cluster" style="z-index: 1; --size: 2010px; --tint: 14 17 155" data-x="-2000" data-y="-2000">
+        <img src="./img/deep_field_remix.png" />
       </div>
-      <div class="plax z1">
-        <img class="floater stuster-b" src="./img/deep_field_remix.png" />
+      <div class="landmark cluster" style="z-index: 4; --size: 2010px; --tint: 47 0 128" data-x="-1500" data-y="1500">
+        <img src="./img/deep_field_remix.png" />
+      </div>
+      <div class="landmark cluster" style="z-index: 5; --size: 2412px; --tint: 87 39 169" data-x="0" data-y="0">
+        <img src="./img/deep_field_remix.png" />
+      </div>
+      <div class="landmark cluster" style="z-index: 3; --size: 2010px; --tint: 128 0 128" data-x="1500" data-y="1500">
+        <img src="./img/deep_field_remix.png" />
+      </div>
+      <div class="landmark cluster" style="z-index: 4; --size: 2010px; --tint: 128 0 0" data-x="2000" data-y="3500">
+        <img src="./img/deep_field_remix.png" />
+      </div>
+      <div class="landmark cluster" style="z-index: 6; --size: 2010px; --tint: 50 50 187" data-x="1500" data-y="-1000">
+        <img src="./img/deep_field_remix.png" />
       </div>
 
-      <div class="plax z-1">
-        <img
-          class="floater stuster-a"
-          src="./img/hdf_pixelized_transparent_extended_rounded.png"
-        />
-      </div>
-      <div class="plax z4">
-        <img class="floater stuster-b" src="./img/deep_field_remix.png" />
-      </div>
-      <div class="plax z4">
-        <img
-          class="floater stuster-b stuster-b-2"
-          src="./img/deep_field_remix.png"
-        />
-      </div>
-      <div class="plax z5">
-        <img
-          class="floater stuster-b stuster-b-3"
-          src="./img/deep_field_remix.png"
-        />
-      </div>
-      <div class="plax z3">
-        <img
-          class="floater stuster-b stuster-b-4"
-          src="./img/deep_field_remix.png"
-        />
-      </div>
-      <div class="plax z4">
-        <img
-          class="floater stuster-b stuster-b-5"
-          src="./img/deep_field_remix.png"
-        />
-      </div>
-      <div class="plax z6">
-        <img
-          class="floater stuster-b stuster-b-6"
-          src="./img/deep_field_remix.png"
-        />
-      </div>
+      <!-- Debug (toggle with the ` key or ?debug): the old 5000x5000 finite world, centered on the origin. -->
+      <div class="landmark debug-bounds" style="z-index: 0" data-x="0" data-y="0"></div>
+      <div class="debug-hud"></div>
 
-      <div class="black-hole">
+      <div class="landmark black-hole" style="z-index: 0" data-x="-1500" data-y="-800">
         Put a black hole gif here Connect it to a white hole Make clicking it
         jump to the white hole
       </div>
@@ -77,8 +122,8 @@
         class="tiled-layer"
         data-src="./img/stars_desync.gif"
         style="z-index: -5"
-        data-speed="0.2"
-        data-scale="1"
+        data-speed="1.2"
+        data-scale="1.25"
       ></div>
       <div
         class="tiled-layer"

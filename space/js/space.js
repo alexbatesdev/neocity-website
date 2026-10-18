@@ -1,15 +1,17 @@
-import { ParallaxScene } from './parallax.js';
+import { ProceduralLayer } from './proceduralLayer.js';
+import { Landmarks } from './landmarks.js';
+import { generateStarTiles } from './starTile.js';
 import { TiledParallaxLayer } from './tiledParallaxLayer.js';
-const scene = new ParallaxScene(document.querySelector('.the-great-beyond'));
+const proceduralLayers = ProceduralLayer.initAll();
+const landmarks = new Landmarks();
+generateStarTiles();
 const tiledLayers = TiledParallaxLayer.initAll();
 
 // --- camera system -------------------------------------------------------
-// Native scrolling is not used: the camera is plain numbers and the world is moved with one translate.
+// The world is unbounded and the camera is just numbers: x/y is the world position at the
+// viewport's top-left. Everything on screen is positioned relative to it each frame.
 class Camera {
-  constructor(worldElement, worldWidth, worldHeight) {
-    this.element = worldElement;
-    this.worldWidth = worldWidth;
-    this.worldHeight = worldHeight;
+  constructor() {
     this.x = 0;
     this.y = 0;
     this.measure();
@@ -19,25 +21,25 @@ class Camera {
   measure() {
     this.viewportWidth = window.innerWidth;
     this.viewportHeight = window.innerHeight;
-    this.maxX = Math.max(0, this.worldWidth - this.viewportWidth);
-    this.maxY = Math.max(0, this.worldHeight - this.viewportHeight);
   }
 
   // Center viewport on a world position
   focusOn(worldX, worldY) {
-    this.x = Math.max(0, Math.min(worldX - this.viewportWidth / 2, this.maxX));
-    this.y = Math.max(0, Math.min(worldY - this.viewportHeight / 2, this.maxY));
+    this.x = worldX - this.viewportWidth / 2;
+    this.y = worldY - this.viewportHeight / 2;
   }
 
   // Write all camera-dependent styles once per frame
   render() {
-    this.element.style.translate = `${-this.x}px ${-this.y}px`;
-    scene.update(this.x, this.y);
+    const cx = this.x + this.viewportWidth / 2;
+    const cy = this.y + this.viewportHeight / 2;
+    for (const layer of proceduralLayers) layer.update(cx, cy);
+    landmarks.update(cx, cy);
     for (const layer of tiledLayers) layer.update(this.x, this.y);
   }
 }
 
-const camera = new Camera(document.querySelector(".the-great-beyond"), 5000, 5000);
+const camera = new Camera();
 
 // fixed‑timestep accumulator variables (borrowed from game.js)
 let lastTime = performance.now();
@@ -57,9 +59,9 @@ class Player {
     this.width = this.element.getBoundingClientRect().width;
     this.height = this.element.getBoundingClientRect().height;
 
-    // position in world space (start at center of 5000x5000 world)
-    this.x = 2500;
-    this.y = 2500;
+    // position in world space: the ship's center; the world starts at (0, 0)
+    this.x = 0;
+    this.y = 0;
     // velocity in pixels per second
     this.vx = 0;
     this.vy = 0;
@@ -74,12 +76,11 @@ class Player {
     this.updateRender();
   }
 
-  // Point the ship toward a world position
-  // Ship center in viewport coordinates, computed without touching layout
+  // Ship center in viewport coordinates: the camera always follows, so it is the viewport center
   getScreenCenter() {
     return {
-      x: this.x + this.width / 2 - camera.x,
-      y: this.y + this.height / 2 - camera.y,
+      x: camera.viewportWidth / 2,
+      y: camera.viewportHeight / 2,
     };
   }
 
@@ -98,37 +99,24 @@ class Player {
   }
 
   // Apply braking damping to reduce velocity
-  applyBraking(deltaTime) {
-    this.vx *= Math.pow(this.brakingDamping, deltaTime * 60);
-    this.vy *= Math.pow(this.brakingDamping, deltaTime * 60);
+  applyBraking(deltaTime, damping = this.brakingDamping) {
+    this.vx *= Math.pow(damping, deltaTime * 60);
+    this.vy *= Math.pow(damping, deltaTime * 60);
   }
 
   // Update position based on velocity
   update(deltaTime) {
     this.applyThrust(deltaTime);
-    if (
-      (this.x + this.width / 2) + this.vx * deltaTime > 0 &&
-      (this.x + this.width / 2) + this.vx * deltaTime < 5000
-    ) {
-      this.x += this.vx * deltaTime;
-    } else {
-      this.vx = 0; // stop horizontal movement if out of bounds
-    }
-
-    if (
-      (this.y + this.height / 2) + this.vy * deltaTime > 0 &&
-      (this.y + this.height / 2) + this.vy * deltaTime < 5000
-    ) {
-      this.y += this.vy * deltaTime;
-    } else {
-      this.vy = 0; // stop vertical movement if out of bounds
-    }
+    this.x += this.vx * deltaTime;
+    this.y += this.vy * deltaTime;
     this.updateRender();
   }
 
-  // Sync visual representation with world state
+  // The world is infinite and the camera always follows, so the ship is drawn at the frame center.
   updateRender() {
-    this.element.style.transform = `translate(${this.x}px, ${this.y}px) rotate(${this.angle}rad)`;
+    const x = camera.viewportWidth / 2 - this.width / 2;
+    const y = camera.viewportHeight / 2 - this.height / 2;
+    this.element.style.transform = `translate(${x}px, ${y}px) rotate(${this.angle}rad)`;
   }
 }
 
@@ -211,6 +199,81 @@ class PointerState {
 
 const pointer = new PointerState(player);
 
+// --- keyboard input (Asteroids style) --------------------------------------
+// Left/right (A/D) rotate the ship, up (W) thrusts along its heading, down (S) brakes.
+// Pointer dragging takes over steering while active.
+class KeyboardState {
+  constructor(player, pointer) {
+    this.player = player;
+    this.pointer = pointer;
+    this.keys = new Set();
+    this.turnRate = 2.5; // radians per second
+    this.thrust = 150; // pixels/sec²
+    this.brakeDamping = 0.97; // per-frame speed retention while braking (closer to 1 = softer)
+    const map = {
+      ArrowLeft: "left", KeyA: "left",
+      ArrowRight: "right", KeyD: "right",
+      ArrowUp: "up", KeyW: "up",
+      ArrowDown: "down", KeyS: "down",
+    };
+    window.addEventListener("keydown", (e) => {
+      const action = map[e.code];
+      if (!action || e.ctrlKey || e.metaKey || e.altKey) return;
+      e.preventDefault();
+      this.keys.add(action);
+    });
+    window.addEventListener("keyup", (e) => {
+      const action = map[e.code];
+      if (action) this.keys.delete(action);
+    });
+    window.addEventListener("blur", () => this.keys.clear());
+  }
+
+  update(deltaTime) {
+    if (this.pointer.isDragging) return;
+    const k = this.keys;
+    const turn = (k.has("right") ? 1 : 0) - (k.has("left") ? 1 : 0);
+    this.player.angle += turn * this.turnRate * deltaTime;
+    this.player.isThrustingForward = k.has("up");
+    this.player.thrustMagnitude = this.thrust;
+    if (k.has("down")) this.player.applyBraking(deltaTime, this.brakeDamping);
+  }
+}
+
+const keyboard = new KeyboardState(player, pointer);
+
+// --- debug overlay -----------------------------------------------------------
+// Toggle with the ` key (or add ?debug to the URL); the choice is remembered.
+const debugHud = document.querySelector(".debug-hud");
+const homeLandmark = document.querySelector(".black-hole");
+function setDebug(on) {
+  document.body.classList.toggle("debug", on);
+  localStorage.setItem("space-debug", on ? "1" : "0");
+}
+setDebug(
+  new URLSearchParams(location.search).has("debug") ||
+    localStorage.getItem("space-debug") === "1"
+);
+window.addEventListener("keydown", (e) => {
+  if (e.code === "Backquote") setDebug(!document.body.classList.contains("debug"));
+});
+
+function renderDebugHud() {
+  if (!document.body.classList.contains("debug")) return;
+  const hole = {
+    x: parseFloat(homeLandmark.dataset.x),
+    y: parseFloat(homeLandmark.dataset.y),
+  };
+  const dx = hole.x - player.x;
+  const dy = hole.y - player.y;
+  const dist = Math.hypot(dx, dy);
+  const bearing = (Math.atan2(dx, -dy) * 180) / Math.PI; // 0 = up, clockwise
+  const speed = Math.hypot(player.vx, player.vy);
+  debugHud.textContent =
+    `pos ${player.x.toFixed(0)}, ${player.y.toFixed(0)}  speed ${speed.toFixed(0)}\n` +
+    `black hole: ${dist.toFixed(0)}px away, bearing ${((bearing + 360) % 360).toFixed(0)}° (0=up)`;
+}
+
 // wire DOM events to pointer manager
 // Pointer events unify mouse, touch and pen; track a single active pointer.
 let activePointerId = null;
@@ -238,6 +301,7 @@ document.addEventListener("contextmenu", (e) => {
 function updateSimulation(delta) {
   // process pointer input once per tick
   pointer.update();
+  keyboard.update(delta);
 
   // update game entities
   player.update(delta);
@@ -259,6 +323,7 @@ function animate(timestamp) {
   }
 
   camera.render();
+  renderDebugHud();
   requestAnimationFrame(animate);
 }
 
