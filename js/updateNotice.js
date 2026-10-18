@@ -47,37 +47,62 @@
       transition: "opacity 0.4s",
     });
     const root = host.attachShadow({ mode: "open" });
-    root.innerHTML = `
-      <link rel="stylesheet" href="https://unpkg.com/xp.css">
-      <style>
-        .window { width: 300px; }
-        .window-body { margin: 8px; font-family: "Pixelated MS Sans Serif", Arial, sans-serif; font-size: 11px; line-height: 1.25; }
-        .window-body p { margin: 0 0 8px; }
-        progress { width: 100%; }
-      </style>
-      <div class="window" role="status">
-        <div class="title-bar">
-          <div class="title-bar-text">Site Updated</div>
-          <div class="title-bar-controls">
-            <button aria-label="Close"></button>
-          </div>
-        </div>
-        <div class="window-body">
-          <p>The site has been updated since your last visit!<br>Check the update diary and hard refresh if anything seems off.</p>
-          <progress max="100" value="0"></progress>
-        </div>
-      </div>`;
+    const el = (tag, props = {}, ...children) => {
+      const node = Object.assign(document.createElement(tag), props);
+      node.append(...children);
+      return node;
+    };
+
+    const link = el("link", { rel: "stylesheet", href: "https://unpkg.com/xp.css" });
+    const style = el(
+      "style",
+      {},
+      `.window { width: 300px; }
+.window-body { margin: 8px; font-family: "Pixelated MS Sans Serif", Arial, sans-serif; font-size: 11px; line-height: 1.25; }
+.window-body p { margin: 0 0 8px; }
+progress { width: 100%; }`
+    );
+
+    const closeButton = el("button");
+    closeButton.setAttribute("aria-label", "Close");
+
+    const progress = el("progress");
+    progress.max = 100;
+    progress.value = 0;
+
+    const win = el(
+      "div",
+      { className: "window" },
+      el(
+        "div",
+        { className: "title-bar" },
+        el("div", { className: "title-bar-text" }, "Site Updated!"),
+        el("div", { className: "title-bar-controls" }, closeButton)
+      ),
+      el(
+        "div",
+        { className: "window-body" },
+        el(
+          "p",
+          {},
+          "The site has been updated since your last visit!",
+          el("br"),
+          "Check the update diary and hard refresh if anything seems off."
+        ),
+        progress
+      )
+    );
+    win.setAttribute("role", "status");
+    root.append(link, style, win);
 
     const dismiss = () => {
       cancelAnimationFrame(frame);
       host.style.opacity = "0";
       setTimeout(() => host.remove(), 400);
     };
-    root.querySelector("button").addEventListener("click", dismiss);
+    closeButton.addEventListener("click", dismiss);
 
     // The bar fills from 0 to 100; hovering pauses it
-    const win = root.querySelector(".window");
-    const progress = root.querySelector("progress");
     let elapsed = 0;
     let last = performance.now();
     let hovered = false;
