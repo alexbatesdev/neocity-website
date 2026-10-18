@@ -218,7 +218,7 @@ class KeyboardState {
     };
     window.addEventListener("keydown", (e) => {
       const action = map[e.code];
-      if (!action || e.ctrlKey || e.metaKey || e.altKey) return;
+      if (!action || e.ctrlKey || e.metaKey || e.altKey || document.body.classList.contains("paused")) return;
       e.preventDefault();
       this.keys.add(action);
     });
@@ -274,10 +274,42 @@ function renderDebugHud() {
     `black hole: ${dist.toFixed(0)}px away, bearing ${((bearing + 360) % 360).toFixed(0)}° (0=up)`;
 }
 
+// --- pause ---------------------------------------------------------------------
+let paused = false;
+const pauseUi = "#pause-btn, #pause";
+
+function setPaused(on) {
+  if (on === paused) return;
+  paused = on;
+  document.body.classList.toggle("paused", on);
+  if (on) {
+    activePointerId = null;
+    pointer.onMouseUp();
+    keyboard.keys.clear();
+    player.isThrustingForward = false;
+    for (const layer of tiledLayers) layer.pause();
+  } else {
+    for (const layer of tiledLayers) layer.resume();
+    lastTime = performance.now();
+    accumulator = 0;
+  }
+}
+
+document.getElementById("pause-btn").addEventListener("click", () => setPaused(true));
+document.getElementById("resume-btn").addEventListener("click", () => setPaused(false));
+window.addEventListener("keydown", (e) => {
+  if (e.code === "Escape" && !e.repeat) setPaused(!paused);
+});
+window.addEventListener("blur", () => setPaused(true));
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) setPaused(true);
+});
+
 // wire DOM events to pointer manager
 // Pointer events unify mouse, touch and pen; track a single active pointer.
 let activePointerId = null;
 document.addEventListener("pointerdown", (e) => {
+  if (paused || e.target.closest(pauseUi)) return;
   if (activePointerId !== null) return;
   activePointerId = e.pointerId;
   pointer.onMouseDown(e.clientX, e.clientY);
@@ -318,7 +350,7 @@ function animate(timestamp) {
   accumulator += frameTime;
 
   while (accumulator >= fixedDelta) {
-    updateSimulation(fixedDelta);
+    if (!paused) updateSimulation(fixedDelta);
     accumulator -= fixedDelta;
   }
 

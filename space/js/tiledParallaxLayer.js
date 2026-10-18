@@ -17,14 +17,59 @@ export class TiledParallaxLayer {
     this.scale = Math.max(1, Math.round(parseFloat(element.dataset.scale ?? '1')));
 
     const img = new Image();
+    this.img = img;
+    this.isGif = /\.gif($|\?)/i.test(element.dataset.src);
+    if (this.isGif) {
+      // Attached (but invisible) so the browser keeps animating it and drawImage grabs the live frame.
+      img.style.cssText = 'position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;';
+      img.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(img);
+    }
+    this.pausedAt = null;
+    this.pausedTotal = 0;
+    this.snapshotUrl = null;
     img.onload = () => {
       this.loaded = true;
       element.style.backgroundImage = `url("${element.dataset.src}")`;
       element.style.backgroundSize = `${img.naturalWidth * this.scale}px ${img.naturalHeight * this.scale}px`;
       if (this.driftX || this.driftY) this.loop();
       else this.render();
+      if (this.pausedAt !== null) this.freezeGif();
     };
     img.src = element.dataset.src;
+  }
+
+  pause() {
+    if (this.pausedAt !== null) return;
+    this.pausedAt = performance.now();
+    this.freezeGif();
+  }
+
+  resume() {
+    if (this.pausedAt === null) return;
+    this.pausedTotal += performance.now() - this.pausedAt;
+    this.pausedAt = null;
+    if (this.snapshotUrl) {
+      URL.revokeObjectURL(this.snapshotUrl);
+      this.snapshotUrl = null;
+      // Re-assigning the original URL restarts the GIF (frame-exact resume would need a decoder).
+      this.element.style.backgroundImage = `url("${this.element.dataset.src}")`;
+    }
+  }
+
+  // GIFs can't be paused directly: swap the background for a snapshot of the current frame.
+  freezeGif() {
+    if (!this.isGif || !this.loaded || this.snapshotUrl) return;
+    const canvas = document.createElement('canvas');
+    canvas.width = this.img.naturalWidth;
+    canvas.height = this.img.naturalHeight;
+    canvas.getContext('2d').drawImage(this.img, 0, 0);
+    canvas.toBlob(blob => {
+      if (!blob) return;
+      if (this.pausedAt === null) return; // resumed before the snapshot was ready
+      this.snapshotUrl = URL.createObjectURL(blob);
+      this.element.style.backgroundImage = `url("${this.snapshotUrl}")`;
+    });
   }
 
   // Call each frame with the camera position; drifting layers render on their own loop.
@@ -40,7 +85,7 @@ export class TiledParallaxLayer {
   }
 
   render() {
-    const t = (performance.now() - this.start) / 1000;
+    const t = ((this.pausedAt ?? performance.now()) - this.start - this.pausedTotal) / 1000;
     // Snap offsets to whole source pixels so every star pixel stays the same size.
     const snap = v => Math.round(v / this.scale) * this.scale;
     const x = snap(-this.scrollX * this.speed + this.driftX * t);

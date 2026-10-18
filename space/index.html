@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
     <link rel="stylesheet" href="./css/space.css" />
     <script type="module" src="./js/space.js"></script>
@@ -132,6 +132,20 @@
         data-speed="1.8"
         data-scale="1"
       ></div>
+    </div>
+
+    <button id="pause-btn" type="button" aria-label="Pause">
+      <svg viewBox="0 0 16 16" aria-hidden="true">
+        <rect x="3" y="2" width="4" height="12" rx="1" />
+        <rect x="9" y="2" width="4" height="12" rx="1" />
+      </svg>
+    </button>
+    <div id="pause" role="dialog" aria-label="Paused">
+      <div class="pause-text">
+        <h1>Paused</h1>
+        <button id="resume-btn" type="button">Resume</button>
+        <p>or press ESC</p>
+      </div>
     </div>
   </body>
 </html>
