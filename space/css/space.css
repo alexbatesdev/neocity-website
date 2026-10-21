@@ -238,12 +238,20 @@ body.mode-transitioning #pause-btn {
 }
 
 .hand-zone {
-  width: 1600px;
-  height: 1200px;
-  box-sizing: border-box;
-  border: 2px dashed rgb(255 255 255 / 0.4);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5000px;
+  height: 5000px;
+  overflow: hidden;
   color: white;
-  padding: 2rem;
+}
+
+/* Zone children are positioned by their center, in zone-local px */
+.hand-zone > .cluster,
+.zone-item {
+  position: absolute;
+  translate: -50% -50%;
 }
 
 
@@ -275,6 +283,12 @@ body.debug {
 
 body.debug .debug-bounds {
   opacity: 1;
+}
+
+/* Drawn inside the zone's edge, since the zone clips its overflow */
+body.debug .hand-zone {
+  outline: 6px dashed cyan;
+  outline-offset: -6px;
 }
 
 body.debug .debug-hud {

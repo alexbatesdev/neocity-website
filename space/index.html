@@ -85,42 +85,41 @@
         data-images="./img/deep_field_remix.png|1340"
       ></div>
 
-      <!-- Landmarks: fixed world coordinates, the ship starts at (0, 0) -->
-      <!-- Original hand-placed clusters, now fixed landmarks (old 5000px world coords minus 2500). Size = old width * scale. -->
-      <div class="landmark cluster" style="z-index: -1; --size: 4572px; --tint: 50 50 187; filter: brightness(0.75)" data-x="0" data-y="0">
-        <img src="./img/hdf_pixelized_transparent_extended_rounded.png" />
-      </div>
-      <div class="landmark cluster" style="z-index: 1; --size: 2010px; --tint: 14 17 155" data-x="-2000" data-y="-2000">
-        <img src="./img/deep_field_remix.png" />
-      </div>
-      <div class="landmark cluster" style="z-index: 4; --size: 2010px; --tint: 47 0 128" data-x="-1500" data-y="1500">
-        <img src="./img/deep_field_remix.png" />
-      </div>
-      <div class="landmark cluster" style="z-index: 5; --size: 2412px; --tint: 87 39 169" data-x="0" data-y="0">
-        <img src="./img/deep_field_remix.png" />
-      </div>
-      <div class="landmark cluster" style="z-index: 3; --size: 2010px; --tint: 128 0 128" data-x="1500" data-y="1500">
-        <img src="./img/deep_field_remix.png" />
-      </div>
-      <div class="landmark cluster" style="z-index: 4; --size: 2010px; --tint: 128 0 0" data-x="2000" data-y="3500">
-        <img src="./img/deep_field_remix.png" />
-      </div>
-      <div class="landmark cluster" style="z-index: 6; --size: 2010px; --tint: 50 50 187" data-x="1500" data-y="-1000">
-        <img src="./img/deep_field_remix.png" />
-      </div>
-
-      <!-- Debug (toggle with the ` key or ?debug): the old 5000x5000 finite world, centered on the origin. -->
-      <div class="landmark debug-bounds" style="z-index: 0" data-x="0" data-y="0"></div>
       <div class="debug-hud"></div>
 
-      <!-- Hand-crafted zone: NOT in the world at load. It is spawned just off screen near the ship when the game starts. -->
-      <div class="hand-zone" style="z-index: 2" hidden>
-        <h2>Hand-crafted zone</h2>
-        <p>Place static, hand-made content here.</p>
-        <!-- The autopilot flies here. Any element inside the zone works, even a moving one. -->
-        <div data-autopilot-target style="position: absolute; left: 200px; bottom: 150px; width: 40px; height: 40px"></div>
-      </div>
+      <div class="hand-zone" style="z-index: 1" hidden>
+        <div class="cluster" style="z-index: -1; --size: 4572px; --tint: 50 50 187; filter: brightness(0.75); left: 2500px; top: 2500px">
+          <img src="./img/hdf_pixelized_transparent_extended_rounded.png" />
+        </div>
+        <div class="cluster" style="z-index: 1; --size: 2010px; --tint: 14 17 155; left: 500px; top: 500px">
+          <img src="./img/deep_field_remix.png" />
+        </div>
+        <div class="cluster" style="z-index: 4; --size: 2010px; --tint: 47 0 128; left: 1000px; top: 4000px">
+          <img src="./img/deep_field_remix.png" />
+        </div>
+        <div class="cluster" style="z-index: 5; --size: 2412px; --tint: 87 39 169; left: 2500px; top: 2500px">
+          <img src="./img/deep_field_remix.png" />
+        </div>
+        <div class="cluster" style="z-index: 3; --size: 2010px; --tint: 128 0 128; left: 4000px; top: 4000px">
+          <img src="./img/deep_field_remix.png" />
+        </div>
+        <div class="cluster" style="z-index: 4; --size: 2010px; --tint: 128 0 0; left: 4500px; top: 6000px">
+          <img src="./img/deep_field_remix.png" />
+        </div>
+        <div class="cluster" style="z-index: 6; --size: 2010px; --tint: 50 50 187; left: 4000px; top: 1500px">
+          <img src="./img/deep_field_remix.png" />
+        </div>
 
+        <!-- The old page's black hole, at the center -->
+        <div class="black-hole zone-item" style="z-index: 0; left: 2500px; top: 2500px">
+          Put a black hole gif here Connect it to a white hole Make clicking it
+          jump to the white hole
+        </div>
+
+        <!-- The spot the autopilot flies to. Any element inside the zone works, even a moving one. Move it
+             (and set data-stop-distance="px" to park at a distance). -->
+        <div data-autopilot-target class="zone-item" style="left: 2500px; top: 2800px; width: 40px; height: 40px"></div>
+      </div>
       <div class="landmark black-hole" style="z-index: 0" data-x="-1500" data-y="-800">
         Put a black hole gif here Connect it to a white hole Make clicking it
         jump to the white hole
