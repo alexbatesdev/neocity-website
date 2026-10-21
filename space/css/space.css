@@ -174,7 +174,7 @@ body.paused #pause-btn {
   visibility: hidden;
 }
 
-.pause-text {
+.pause-content {
   position: absolute;
   inset: 0;
   display: flex;
