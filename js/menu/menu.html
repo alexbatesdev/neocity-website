@@ -1,0 +1,63 @@
+<!--
+  The site menu: ONE self-contained HTML snippet, shown in the home document, the space pause menu
+  and the NekkoPlat pause menu. It is loaded into a shadow root, so the <style> below cannot leak
+  out and page styles cannot leak in. Put anything in here: markup, styles, scripts.
+
+  Rules:
+  - data-modes="document space nekkoplat" on any element limits it to those modes (default: all).
+    Elements for other modes are removed before the menu is shown. Hosts also get a data-menu-mode
+    attribute, so CSS can use :host([data-menu-mode="document"]).
+  - data-action="start" or data-action="resume" on any element makes a click on it trigger that action.
+  - data-start-slot marks where the ship is drawn in document mode (keep it transparent, the ship is behind).
+  - Use root-absolute URLs (/img/..., /aboutme/) for images and links, relative ones resolve against the host page.
+  - <script> tags run (classic scripts). Inside one, document.currentScript.getRootNode() is the shadow root.
+  - @font-face does not work inside a shadow root; load fonts in the host page, they can then be used here.
+-->
+<style>
+  :host {
+    color: white;
+    font-family: "Times New Roman", Times, serif;
+  }
+  .menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  a { color: #9cf; }
+  button { font: inherit; color: white; background: rgb(255 255 255 / 0.1); border: 2px solid white; border-radius: 8px; padding: 0.5rem 1.5rem; cursor: pointer; }
+  button:hover { background: rgb(255 255 255 / 0.25); }
+  .start-slot { display: block; width: 80px; height: 100px; padding: 0; border: 0; background: none; }
+  .key { border: 1px solid currentColor; border-radius: 4px; padding: 0 0.3em; }
+</style>
+
+<div class="menu">
+  <h1 data-modes="document">Alex Bates</h1>
+  <h1 data-modes="space nekkoplat">Paused</h1>
+
+  <p data-modes="document">Welcome to my corner of the internet.</p>
+
+  <nav>
+    <h2>Explore</h2>
+    <ul>
+      <li><a href="/aboutme/">About me</a></li>
+      <li><a href="/library/">Library</a></li>
+      <li><a href="/links_links/">Links</a></li>
+      <li><a href="/song_player/">Songs</a></li>
+    </ul>
+  </nav>
+
+  <nav>
+    <h2>Games</h2>
+    <ul>
+      <li data-modes="document nekkoplat"><a href="/space/">Space</a></li>
+      <li data-modes="document space"><a href="/NekkoPlat/">NekkoPlat</a></li>
+    </ul>
+  </nav>
+
+  <button class="start-slot" type="button" data-modes="document" data-action="start" data-start-slot aria-label="Start game"></button>
+
+  <button type="button" data-modes="space nekkoplat" data-action="resume">Resume</button>
+  <p data-modes="space nekkoplat">or press <span class="key">ESC</span></p>
+</div>

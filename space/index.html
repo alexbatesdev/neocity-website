@@ -9,7 +9,7 @@
 
     <title>Space!</title>
   </head>
-  <body>
+  <body class="mode-document">
     <div class="the-great-beyond">
       <svg class="spacecraft player-ship" viewBox="0 0 100 100">
         <polygon points="50,0 100,100 0,100" />
@@ -113,6 +113,14 @@
       <div class="landmark debug-bounds" style="z-index: 0" data-x="0" data-y="0"></div>
       <div class="debug-hud"></div>
 
+      <!-- Hand-crafted zone: NOT in the world at load. It is spawned just off screen near the ship when the game starts. -->
+      <div class="hand-zone" style="z-index: 2" hidden>
+        <h2>Hand-crafted zone</h2>
+        <p>Place static, hand-made content here.</p>
+        <!-- The autopilot flies here. Any element inside the zone works, even a moving one. -->
+        <div data-autopilot-target style="position: absolute; left: 200px; bottom: 150px; width: 40px; height: 40px"></div>
+      </div>
+
       <div class="landmark black-hole" style="z-index: 0" data-x="-1500" data-y="-800">
         Put a black hole gif here Connect it to a white hole Make clicking it
         jump to the white hole
@@ -134,6 +142,10 @@
       ></div>
     </div>
 
+    <!-- Home "document": the same shared menu as the pause screen, rendered in document mode.
+         The ship is drawn behind it, at the .menu-start-slot button. -->
+    <main id="doc" data-menu="document"></main>
+
     <button id="pause-btn" type="button" aria-label="Pause">
       <svg viewBox="0 0 16 16" aria-hidden="true">
         <rect x="3" y="2" width="4" height="12" rx="1" />
@@ -141,11 +153,7 @@
       </svg>
     </button>
     <div id="pause" role="dialog" aria-label="Paused">
-      <div class="pause-text">
-        <h1>Paused</h1>
-        <button id="resume-btn" type="button">Resume</button>
-        <p>or press ESC</p>
-      </div>
+      <div class="pause-text" data-menu="space"></div>
     </div>
   </body>
 </html>

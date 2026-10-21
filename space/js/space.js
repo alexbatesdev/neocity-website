@@ -1,3 +1,4 @@
+import { renderMenu } from '../../js/menu/renderMenu.js';
 import { ProceduralLayer } from './proceduralLayer.js';
 import { Landmarks } from './landmarks.js';
 import { generateStarTiles } from './starTile.js';
@@ -112,15 +113,204 @@ class Player {
     this.updateRender();
   }
 
-  // The world is infinite and the camera always follows, so the ship is drawn at the frame center.
+  // In game the camera follows the ship, so it is drawn at the frame center. In document mode it sits
+  // at the home menu's start slot instead (blended to the center during the start transition).
   updateRender() {
-    const x = camera.viewportWidth / 2 - this.width / 2;
-    const y = camera.viewportHeight / 2 - this.height / 2;
-    this.element.style.transform = `translate(${x}px, ${y}px) rotate(${this.angle}rad)`;
+    const c = this.getRenderCenter();
+    this.element.style.transform = `translate(${c.x - this.width / 2}px, ${c.y - this.height / 2}px) rotate(${this.angle}rad)`;
+  }
+
+  getRenderCenter() {
+    const vc = { x: camera.viewportWidth / 2, y: camera.viewportHeight / 2 };
+    const slot = getStartSlot();
+    if (gameState === "playing" || !slot) return vc;
+    const r = slot.getBoundingClientRect();
+    const sx = r.left + r.width / 2;
+    return { x: sx + (vc.x - sx) * transitionBlend, y: r.top + r.height / 2 };
   }
 }
 
+// --- game state ----------------------------------------------------------------
+// "document" (home page: drifting, no input) -> "transitioning" (scrolling the ship to center)
+// -> "playing". The home menu is rendered from the shared menu module.
+let gameState = "document";
+let transitionBlend = 0;
+let startSlotEl = null;
+const getStartSlot = () =>
+  (startSlotEl ??= document.getElementById("doc").shadowRoot?.querySelector("[data-start-slot]") ?? null);
+
+
 const player = new Player(document.querySelector(".player-ship"));
+
+// --- home document: drift + hand-crafted zone ---------------------------------------
+// The zone is not part of the world until the game starts. Then it spawns just off screen, ahead of
+// the ship's drift direction, relative to wherever the ship has drifted to.
+const handZone = document.querySelector(".hand-zone");
+const DRIFT_SPEED = 50;
+const DRIFT_HEADING = Math.PI / 3; // radians, 0 = up, clockwise
+player.angle = DRIFT_HEADING;
+player.vx = Math.sin(DRIFT_HEADING) * DRIFT_SPEED;
+player.vy = -Math.cos(DRIFT_HEADING) * DRIFT_SPEED;
+player.updateRender();
+
+function spawnHandZone() {
+  if (!handZone) return null;
+  handZone.hidden = false;
+  const zoneReach = Math.hypot(handZone.offsetWidth, handZone.offsetHeight) / 2;
+  const screenReach = Math.hypot(camera.viewportWidth, camera.viewportHeight) / 2;
+  const dist = zoneReach + screenReach + 200;
+  const heading = Math.atan2(player.vx, -player.vy);
+  const x = player.x + Math.sin(heading) * dist;
+  const y = player.y - Math.cos(heading) * dist;
+  // track: keep its transform current even off screen, so children can be targeted from far away
+  landmarks.add(handZone, x, y, { track: true });
+  // The spot inside the zone the ship flies to: any element, marked in the HTML
+  return handZone.querySelector("[data-autopilot-target]") ?? handZone;
+}
+
+// World position of an element's center, read from where it is currently drawn. This follows
+// anything that moves (CSS animation, parallax, scripted motion) as long as it is rendered.
+// The camera is the reference because it is what the last frame was drawn with.
+function worldCenterOf(el) {
+  const r = el.getBoundingClientRect();
+  return {
+    x: camera.x + r.left + r.width / 2,
+    y: camera.y + r.top + r.height / 2,
+  };
+}
+
+// Flies the ship to a target and brings it to rest relative to it. Any player input cancels it.
+// target: an Element, a {x, y} world point, or a function returning a {x, y} world point
+// (so it may move). Options: offset {x, y} aims at a point relative to the target; stopDistance is how far
+// from that point (px) the ship comes to rest, e.g. to park in orbit range of a planet (default 0).
+class AutoSteer {
+  constructor(player) {
+    this.player = player;
+    this.target = null;
+    this.cruiseSpeed = 350; // pixels/sec
+    this.deceleration = 250; // pixels/sec², the most the autopilot accelerates or brakes
+    this.brakeMargin = 0.85; // <1 plans to brake a little earlier than strictly needed
+    this.endRamp = 2; // 1/sec: final approach speed is at most this times the remaining distance
+    this.turnRate = 3;
+    this.arriveDistance = 15;
+    this.active = false;
+  }
+
+  start(target, { offset = { x: 0, y: 0 }, stopDistance = 0 } = {}) {
+    this.target = target;
+    this.offset = offset;
+    this.stopDistance = stopDistance;
+    this.lastPos = null;
+    this.active = !!target;
+  }
+
+  cancel() {
+    this.active = false;
+  }
+
+  resolve() {
+    const t = this.target;
+    const pos = t instanceof Element ? worldCenterOf(t) : typeof t === "function" ? t() : t;
+    return { x: pos.x + this.offset.x, y: pos.y + this.offset.y };
+  }
+
+  update(dt) {
+    if (!this.active) return;
+    const p = this.player;
+    const pos = this.resolve();
+    const tvx = this.lastPos ? (pos.x - this.lastPos.x) / dt : 0;
+    const tvy = this.lastPos ? (pos.y - this.lastPos.y) / dt : 0;
+    this.lastPos = pos;
+
+    const dx = pos.x - p.x;
+    const dy = pos.y - p.y;
+    const dist = Math.hypot(dx, dy);
+    const remaining = dist - this.stopDistance; // negative = inside the stop distance
+    if (Math.abs(remaining) < this.arriveDistance && Math.hypot(p.vx - tvx, p.vy - tvy) < 10) {
+      p.vx = tvx;
+      p.vy = tvy;
+      return this.cancel();
+    }
+    // Braking-distance profile: the fastest closing speed from which a constant deceleration can still
+    // stop exactly at the stop point is sqrt(2*a*remaining). Following it makes the ship start
+    // slowing down early enough to arrive at rest instead of overshooting. Near the end the profile
+    // is capped by a linear ramp, since sqrt is infinitely steep at zero.
+    const dirX = dx / (dist || 1);
+    const dirY = dy / (dist || 1);
+    const brakeSpeed = Math.sqrt(2 * this.deceleration * Math.abs(remaining)) * this.brakeMargin;
+    const closing = Math.sign(remaining) * Math.min(this.cruiseSpeed, brakeSpeed, Math.abs(remaining) * this.endRamp);
+
+    // Steer the velocity relative to the target toward the profile, with acceleration capped at the
+    // same deceleration the profile assumes.
+    const wantX = dirX * closing;
+    const wantY = dirY * closing;
+    const errX = wantX - (p.vx - tvx);
+    const errY = wantY - (p.vy - tvy);
+    const err = Math.hypot(errX, errY);
+    const step = Math.min(err, this.deceleration * dt);
+    if (err > 0) {
+      p.vx += (errX / err) * step;
+      p.vy += (errY / err) * step;
+    }
+    let diff = Math.atan2(dx, -dy) - p.angle;
+    diff = Math.atan2(Math.sin(diff), Math.cos(diff)); // shortest way around
+    p.angle += diff * Math.min(1, this.turnRate * dt);
+  }
+}
+
+const autoSteer = new AutoSteer(player);
+let zoneTarget = null;
+function startGame() {
+  if (gameState !== "document") return;
+  gameState = "transitioning";
+  zoneTarget = spawnHandZone();
+  document.body.classList.replace("mode-document", "mode-transitioning");
+  const doc = document.getElementById("doc");
+  const slot = getStartSlot();
+  const from = doc.scrollTop;
+  let to = from;
+  if (slot) {
+    const r = slot.getBoundingClientRect();
+    to = from + (r.top + r.height / 2 - camera.viewportHeight / 2);
+  }
+  const duration = 900;
+  const t0 = performance.now();
+  transition = { doc, from, to, t0, duration };
+}
+let transition = null;
+
+function stepTransition(now) {
+  const { doc, from, to, t0, duration } = transition;
+  const p = Math.min(1, (now - t0) / duration);
+  const e = p * p * (3 - 2 * p); // smoothstep
+  doc.scrollTop = from + (to - from) * e;
+  transitionBlend = e;
+  if (p > 0.5) document.body.classList.add("doc-fading");
+  if (p < 1) return;
+  transition = null;
+  transitionBlend = 1;
+  gameState = "playing";
+  document.body.classList.remove("mode-transitioning", "doc-fading");
+  autoSteer.start(zoneTarget);
+}
+
+// Render every shared menu on the page (home document + pause screen). The ship stays hidden until the
+// home menu exists, since it is positioned at the menu's start slot.
+player.element.style.visibility = "hidden";
+Promise.all(
+  Array.from(document.querySelectorAll("[data-menu]")).map((target) =>
+    renderMenu(target, {
+      mode: target.dataset.menu,
+      onAction: (action) => {
+        if (action === "start") startGame();
+        else if (action === "resume") setPaused(false);
+      },
+    })
+  )
+).then(() => {
+  player.updateRender();
+  player.element.style.visibility = "";
+});
 
 // Update the viewport middle point on resize
 window.addEventListener("resize", () => {
@@ -218,8 +408,9 @@ class KeyboardState {
     };
     window.addEventListener("keydown", (e) => {
       const action = map[e.code];
-      if (!action || e.ctrlKey || e.metaKey || e.altKey || document.body.classList.contains("paused")) return;
+      if (!action || e.ctrlKey || e.metaKey || e.altKey || gameState !== "playing" || document.body.classList.contains("paused")) return;
       e.preventDefault();
+      autoSteer.cancel();
       this.keys.add(action);
     });
     window.addEventListener("keyup", (e) => {
@@ -279,7 +470,7 @@ let paused = false;
 const pauseUi = "#pause-btn, #pause";
 
 function setPaused(on) {
-  if (on === paused) return;
+  if (on === paused || (on && gameState !== "playing")) return;
   paused = on;
   document.body.classList.toggle("paused", on);
   if (on) {
@@ -296,7 +487,6 @@ function setPaused(on) {
 }
 
 document.getElementById("pause-btn").addEventListener("click", () => setPaused(true));
-document.getElementById("resume-btn").addEventListener("click", () => setPaused(false));
 window.addEventListener("keydown", (e) => {
   if (e.code === "Escape" && !e.repeat) setPaused(!paused);
 });
@@ -309,8 +499,9 @@ document.addEventListener("visibilitychange", () => {
 // Pointer events unify mouse, touch and pen; track a single active pointer.
 let activePointerId = null;
 document.addEventListener("pointerdown", (e) => {
-  if (paused || e.target.closest(pauseUi)) return;
+  if (paused || gameState !== "playing" || e.target.closest(pauseUi)) return;
   if (activePointerId !== null) return;
+  autoSteer.cancel();
   activePointerId = e.pointerId;
   pointer.onMouseDown(e.clientX, e.clientY);
 });
@@ -331,11 +522,14 @@ document.addEventListener("contextmenu", (e) => {
 });
 
 function updateSimulation(delta) {
-  // process pointer input once per tick
-  pointer.update();
-  keyboard.update(delta);
+  if (gameState === "playing") {
+    // process pointer input once per tick
+    pointer.update();
+    keyboard.update(delta);
+    autoSteer.update(delta);
+  }
 
-  // update game entities
+  // update game entities (in document mode the ship just drifts)
   player.update(delta);
 
   // update camera to follow player
@@ -354,7 +548,9 @@ function animate(timestamp) {
     accumulator -= fixedDelta;
   }
 
+  if (transition) stepTransition(now);
   camera.render();
+  player.updateRender();
   renderDebugHud();
   requestAnimationFrame(animate);
 }

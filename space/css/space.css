@@ -186,40 +186,66 @@ body.paused #pause-btn {
   font-family: "Times New Roman", Times, serif;
 }
 
-.pause-text > h1 {
-  margin: 0;
-  font-size: clamp(2.5rem, 12vw, 5rem);
-}
-
-.pause-text > p {
-  margin: 0;
-  font-size: 1rem;
-  opacity: 0.7;
-}
-
-#resume-btn {
-  min-width: 160px;
-  min-height: 48px;
-  padding: 0.5rem 1.5rem;
-  font: inherit;
-  font-size: 1.5rem;
-  color: white;
-  background: rgb(255 255 255 / 0.1);
-  border: 2px solid white;
-  border-radius: 8px;
-  cursor: pointer;
-  touch-action: manipulation;
-}
-
-#resume-btn:hover,
-#resume-btn:focus-visible {
-  background: rgb(255 255 255 / 0.25);
-}
-
 body.paused .proc-img,
 body.paused .cluster img {
   animation-play-state: paused;
 }
+
+/* ========== DOCUMENT MODE (home) ========== */
+/* States on <body>: mode-document -> mode-transitioning -> (none = playing) */
+
+#doc {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  overflow-y: auto;
+  touch-action: pan-y;
+  user-select: text;
+  -webkit-user-select: text;
+  color: white;
+  font-family: "Times New Roman", Times, serif;
+  transition: opacity 0.6s ease;
+}
+
+/* Lets the start slot scroll to the exact viewport center */
+#doc::before,
+#doc::after {
+  content: "";
+  display: block;
+  height: 50vh;
+}
+
+body:not(.mode-document):not(.mode-transitioning) #doc {
+  display: none;
+}
+
+body.mode-transitioning #doc {
+  pointer-events: none;
+  overflow: hidden;
+}
+
+body.mode-transitioning.doc-fading #doc {
+  opacity: 0;
+}
+
+body.mode-document #pause-btn,
+body.mode-transitioning #pause-btn {
+  display: none;
+}
+
+.player-ship {
+  pointer-events: none;
+}
+
+.hand-zone {
+  width: 1600px;
+  height: 1200px;
+  box-sizing: border-box;
+  border: 2px dashed rgb(255 255 255 / 0.4);
+  color: white;
+  padding: 2rem;
+}
+
 
 /* Debug visuals: hidden by default, shown when body.debug is set (` key or ?debug). */
 .debug-bounds {

@@ -14,6 +14,12 @@ export class Landmarks {
     window.addEventListener('resize', () => this.measure());
   }
 
+  // Registers an element created after load (e.g. the hand-crafted zone) at a fixed world position.
+  add(el, x, y, { track = false } = {}) {
+    el.classList.add('landmark');
+    this.items.push({ el, x, y, w: el.offsetWidth, h: el.offsetHeight, visible: true, track });
+  }
+
   measure() {
     this.vw = window.innerWidth;
     this.vh = window.innerHeight;
@@ -31,7 +37,7 @@ export class Landmarks {
         item.el.style.visibility = visible ? 'visible' : 'hidden';
         item.visible = visible;
       }
-      if (visible) item.el.style.transform = `translate(${sx - item.w / 2}px, ${sy - item.h / 2}px)`;
+      if (visible || item.track) item.el.style.transform = `translate(${sx - item.w / 2}px, ${sy - item.h / 2}px)`;
     }
   }
 }
