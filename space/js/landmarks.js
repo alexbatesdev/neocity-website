@@ -14,10 +14,32 @@ export class Landmarks {
     window.addEventListener('resize', () => this.measure());
   }
 
-  // Registers an element created after load (e.g. the hand-crafted zone) at a fixed world position.
+  // Registers an element at a fixed world position. track: keep its transform current even while off
+  // screen, so things inside it can be measured (e.g. autopilot targets) from far away.
   add(el, x, y, { track = false } = {}) {
     el.classList.add('landmark');
     this.items.push({ el, x, y, w: el.offsetWidth, h: el.offsetHeight, visible: true, track });
+  }
+
+  // Places a landmark just off screen, `heading` radians (0 = up, clockwise) from `near` ({x, y} in world
+  // space), so it appears ahead of the player wherever they have flown to. Returns the world position.
+  // margin: extra px of clearance beyond the screen edge.
+  spawn(el, { near, heading, margin = 200, track = true }) {
+    el.hidden = false;
+    const reach = Math.hypot(el.offsetWidth, el.offsetHeight) / 2;
+    const screenReach = Math.hypot(this.vw, this.vh) / 2;
+    const dist = reach + screenReach + margin;
+    const x = near.x + Math.sin(heading) * dist;
+    const y = near.y - Math.cos(heading) * dist;
+    this.add(el, x, y, { track });
+    return { x, y };
+  }
+
+  // What the autopilot should fly to for a landmark: its [data-autopilot-target] child (or the landmark
+  // itself), plus the optional data-stop-distance (px) set on that element.
+  static autopilotTarget(el) {
+    const target = el.querySelector('[data-autopilot-target]') ?? el;
+    return { target, stopDistance: parseFloat(target.dataset.stopDistance) || 0 };
   }
 
   measure() {

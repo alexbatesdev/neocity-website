@@ -153,21 +153,14 @@ player.vx = Math.sin(DRIFT_HEADING) * DRIFT_SPEED;
 player.vy = -Math.cos(DRIFT_HEADING) * DRIFT_SPEED;
 player.updateRender();
 
+// Spawns the zone just off screen ahead of the ship (falling back to its facing if it is not moving).
 function spawnHandZone() {
   if (!handZone) return null;
-  handZone.hidden = false;
-  const zoneReach = Math.hypot(handZone.offsetWidth, handZone.offsetHeight) / 2;
-  const screenReach = Math.hypot(camera.viewportWidth, camera.viewportHeight) / 2;
-  const dist = zoneReach + screenReach + 200;
-  const heading = Math.atan2(player.vx, -player.vy);
-  const x = player.x + Math.sin(heading) * dist;
-  const y = player.y - Math.cos(heading) * dist;
-  // track: keep its transform current even off screen, so children can be targeted from far away
-  landmarks.add(handZone, x, y, { track: true });
-  // The spot inside the zone the ship flies to: any element, marked in the HTML
-  return handZone.querySelector("[data-autopilot-target]") ?? handZone;
+  const moving = Math.hypot(player.vx, player.vy) > 1;
+  const heading = moving ? Math.atan2(player.vx, -player.vy) : player.angle;
+  landmarks.spawn(handZone, { near: player, heading });
+  return Landmarks.autopilotTarget(handZone);
 }
-
 // World position of an element's center, read from where it is currently drawn. This follows
 // anything that moves (CSS animation, parallax, scripted motion) as long as it is rendered.
 // The camera is the reference because it is what the last frame was drawn with.
@@ -291,7 +284,7 @@ function stepTransition(now) {
   transitionBlend = 1;
   gameState = "playing";
   document.body.classList.remove("mode-transitioning", "doc-fading");
-  autoSteer.start(zoneTarget);
+  if (zoneTarget) autoSteer.start(zoneTarget.target, { stopDistance: zoneTarget.stopDistance });
 }
 
 // Render every shared menu on the page (home document + pause screen). The ship stays hidden until the
