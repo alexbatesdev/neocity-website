@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu dev page</title>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        /* Checkerboard: gives blur / backdrop-filter something to visibly act on */
+        background: repeating-conic-gradient(#8a8ab8 0% 25%, #1c1c30 0% 50%) 0 0 / 48px 48px;
+        color: white;
+        font-family: system-ui, sans-serif;
+      }
+
+      /* Stand-in for the real hosts: #doc (home) and the pause overlay */
+      #host {
+        min-height: 100vh;
+        box-sizing: border-box;
+      }
+      #host.overlay {
+        background: rgb(0 0 0 / 0.6);
+      }
+
+      #dev-panel {
+        position: fixed;
+        top: 8px;
+        right: 8px;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        width: 220px;
+        padding: 10px;
+        font: 12px/1.4 monospace;
+        color: lime;
+        background: rgb(0 0 0 / 0.85);
+        border: 1px solid lime;
+        border-radius: 6px;
+      }
+      #dev-panel h2 { margin: 0; font-size: 12px; }
+      #dev-panel .row { display: flex; gap: 4px; flex-wrap: wrap; }
+      #dev-panel button {
+        font: inherit;
+        color: lime;
+        background: none;
+        border: 1px solid lime;
+        padding: 2px 6px;
+        cursor: pointer;
+      }
+      #dev-panel button[aria-pressed="true"] { background: lime; color: black; }
+      #log { max-height: 120px; overflow: auto; white-space: pre-wrap; color: #9f9; }
+    </style>
+  </head>
+  <body>
+    <!-- Same markup shape as the real hosts: an element with data-menu that gets a shadow root -->
+    <div id="host"></div>
+
+    <div id="dev-panel">
+      <h2>menu.html dev</h2>
+      <div class="row" id="modes"></div>
+      <label><input type="checkbox" id="overlay" checked /> pause-style dim overlay</label>
+      <label><input type="checkbox" id="live" /> auto-reload on file change</label>
+      <div class="row"><button id="reload" type="button">Reload menu.html</button></div>
+      <h2>actions</h2>
+      <div id="log">(none yet)</div>
+    </div>
+
+    <script type="module">
+      import { renderMenu, clearMenuCache } from "../js/menu/renderMenu.js";
+
+      const MODES = ["document", "space", "nekkoplat"];
+      const host = document.getElementById("host");
+      const log = document.getElementById("log");
+      const modesEl = document.getElementById("modes");
+      const overlay = document.getElementById("overlay");
+      const live = document.getElementById("live");
+
+      const params = new URLSearchParams(location.search);
+      let mode = MODES.includes(params.get("mode")) ? params.get("mode") : "document";
+
+      function say(text) {
+        log.textContent = `${new Date().toLocaleTimeString()} ${text}\n` + (log.textContent === "(none yet)" ? "" : log.textContent);
+      }
+
+      async function render() {
+        host.dataset.menu = mode;
+        host.classList.toggle("overlay", overlay.checked && mode !== "document");
+        try {
+          await renderMenu(host, { mode, onAction: (a) => say(`action: ${a}`) });
+        } catch (err) {
+          say(`render failed: ${err.message}`);
+        }
+        for (const b of modesEl.children) b.setAttribute("aria-pressed", String(b.dataset.mode === mode));
+        history.replaceState(null, "", `?mode=${mode}`);
+      }
+
+      async function reload() {
+        clearMenuCache();
+        await render();
+        say("reloaded menu.html");
+      }
+
+      for (const m of MODES) {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.textContent = m;
+        b.dataset.mode = m;
+        b.addEventListener("click", () => { mode = m; render(); });
+        modesEl.append(b);
+      }
+      overlay.addEventListener("change", render);
+      document.getElementById("reload").addEventListener("click", reload);
+
+      // Poll for edits to menu.html so the preview follows what you type
+      let lastHtml = null;
+      setInterval(async () => {
+        if (!live.checked) return;
+        const html = await fetch("../js/menu/menu.html", { cache: "no-store" }).then((r) => r.text());
+        if (lastHtml !== null && html !== lastHtml) reload();
+        lastHtml = html;
+      }, 1000);
+
+      render();
+    </script>
+  </body>
+</html>

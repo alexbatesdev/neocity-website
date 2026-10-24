@@ -2,10 +2,15 @@
 const MENU_URL = new URL("./menu.html", import.meta.url);
 let menuHtml = null;
 
-const loadMenuHtml = () => (menuHtml ??= fetch(MENU_URL).then((r) => {
+const loadMenuHtml = () => (menuHtml ??= fetch(MENU_URL, { cache: "no-cache" }).then((r) => {
   if (!r.ok) throw new Error(`Failed to load menu: ${r.status}`);
   return r.text();
 }));
+
+// Forces the next renderMenu() to re-fetch menu.html (used by the dev page).
+export function clearMenuCache() {
+  menuHtml = null;
+}
 
 // mode: "document" | "space" | "nekkoplat". onAction(name) fires for clicks on [data-action] elements.
 export async function renderMenu(target, { mode, onAction = () => {} }) {
@@ -30,8 +35,13 @@ export async function renderMenu(target, { mode, onAction = () => {} }) {
   }
 
   root.replaceChildren(content);
-  root.addEventListener("click", (e) => {
-    const el = e.target.closest?.("[data-action]");
-    if (el) onAction(el.dataset.action);
-  });
+  // Re-rendering the same host must not stack listeners, so keep one and swap its callback
+  root.menuOnAction = onAction;
+  if (!root.menuListening) {
+    root.menuListening = true;
+    root.addEventListener("click", (e) => {
+      const el = e.target.closest?.("[data-action]");
+      if (el) root.menuOnAction(el.dataset.action);
+    });
+  }
 }
